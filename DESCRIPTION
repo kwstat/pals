@@ -1,0 +1,17 @@
+Package: pals
+Title: Color Palettes and Palette Evaluation Tools
+Authors@R: person("Kevin","Wright", email="kw.stat@gmail.com", role=c("aut","cre"))
+Version: 0.1
+Date: 2016-09-20
+Description: A comprehensive collection of color palettes and tools to evaluate them.
+License: GPL-2
+URL:
+VignetteBuilder: knitr
+Imports:
+  colorspace,
+  RColorBrewer,
+  mapproj,
+  maps,
+  rgl,
+  viridisLite
+RoxygenNote: 5.0.1
