@@ -1,0 +1,120 @@
+
+Get kw.fillcols
+
+http://blogs.nature.com/methagora/2013/07/data-visualization-points-of-view.html
+
+Add St Helens image as used in plotly?
+https://github.com/matplotlib/viscm/tree/master/viscm/examples
+
+Good test image?
+http://yt-project.org/doc/visualizing/colormaps/index.html
+
+Need an option to reverse any palette
+
+See scales, ggthemes, viridis::scale_fill_viridis
+
+In pal.test, add discrete=TRUE to prevent interpolation
+
+Note, we could define functions like:
+cubicyf <- colorRampPalette(rgb(colormatrix))
+But then the actual colors get hidden deep inside an environment
+
+
+TODO: gist_earth, interface to colorbrewer
+
+
+Best comparison pages
+http://inversed.ru/Blog_2.htm
+
+
+ 
+http://mkweb.bcgsc.ca/
+
+
+
+Matteo Niccoli.  Free to re-use mode/media.
+Credit to Matteo Niccoli as the author and mycarta.wordpress.com
+https://mycarta.wordpress.com/2012/05/29/the-rainbow-is-dead-long-live-the-rainbow-series-outline/
+
+
+
+
+Niccoli
+Following has short cubicyf palette
+Trimmed, original code here
+https://www.mathworks.com/matlabcentral/fileexchange/28982-perceptually-improved-colormaps/content/pmkmp/pmkmp.m
+Non-trimmed version here
+https://github.com/rikrd/matlab/blob/master/output/pmkmp/pmkmp.m
+
+
+https://github.com/matplotlib/matplotlib/blob/master/lib/matplotlib/_cm.py
+
+cmocean, MIT license
+http://matplotlib.org/cmocean/
+https://github.com/kthyng/cmocean
+Actual color definitions are here:
+https://github.com/kthyng/cmocean/tree/master/cmocean/rgb
+R version of cmocean:
+https://github.com/dankelley/oce/
+
+----------------------------------------------------------------------------
+
+Done
+
+* Peter Kovesi
+
+Palettes defined in csv format here:
+http://peterkovesi.com/projects/colourmaps/index.html
+
+Some interesting comments about the palettes
+https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/src/cmap.jl
+
+* Paul Tol
+
+https://personal.sron.nl/~pault
+
+* Rpackages
+
+https://github.com/btupper/catecolors
+
+https://github.com/ronammar/randomcoloR
+
+ggsci
+https://github.com/road2stat/ggsci
+
+palr
+https://github.com/AustralianAntarcticDivision/palr
+
+PaletteTown
+https://github.com/timcdlucas/palettetown
+
+qualpalr
+
+RColorBrewer
+Has one main function brewer.pal with all RGB codes.
+
+
+* StackExchange
+
+http://mathematica.stackexchange.com/questions/64513/is-there-an-easy-way-to-use-matteo-niccolis-perceptual-color-maps-for-2d-plots
+
+http://graphicdesign.stackexchange.com/questions/3682/where-can-i-find-a-large-palette-set-of-contrasting-colors-for-coloring-many-d
+
+Interesting palettes at bottom
+https://github.com/d3/d3-scale/blob/master/README.mdinterpolateViridis
+
+http://stackoverflow.com/questions/7251872/is-there-a-better-color-scale-than-the-rainbow-colormap
+
+http://stackoverflow.com/questions/13968520/color-selection-for-matplotlib-that-prints-well
+
+http://stackoverflow.com/questions/15282580/how-to-generate-a-number-of-most-distinctive-colors-in-r
+
+
+
+Color Schemes Appropriate for Scientific Data Graphics
+http://geog.uoregon.edu/datagraphics/color_scales.htm
+
+Polychrome
+install.packages("Polychrome", repos="http://R-Forge.R-project.org")
+https://rdrr.io/rforge/Polychrome/man/viewers.html
+

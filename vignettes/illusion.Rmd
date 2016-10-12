@@ -1,0 +1,79 @@
+
+---
+title: "A Color-Caused Optical Illusion"
+author: "Kevin Wright"
+date: "`r Sys.Date()`"
+bibliography: pals.bib
+output:
+  html_document:
+    highlight: tango
+vignette: >
+  % \VignetteIndexEntry{}
+  % \VignetteEncoding{UTF-8}
+  % \VignetteEngine{knitr::rmarkdown}
+---
+<style type="text/css">
+body, td { font-size: 14pt; color: #000; padding:1em; }
+code, pre, #ws, #message { font-size: 12pt;
+  color: #000; background-color: #f5f5f5; }
+code {border: 1px solid #e0e0e0; padding: 0 5px;}
+pre > code { border: 0; }
+</style>
+
+@cleveland1983color conducted experiments with different partitionings of
+colored-areas that were nearly the same size.  (Here less than 1% different.)
+
+Using a map (similar to the one below left) with regions coded by two saturated
+colors, 49% of subjects said the red area was bigger, 22% said
+the green was bigger, and 31% said the areas were the same.
+
+```{r saturated}
+library(maps)
+#library(mapproj)
+#nv <- map('county', 'nevada', fill=TRUE, col=1:12, projection="mollweide")
+reds <- c("nevada,carson city", "nevada,churchill", "nevada,clark",      
+          "nevada,douglas", "nevada,esmeralda", "nevada,lincoln",    
+          "nevada,nye", "nevada,storey", "nevada,white pine")
+grns <- c("nevada,elko", "nevada,eureka", "nevada,humboldt", "nevada,lander",
+          "nevada,lyon", "nevada,mineral", "nevada,pershing", "nevada,washoe")
+nv.names <- c(reds,grns)
+
+# Draw the map and color it
+nv.names <- map('county', 'nevada', namesonly=TRUE, plot=FALSE)
+
+# Green/Red
+op <- par(mar=c(0,1,0,1), mfrow=c(1,2))
+nv <- map('county', 'nevada', fill=TRUE,
+          col=ifelse(nv.names %in% reds,
+            rgb(206, 60, 17, max=255), rgb(80,164,52, max=255)),
+          projection="mollweide")
+# Red/Green
+nv <- map('county', 'nevada', fill=TRUE,
+          col=ifelse(nv.names %in% reds,
+            rgb(80,164,52, max=255), rgb(206, 60, 17, max=255)),
+          projection="mollweide")
+par(op)
+```
+
+```{r areas}
+# Area of red region = 55581
+sum(area.map(nv, regions=reds))
+# Area of green region = 55687
+sum(area.map(nv, regions=grns))
+
+```
+# Muted colors
+
+When low-saturated, muted colors were used, the observers demonstrated no systematic biases.
+
+```{r muted}
+op <- par(mar=c(0,1,0,1))
+nv <- map('county', 'nevada', fill=TRUE,
+          col=ifelse(nv.names %in% reds,
+                     rgb(250, 229, 139, max=255), rgb(204, 246, 186, max=255)),
+          projection="mollweide")
+par(op)
+```
+ 
+# Bibliography
+	

@@ -1,4 +1,4 @@
-# map.r
+# map.R
 # Time-stamp: <24 Sep 2016 22:05:01 c:/x/rpack/pals/R/map.r>
 # Copyright: Kevin Wright, 2016. License: GPL-2.
 

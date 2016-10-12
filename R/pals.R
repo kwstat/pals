@@ -1,16 +1,19 @@
-# colors.r
-# Time-stamp: <26 Sep 2016 08:38:03 c:/x/rpack/pals/R/colors.r>
+# pals.R
+# Time-stamp: <12 Oct 2016 16:41:59 c:/x/rpack/pals/R/pals.R>
 # Copyright: Kevin Wright, 2016. License: GPL-2.
+
 
 #' Comprehensive color palettes and evaluation tools
 #' 
 #' Design goals:
 #' 
-#' 1. All palettes are functions that return a vector of 'n' colors.
-#' 
-#' 2. The function names use only lowercase letters.
-#' 
+#' 1. All palettes are _functions_ that return a vector of 'n' colors.
+#' 2. The palette function names use only lowercase letters.
 #' 3. The 'data' directory is not used.
+#' 4. The source package is text (no rda files).
+#' 5. No dependencies/imports of palettes.
+#' 6. Extensive collection of palettes.
+#' 7. Multiple tools to evaluate palettes.
 #' 
 #' @name pals-package
 #' @aliases pals-package
@@ -20,81 +23,94 @@ NULL
 
 # ----------------------------------------------------------------------------
 
-# Get kw.fillcols
+#' Show palettes as colored bands
+#'
+#' Show palettes as colored bands (like paint chips).
+#'
+#' @param ... Palettes, either functions or vectors.
+#' @param n The number of colors to display for palette functions, default 51.
+#' @param labels Labels for palettes
+#' 
+#' @examples
+#' pal.chips(cubehelix, gnuplot, jet, tol.rainbow, tol, inferno, magma, plasma, viridis, parula, n=51)
+#' pal.chips(c('red','white','blue'), rainbow)
+#'
+#' @export
+pal.chips <- function(..., n=51, labels=NULL){
 
-# Interesting palettes at bottom
-# https://github.com/d3/d3-scale/blob/master/README.md#interpolateViridis
-
-# Good test image?
-# http://yt-project.org/doc/visualizing/colormaps/index.html
-
-# Need an option to reverse any palette
-
-# http://flowingdata.com/2009/11/12/how-to-make-a-us-county-thematic-map-using-free-tools/
-
-# See scales, ggthemes, viridis::scale_fill_viridis
-
-# In pal.test, add discrete=TRUE to prevent interpolation
-
-# Note, we could define functions like:
-# cubicyf <- colorRampPalette(rgb(colormatrix))
-# But then the actual colors get hidden deep inside an environment
-
-
-# TODO: gist_earth, cmocean, interface to colorbrewer
-
-
-# Best comparison pages
-# http://inversed.ru/Blog_2.htm
-# http://peterkovesi.com/projects/colourmaps/
-
-# http://graphicdesign.stackexchange.com/questions/3682/where-can-i-find-a-large-palette-set-of-contrasting-colors-for-coloring-many-d
-
-##  Is there a better color scale than the “rainbow” colormap?
-## http://stackoverflow.com/q/7251872/590388
-# http://stackoverflow.com/questions/13968520/color-selection-for-matplotlib-that-prints-well
-
-# http://geog.uoregon.edu/datagraphics/color_scales.htm
-
-# http://stackoverflow.com/questions/13968520/color-selection-for-matplotlib-that-prints-well
+  if(n < 3) warning("Using n=3")
   
-## http://stackoverflow.com/questions/15282580/how-to-generate-a-number-of-most-distinctive-colors-in-r
+  # Each argument in '...' is a palette function or palette vector.
+  # if a function, use n colors
+  # if a vector, use all colors in the palette
 
-# Matteo Niccoli.  Free to re-use mode/media.
-# Credit to Matteo Niccoli as the author and mycarta.wordpress.com
-## https://mycarta.wordpress.com/2012/05/29/the-rainbow-is-dead-long-live-the-rainbow-series-outline/
-## http://mathematica.stackexchange.com/questions/64513/is-there-an-easy-way-to-use-matteo-niccolis-perceptual-color-maps-for-2d-plots
-# Following has short cubicyf palette
-# Trimmed, original code here
-# https://www.mathworks.com/matlabcentral/fileexchange/28982-perceptually-improved-colormaps/content/pmkmp/pmkmp.m
-# Non-trimmed version here
-# https://github.com/rikrd/matlab/blob/master/output/pmkmp/pmkmp.m
+  pals <- list(...)
+  isfun <- unlist(lapply(pals, is.function))
+  npal <- length(pals)
 
+  if(!is.null(labels)) {
+    if(length(labels) != npal)
+      stop("Length of labels needs to match number of palettes.")
+  } else {
+    # Get the palette function name, or blank
+    # Once a function is passed as an argument, the name of the function is gone,
+    # so we have to use 'match.call' to get the names
+    mc <- match.call()
+    labels <- unlist(lapply(mc, deparse))
+    labels <- labels[-1] # first item is 'pal.chips'
+    labels <- labels[1:npal] # other arguments n, labels
+    labels <- ifelse(isfun, labels, "")
+  }
+  
+  # Now convert the palette functions to palette vectors
+  for(i in 1:npal) {
+    if(isfun[i]) pals[[i]] <- pals[[i]](n)
+  }
+  # Count the number of boxes for each palette
+  nc <- unlist(lapply(pals, length))
+  
+  maxn <- max(nc)
+  ylim <- c(0, npal)
+  oldpar <- par(mgp = c(2, 0.25, 0))
+  on.exit(par(oldpar))
+  plot(1, 1, xlim = c(0, maxn), ylim = ylim,
+       type = "n", axes = FALSE, bty = "n", xlab = "", ylab = "")
+  
+  for (i in 1:npal) {
+    # i goes bottom to top, npal+1-i goes top to bottom
+    nj <- nc[npal+1 - i]
+    shadi <- pals[[npal+1 - i]]
+    brks <- seq(from=0, to=maxn, length=nj+1) # break points between colors
+    rect(xleft = brks[1:nj], ybottom = i-1,
+         xright = brks[2:(nj+1)],      ytop = i-0.2, col = shadi, border = NA)
+    
+    # If inidividual colors in a palette have names, add them
+    nms <- names(shadi)
+    if(!is.null(nms)) {
+      text(brks[1:nj] + 0.5, i-.6, nms, srt=90, cex=.75)
+    }
+  }
 
-# https://github.com/matplotlib/matplotlib/blob/master/lib/matplotlib/_cm.py
+  # Palette name along left side
+  text(rep(-0.1, npal), (1:npal) - 0.6,
+       labels = rev(labels),
+       cex=0.6, xpd = TRUE, adj = 1)
 
-# cmocean, MIT license
-# http://matplotlib.org/cmocean/
-# https://github.com/kthyng/cmocean
-# Actual color definitions are here:
-# https://github.com/kthyng/cmocean/tree/master/cmocean/rgb
-# R version of cmocean:
-# https://github.com/dankelley/oce/
+}
+if(FALSE){
+pal.chips(c('red','white','blue'),c('blue','yellow'), c('black','red','gold'), labels=c('USA','Sweden','Germany'))
+pal.chips(cm.colors, rainbow, topo.colors, heat.colors, c('red','blue'), n=31)
+pal.chips(alphabet)
+pal.chips(alphabet,n=25)
+pal.chips(alphabet,n=26)
+pal.chips(alphabet,n=27)
+pal.chips(cubehelix)
+pal.chips(alphabet,cubehelix)
+pal.chips(cubehelix,alphabet)
+pal.chips(warmcool, c('red','orange','yellow','green','blue','purple'), coolwarm, n=11)
+pal.chips(alphabet,cols25,glasbey,kelly,stepped,tol)
+}
 
-# ----------------------------------------------------------------------------
-
-# Done
-
-# https://personal.sron.nl/~pault/
-
-# https://github.com/btupper/catecolors
-
-# Polychrome
-# install.packages("Polychrome", repos="http://R-Forge.R-project.org")
-# https://rdrr.io/rforge/Polychrome/man/viewers.html
-
-# ----------------------------------------------------------------------------
-# ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
 
 #' Discrete palettes
@@ -118,7 +134,7 @@ NULL
 #' We think this is absurd--even 32 colors are hard to distinguish.
 #'
 #' The \code{kelly} palette of 22 colors maximize the contrast
-#' between colors in a set if the colors are chosen in order from the top.
+#' between colors in a set if the colors are chosen in sequential order.
 #' Kelly paid attention to the needs of people with color blindness.  The
 #' first nine colors work well for such people and people with normal vision.
 #' Kelly did not provide RGB color values, and the paper was in black-and-white.
@@ -130,6 +146,11 @@ NULL
 #' colors, the purples are not very distinct, etc.  See the pal.heatmap
 #' example.
 #'
+#' The \code{stepped} palette has 20 colors (5 hues, 4 levels within each hue)
+#' that is useful for showing varying levels within categories.
+#' In order to better separate these colors in RGB space, we
+#' moved red hue 0 to hue 350, green hue 80 to hue 90 
+#' 
 #' The \code{tol} palette has 12 colors by Paul Tol.
 #' Any printer that conforms to international standard ISO 12647-2 can
 #' reproduce all colours.
@@ -143,26 +164,30 @@ NULL
 #' alphabet()
 #' alphabet()["jade"]
 #' pal.cube(alphabet)
-#' pal.bands("alphabet",n=26)
+#' pal.chips(alphabet,n=26)
 #' pal.map(alphabet)
 #' pal.heatmap(alphabet)
 #'
 #' # ----- cols25 -----
-#' pal.bands("cols25",n=25)
+#' pal.chips(cols25,n=25)
 #' pal.heatmap(cols25)
 #'
 #' # ------ glasbey ------
-#' pal.bands("glasbey",n=32)
+#' pal.chips(glasbey,n=32)
 #' pal.cube(glasbey, n=32) # Blues are close together
 #' pal.heatmap(glasbey(32))
 #'
 #' # ----- kelly -----
-#' pal.bands("kelly",n=22)
+#' pal.chips(kelly,n=22)
 #' pal.heatmap(kelly(22))
 #'
+#' # ----- stepped -----
+#' pal.chips(stepped,n=20)
+#' pal.heatmap(stepped, n=20)
+#' 
 #' # ----- tol -----
-#' pal.bands("tol",12)
-#'
+#' pal.chips(tol,n=12)
+#' pal.heatmap(tol, 12)
 #' 
 #' @references
 #' 
@@ -181,13 +206,20 @@ NULL
 #' 
 #' Paul Tol (2012). Color Schemes. SRON technical note, SRON/EPS/TN/09-002.
 #' https://personal.sron.nl/~pault/
+#'
+#' Color Schemes Appropriate for Scientific Data Graphics
+#' http://geog.uoregon.edu/datagraphics/color_scales.htm
 #' 
+#' @name discrete
+NULL
+
+
 #' @export
 #' @rdname discrete
 alphabet <- function(n=26) {
   
   if(n > 26){
-    warning("alphabet() has max 26 colors")
+    warning("Only 26 colors are available with 'alphabet'")
     n <- 26
   }
   
@@ -226,6 +258,10 @@ alphabet <- function(n=26) {
 #' @export
 #' @rdname discrete
 cols25 <- function(n=25) {
+  if(n > 25) {
+    warning("Only 25 colors are available with 'cols25'.")
+    n <- 25
+  }
   pal <- c(rgb(31,120,200,max=255), # "#1f78b4",
            "#ff0000", # red
            "#33a02c",
@@ -264,43 +300,9 @@ glasbey <- function(n=32) {
     warning("Only 32 colors are available with 'glasbey'.")
     n <- 32
   }
-  
-  pal <- matrix(
-    c(2,1,0,0,255,
-      3,1,255,0,0,
-      4,1,0,255,0,
-      5,2,0,0,51,
-      6,3,255,0,182,
-      7,5,0,83,0,
-      8,3,255,211,0,
-      9,5,0,159,255,
-      10,3,154,77,66,
-      11,1,0,255,190,
-      12,9,120,63,193,
-      13,11,31,150,152,
-      14,12,255,172,253,
-      15,8,177,204,113,
-      16,3,241,8,92,
-      17,10,254,143,66,
-      18,12,221,0,255,
-      19,5,32,26,1,
-      20,10,114,0,85,
-      21,9,118,108,149,
-      22,4,2,173,36,
-      23,8,200,255,0,
-      24,15,136,108,0,
-      25,1,255,183,159,
-      26,15,133,133,103,
-      27,3,161,3,0,
-      28,11,20,249,255,
-      29,21,0,71,158,
-      30,14,220,94,147,
-      31,1,147,212,255,
-      32,2,0,76,255,
-      1,1,242,243,244 # white #F2F3F4
-      ), ncol=5, byrow=TRUE)
-  
-  rgb(pal[,3], pal[,4], pal[,5], max=255)
+
+  pal <- subset(colrs, palette=="glasbey")[,c('red','green','blue')]
+  rgb(pal, max=255)[1:n]
 }
 
 #' @export
@@ -308,7 +310,7 @@ glasbey <- function(n=32) {
 kelly <- function(n=22) {
 
   if(n > 22) {
-    warning("Only 22 colors are available with kelly()")
+    warning("Only 22 colors are available with 'kelly'")
     n <- 22
   }
 
@@ -341,28 +343,35 @@ kelly <- function(n=22) {
 
 #' @export
 #' @rdname discrete
-tol <- function(n=12) {
-
-  if(n > 12) {
-    warning("Only 12 colors are available with tol()")
-    n <- 12
-  }
+stepped <- function(n=20) {
   
-  list(
-    c("#4477AA"),
-    c("#4477AA", "#CC6677"),
-    c("#4477AA", "#DDCC77", "#CC6677"),
-    c("#4477AA", "#117733", "#DDCC77", "#CC6677"),
-    c("#332288", "#88CCEE", "#117733", "#DDCC77", "#CC6677"),
-    c("#332288", "#88CCEE", "#117733", "#DDCC77", "#CC6677","#AA4499"),
-    c("#332288", "#88CCEE", "#44AA99", "#117733", "#DDCC77", "#CC6677","#AA4499"),
-    c("#332288", "#88CCEE", "#44AA99", "#117733", "#999933", "#DDCC77", "#CC6677","#AA4499"),
-    c("#332288", "#88CCEE", "#44AA99", "#117733", "#999933", "#DDCC77", "#CC6677", "#882255", "#AA4499"),
-    c("#332288", "#88CCEE", "#44AA99", "#117733", "#999933", "#DDCC77", "#661100", "#CC6677", "#882255", "#AA4499"),
-    c("#332288", "#6699CC", "#88CCEE", "#44AA99", "#117733", "#999933", "#DDCC77", "#661100", "#CC6677", "#882255", "#AA4499"),
-    c("#332288", "#6699CC", "#88CCEE", "#44AA99", "#117733", "#999933", "#DDCC77", "#661100", "#CC6677", "#AA4466", "#882255", "#AA4499")
-  )[[n]]
+  if(n > 20) {
+    warning("Only 20 colors are available with 'stepped'")
+    n <- 20
+  }
 
+  # Similar to the HSV codes here, but using 4 steps instead of 5
+  # http://geog.uoregon.edu/datagraphics/color/StepSeq_25.txt
+
+  pal <- subset(colrs, palette=="stepped")[,c('red','green','blue')]
+  # Even though the columns are called red,green,blue, the numbers
+  # are really HSV
+
+  # If pal is a tibble, reference by column did not work:
+  # hsv(pal[,'red']/360, pal[,'green'], pal[,'blue'])
+  pal <- hsv(pal$red/360, pal$green, pal$blue)
+  return(pal[1:n])
+}
+
+
+
+#' @export
+#' @rdname discrete
+tol <- function(n) {
+  if(n > 12) warning("Only 12 colors are available with 'tol'")
+  pal <- subset(colrs, palette=="tol" & ncolors==n)
+  pal <- rgb(pal[,c('red','green','blue')], max=255)
+  pal[1:n]
 }
 
 # ----------------------------------------------------------------------------
@@ -389,7 +398,9 @@ tol <- function(n=12) {
 #' 
 #' The \code{jet} palette should not be used and is only provided for historical interest.
 #' The code for this palette comes from the example section of \code{colorRampPalette}.
-#' The 'jet' palette was the default colormap in older versions of Matlab.
+#' The 'jet' palette gained popularity as the default colormap in older versions of Matlab.
+#' Because of the unevenness of the gradient, jet will exaggerate some features
+#' of the data and minimize other features.
 #'
 #' The \code{parula} palette here is similar to the default Matlab palette.
 #' Specific colors were adapted from Gnuplot.
@@ -409,50 +420,49 @@ tol <- function(n=12) {
 #' @examples
 #'
 #' # ----- coolwarm -----
-#'  filled.contour(volcano, color.palette = coolwarm, nlevels=40, asp = 1, main="coolwarm")
+#' filled.contour(volcano, color.palette = coolwarm, nlevels=40, asp = 1, axes=0, main="coolwarm")
 #' pal.test(coolwarm)
 #' # Note the mach banding gray line in the following:
 #' filled.contour(volcano,
 #'   color.palette = colorRampPalette(c("#3B4CC0", "lightgray", "#B40426"),space="Lab"),
-#'   nlevels=40, asp = 1, main="coolwarm")
+#'   nlevels=40, asp = 1, axes=0)
 #'
 #' # ----- cubehelix -----
 #' # Full range of colors. Pink is overwhelming. Not the best choice.
-#' filled.contour(volcano, color.palette = cubehelix, nlevels=40, asp = 1, main="cubehelix")
+#' filled.contour(volcano, color.palette = cubehelix, nlevels=40, asp = 1, axes=0, main="cubehelix")
 #' pal.test(cubehelix)
 #' 
 #' # Limited to mostly blues/greens
 #' filled.contour(volcano, color.palette = function(n)
-#'   cubehelix(n, start=.5, r=-.75), nlevels=40, asp = 1, main="cubehelix")
+#'   cubehelix(n, start=.5, r=-.75), nlevels=40, asp = 1, axes=0, main="cubehelix")
 #'
 #' # Similar, but more saturated. See: http://inversed.ru/Blog_2.htm
 #' filled.contour(volcano, color.palette = function(n)
-#'   cubehelix(n, start=.25, r=-.67, hue=1.5), nlevels=40, asp = 1, main="cubehelix")
+#'   cubehelix(n, start=.25, r=-.67, hue=1.5), nlevels=40, asp = 1, axes=0, main="cubehelix")
 #'
 #' # Dark colors totally lose structure of the volcano peak.
 #' op <- par(mfrow=c(2,2), mar=c(2,2,2,2))
-#' image(volcano, col = cubehelix(51), asp = 1, main="cubehelix")
-#' image(volcano, col = cubehelix(51, start=.25, r=-.67, hue=1.5), asp = 1, main="cubehelix")
-#' image(volcano, col = rev(cubehelix(51)), asp = 1, main="cubehelix")
-#' image(volcano, col = rev(cubehelix(51, start=.25, r=-.67, hue=1.5)), asp = 1, main="cubehelix")
+#' image(volcano, col = cubehelix(51), asp = 1, axes=0, main="cubehelix")
+#' image(volcano, col = cubehelix(51, start=.25, r=-.67, hue=1.5), asp = 1, axes=0, main="cubehelix")
+#' image(volcano, col = rev(cubehelix(51)), asp = 1, axes=0, main="cubehelix")
+#' image(volcano, col = rev(cubehelix(51, start=.25, r=-.67, hue=1.5)), asp = 1, axes=0, main="cubehelix")
 #' par(op)
 #'
-#' # ----- Gnuplot -----
-#' filled.contour(volcano, color.palette = gnuplot, nlevels=40, asp = 1, main="gnuplot")
+#' # ----- gnuplot -----
+#' filled.contour(volcano, color.palette = gnuplot, nlevels=40, asp = 1, axes=0, main="gnuplot")
 #' pal.test(gnuplot)
 #'
 #' # ----- jet -----
-#' filled.contour(volcano, color.palette = jet, nlevels=40, asp = 1, main="jet")
+#' filled.contour(volcano, color.palette = jet, nlevels=40, asp = 1, axes=0,  main="jet")
 #' pal.test(jet)
 #'
 #' # ----- parula -----
-#' filled.contour(volcano, color.palette = parula, nlevels=40, asp = 1, main="parula")
+#' filled.contour(volcano, color.palette = parula, nlevels=40, asp = 1, axes=0, main="parula")
 #' pal.test(parula)
 #'
 #' # ----- tol.rainbow -----
-#' filled.contour(volcano, color.palette = tol.rainbow, nlevels=40, asp = 1, main="tol.rainbow")
+#' filled.contour(volcano, color.palette = tol.rainbow, nlevels=40, asp = 1, axes=0, main="tol.rainbow")
 #' pal.test(tol.rainbow)
-
 #' @author Palette colors by various authors. R code by Kevin Wright.
 #' 
 #' @references
@@ -467,6 +477,7 @@ tol <- function(n=12) {
 #' Diverging Color Maps for Scientific Visualization.
 #' Proceedings of the 5th International Symposium on Visual Computing.
 #' http://www.kennethmoreland.com/color-maps/
+#' http://dx.doi.org/10.1007/978-3-642-10520-3_9
 #'
 #' Paul Tol (2012). Color Schemes. SRON technical note, SRON/EPS/TN/09-002.
 #' https://personal.sron.nl/~pault/
@@ -479,7 +490,9 @@ tol <- function(n=12) {
 #'
 #' Gnuplot palettes.
 #' https://github.com/Gnuplotting/gnuplot-palettes
+#' @name continuous
 NULL
+
 
 #' @param start Start angle (radians) of the helix
 #' @param r  Number of rotations of the helix
@@ -537,42 +550,10 @@ parula <- colorRampPalette(c('#352a87', '#0363e1', '#1485d4', '#06a7c6', '#38b99
 #' @rdname continuous
 coolwarm <- function(n){
   # Values from Moreland Table 2
-  pal <- matrix(c(
-    59,76,192,
-    68,90,204,
-    77,104,215,
-    87,117,225,
-    98,130,234,
-    108,142,241,
-    119,154,247,
-    130,165,251,
-    141,176,254,
-    152,185,255,
-    163,194,255,
-    174,201,253,
-    184,208,249,
-    194,213,244,
-    204,217,238,
-    213,219,230,
-    221,221,221,
-    229,216,209,
-    236,211,197,
-    241,204,185,
-    245,196,173,
-    247,187,160,
-    247,177,148,
-    247,166,135,
-    244,154,123,
-    241,141,111,
-    236,127,99,
-    229,112,88,
-    222,96,77,
-    213,80,66,
-    203,62,56,
-    192,40,47,
-    180,4,38), ncol=3, byrow=TRUE)
-  colorRampPalette(rgb(pal, max=255))(n)
+  #colorRampPalette(rgb(pal, max=255))(n)
+  colorRampPalette(rgb(subset(colrs, palette=="coolwarm")[,c('red','green','blue')],max=255))(n)
 }
+
 
 #' @export
 #' @rdname continuous
@@ -679,33 +660,24 @@ tol.rainbow <- function(n=25, manual=TRUE){
 #' pal.test(isol) # magenta blue green red
 #' pal.test(linearl) # black blue green tan
 #' pal.test(linearlhot) # black red yellow
+#' pal.chips(cubicyf,cubicl,isol,linearl,linearlhot)
 #' 
 #' @references
 #' Matteo Niccoli (2010).
 #' Perceptually improved colormaps.
 #' http://www.mathworks.com/matlabcentral/fileexchange/28982-perceptually-improved-colormaps
+#' Color definitions from here:
+#' http://www.mathworks.com/matlabcentral/fileexchange/28982-perceptually-improved-colormaps/content/pmkmp/pmkmp.m
 #' https://mycarta.wordpress.com/2012/05/29/the-rainbow-is-dead-long-live-the-rainbow-series-outline/
+#' 
+#' @name niccoli
+NULL
+
+
 #' @export
 #' @rdname niccoli
 cubicyf <- function(n) {
-
-  pal <- matrix(c(0.5151, 0.0482, 0.6697,
-                  0.5199, 0.1762, 0.8083,
-                  0.4884, 0.2912, 0.9234,
-                  0.4297, 0.3855, 0.9921,
-                  0.3893, 0.4792, 0.9775,
-                  0.3337, 0.5650, 0.9056,
-                  0.2795, 0.6419, 0.8287,
-                  0.2210, 0.7123, 0.7258,
-                  0.2468, 0.7612, 0.6248,
-                  0.2833, 0.8125, 0.5069,
-                  0.3198, 0.8492, 0.3956,
-                  0.3602, 0.8896, 0.2919,
-                  0.4568, 0.9136, 0.3018,
-                  0.6033, 0.9255, 0.3295,
-                  0.7066, 0.9255, 0.3414,
-                  0.8000, 0.9255, 0.3529), byrow=TRUE, ncol=3)
-  
+  pal <- subset(colrs, palette=="cubicyf")[,c('red','green','blue')]
   colorRampPalette(rgb(pal))(n)
 }
 
@@ -713,92 +685,30 @@ cubicyf <- function(n) {
 #' @rdname niccoli
 #' @export 
 isol <- function(n) {
-  
-  pal <- matrix(c(0.9102, 0.2236, 0.8997,
-                  0.4027, 0.3711, 1.0000,
-                  0.0422, 0.5904, 0.5899,
-                  0.0386, 0.6206, 0.0201,
-                  0.5441, 0.5428, 0.0110,
-                  1.0000, 0.2288, 0.1631), byrow=TRUE, ncol=3)
-  
+  pal <- subset(colrs, palette=="isol")[,c('red','green','blue')]
   colorRampPalette(rgb(pal))(n)
-  
 }
 
 
 #' @rdname niccoli
 #' @export
-#' 
 cubicl <- function(n) {
-  pal <- matrix(c(
-    0.4706,      0, 0.5216,
-    0.5137, 0.0527, 0.7096,
-    0.4942, 0.2507, 0.8781,
-    0.4296, 0.3858, 0.9922,
-    0.3691, 0.5172, 0.9495,
-    0.2963, 0.6191, 0.8515,
-    0.2199, 0.7134, 0.7225,
-    0.2643, 0.7836, 0.5756,
-    0.3094, 0.8388, 0.4248,
-    0.3623, 0.8917, 0.2858,
-    0.5200, 0.9210, 0.3137,
-    0.6800, 0.9255, 0.3386,
-    0.8000, 0.9255, 0.3529,
-    0.8706, 0.8549, 0.3608,
-    0.9514, 0.7466, 0.3686,
-    0.9765, 0.5887, 0.3569), byrow=TRUE, ncol=3)
-
+  pal <- subset(colrs, palette=="cubicl")[,c('red','green','blue')]
   colorRampPalette(rgb(pal))(n)
 }
 
 
 #' @rdname niccoli
 #' @export
-#' 
 linearl <- function(n) {
-  pal <- matrix(c(
-    0.0143,	0.0143,	0.0143,
-    0.1413,	0.0555,	0.1256,
-    0.1761,	0.0911,	0.2782,
-    0.1710,	0.1314,	0.4540,
-    0.1074,	0.2234,	0.4984,
-    0.0686,	0.3044,	0.5068,
-    0.0008,	0.3927,	0.4267,
-    0.0000,	0.4763,	0.3464,
-    0.0000,	0.5565,	0.2469,
-    0.0000,	0.6381,	0.1638,
-    0.2167,	0.6966,	0.0000,
-    0.3898,	0.7563,	0.0000,
-    0.6912,	0.7795,	0.0000,
-    0.8548,	0.8041,	0.4555,
-    0.9712,	0.8429,	0.7287,
-    0.9692,	0.9273,	0.8961), byrow=TRUE, ncol=3)
-  
+  pal <- subset(colrs, palette=="linearl")[,c('red','green','blue')]
   colorRampPalette(rgb(pal))(n)
-
 }
 
 #' @rdname niccoli
 #' @export 
 linearlhot <- function(n) {
-  pal <- matrix(c(
-    0.0225,	0.0121,	0.0121,
-    0.1927,	0.0225,	0.0311,
-    0.3243,	0.0106,	0.0000,
-    0.4463,	0.0000,	0.0091,
-    0.5706,	0.0000,	0.0737,
-    0.6969,	0.0000,	0.1337,
-    0.8213,	0.0000,	0.1792,
-    0.8636,	0.0000,	0.0565,
-    0.8821,	0.2555,	0.0000,
-    0.8720,	0.4182,	0.0000,
-    0.8424,	0.5552,	0.0000,
-    0.8031,	0.6776,	0.0000,
-    0.7659,	0.7870,	0.0000,
-    0.8170,	0.8296,	0.0000,
-    0.8853,	0.8896,	0.4113,
-    0.9481,	0.9486,	0.7165), byrow=TRUE, ncol=3)
-  
+  pal <- subset(colrs, palette=="linearlhot")[,c('red','green','blue')]
   colorRampPalette(rgb(pal))(n)
 }
 
@@ -806,62 +716,6 @@ linearlhot <- function(n) {
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
 
-
-#' View bands of color palettes
-#'
-#' Creates a plot with various color palettes.
-#'
-#' @param pals A vector of strings that are the names of
-#' functions that return a color palette.
-#' @param n The number of levels to display of the palette.
-#' @param builtin Should the default R palettes be shown?
-#'
-#' @examples
-#' #pal.bands(coolwarm)
-#' pals::pal.bands(c('cubehelix', 'gnuplot', 'jet', 'tol.rainbow','tol','inferno','magma','plasma','viridis', 'parula'), n=31, builtin=TRUE)
-#'
-#' @export
-#' 
-pal.bands <- function(pals, n=9, builtin=FALSE){
-
-  # Some code from RColorBrewer::display.brewer.pal
-
-  if(builtin)
-    pals <- c(pals,
-              "rainbow", "cm.colors", "heat.colors", "topo.colors",
-              "terrain.colors")
-
-  # Check to see if palettes exist
-  pal.exist <- unlist(lapply(pals, exists))
-  if(any(!pal.exist)){
-    cat("Can't find palettes:", pals[!pal.exist], "\n")
-    pals <- pals[pal.exist]
-  }
-
-  npal <- length(pals)
-  #nr <- length(pals)
-  nc <- max(n)
-  ylim <- c(0, npal)
-  oldpar <- par(mgp = c(2, 0.25, 0))
-  on.exit(par(oldpar))
-  plot(1, 1, xlim = c(0, nc), ylim = ylim,
-       type = "n", axes = FALSE, 
-       bty = "n", xlab = "", ylab = "")
-  #browser()
-  for (i in 1:npal) {
-    ##nj <- n[i]
-    nj <- n 
-    ## if (colorlist[i] == "") 
-    ##   next
-    shadi <- eval(parse(text=paste(pals[(npal+1) - i],"(n)",sep="")))
-    rect(xleft = 0:(nj - 1), ybottom = i - 1, xright = 1:nj, 
-         ytop = i - 0.2, col = shadi, border = NA)
-  }
-  text(rep(-0.1, npal), (1:npal) - 0.6,
-       labels = rev(pals),
-       cex=0.6, xpd = TRUE, adj = 1)
-
-}
 
 # ----------------------------------------------------------------------------
 
@@ -889,7 +743,7 @@ pal.bands <- function(pals, n=9, builtin=FALSE){
 #' }
 #' 
 #' @references
-#' # None
+#' None
 #' 
 pal.cube <- function(pal, n=100, label=FALSE, type="RGB"){
 
@@ -1044,7 +898,9 @@ pal.safe <- function(pal, n=25){
 #' 
 #' 2. Contrast Sensitivity Function. Also called a contrast-resolution grating.
 #' Frequency increases from left to right, contrast decreases from bottom
-#' to top. Poor colormaps hide variation at the top.
+#' to top.  You can also think of this as a sine wave with periodicity becoming
+#' shorter at the right side and the amplitude decreasing to 0 at the top.
+#' Poor colormaps hide variation at the top.
 #' See: http://blog.kasson.com/?m=201404.
 #'
 #' 3. Frequency ramp. See: http://inversed.ru/Blog_2.htm
@@ -1067,11 +923,16 @@ pal.test <- function(pal){
 
   op <- par(mfrow=c(2,3),mar=c(2,2,1,1), bg="gray80")
 
-  n <- 150
-  cols64 <- pal(64)
-  cols <- pal(n)
-  
-  # pal is a function
+  if(is.function(pal)) {
+    # pal is a function
+    n <- 150
+    cols64 <- pal(64)
+    cols <- pal(n)
+  } else {
+    n <- length(pal)
+    cols <- pal
+    cols64 <- colorRampPalette(pal)(64)
+  }
 
   
   # Z-curve 64
@@ -1088,24 +949,27 @@ pal.test <- function(pal){
 
   
   # Campbell-Robson Contrast Sensitivity Chart
-  # Are the vertical bands visible across the full vertical axis?  
+  # Are the vertical bands visible across the full vertical axis?
+  # Do the vertical bands blur together
   x <- seq(0,3*pi,length=200)
-  y <- seq(0,-2*pi,length=200)
-  z <- outer(x,y, function(x,y) cos(x^2)*exp(y))
+  y <- seq(0,2*pi,length=200)
+  z <- outer(x,y, function(x,y) cos(x^2)/exp(y))
   image(z, col=cols, axes=FALSE)
 
 
-  # Frequency ramp suggested by
-  # http://inversed.ru/Blog_2.htm
-  x <- seq(0,2*pi,length=200)
-  y <- seq(0,-pi,length=200)
-  z <- outer(x,y, function(x,y) y + x^2 * sin(64*y) / 12)
-  image(z, col=cols, axes=FALSE)
-
+  ## # Frequency ramp suggested by
+  ## # http://inversed.ru/Blog_2.htm
+  ## x <- seq(0,2*pi,length=200)
+  ## y <- seq(0,2,length=200)
+  ## z <- 5 + outer(x,y, function(x,y) y + x^2 * sin(64*y) / 12)
+  ## image(z, col=cols, axes=FALSE)
+  pal.sineramp(pal=cols, nx=400, wavelen=10)
 
   # Volcano
-  image(volcano, col=cols, xaxt="n", yaxt="n")
-  image(volcano, col=rev(cols), xaxt="n", yaxt="n")
+  #image(volcano, col=cols, xaxt="n", yaxt="n")
+  #image(volcano, col=rev(cols), xaxt="n", yaxt="n")
+  paltest.volcano(cols)
+  paltest.volcano(rev(cols))
 
   
   # RGB curves
@@ -1115,10 +979,18 @@ pal.test <- function(pal){
   yg <- colrgb['green',]
   yb <- colrgb['blue',]
   ygr <- col2rgb(colorspace::desaturate(cols))['red',]
+  
   plot(x,yr,col="red",ylim=c(0,255),type="l",lwd=2,xlab="",ylab="")
   lines(x,yg,col="forestgreen",lwd=2)
   lines(x,yb,col="blue",lwd=2)
   lines(x,ygr,col="gray30",lwd=2)
+  # Here I tried to show the luminosity, but it was almost the
+  # same as the desaturated line.
+  # Also, viridis() returns colors with alpha levels "#FDE725FF"
+  # which failed in hex2RGB (doesn't like alpha level)
+  # LUV scale is 0-100, so multiply by 2.55
+  # luv <- as(colorspace::hex2RGB(cols), "LUV")
+  # lines(x,luv@coords[,1] * 2.5 , col="white") 
 
   on.exit(op)
   par(op)
@@ -1127,98 +999,249 @@ pal.test <- function(pal){
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
+#' Test palette with a sineramp
+#'
+#' Test palette with a sineramp
+#'
+#' Interpretation: Ideally, the sine wave should be equally visible across the
+#' entire image. Further, at the bottom of the image there should be
+#' no identifiable features, only a smooth ramp.  The 'jet' palette fails both.
+#'
+#' The test image shows a sine wave superimposed on a ramp of the palette.  The
+#' amplitude of the sine wave is dampened/modulated from full at the top to 0
+#' at the bottom.
+#' The ramp function that the sine wave is superimposed upon is adjusted slightly
+#' for each row so that each row of the image spans the full data range of 0 to 255.
+#' The wavelength is chosen to create a stimulus that is aligned with the
+#' capabilities of human vision.  For the default amplitude of 12.5, the trough
+#' to peak distance is 25, which is about 10 percent of the 256 levels of the ramp.
+#' Some color palettes (like 'jet') have perceptual flat areas that can hide
+#' fluctations/features of this magnitude.
+#' 
+#' @param pal Palette function/vector
+#' @param n Number of colors
+#' @param nx Number of 'pixels' horizontally (approximate).
+#' @param ny Number of 'pixels' vertically
+#' @param amp Amplitude of sine wave, default 12.5
+#' @param wavelen Wavelength of sine wave, in pixels, default 8.
+#' @param pow Power for dampening the sine wave. Default 2. For no dampening, use 0.
+#' For linear dampening, use 1.
+#' @return None
+#' @author Concept by Peter Kovesi. R code by Kevin Wright.
+#' @examples 
+#' pal.sineramp(jet) # Very poor in green areas
+#' pal.sineramp(parula)
+#' pal.sineramp(brewer_greys(100))
+#' 
+#' # Show Kovesi's colormaps
+#' \dontrun{
+#' library(spatstat)
+#' data(Kovesi)
+#' for(i in 1:41) { pal.sineramp(Kovesi$values[[i]]); title(i) }
+#' pal.sineramp(gnuplot) ; title('gnuplot')
+#' pal.sineramp(Kovesi$values[[29]]); title('Kovesi 29')
+#' }
+#' @references 
+#' Peter Kovesi (2015). Good Colour Maps: How to Design Them.
+#' http://arxiv.org/abs/1509.03700.
+#'
+#' Peter Kovesi. A set of perceptually uniform color map files.
+#' http://peterkovesi.com/projects/colourmaps/index.html
+#'
+#' Peter Kovesi. CET Perceptually Uniform Colour Maps: The Test Image.
+#' http://peterkovesi.com/projects/colourmaps/colourmaptestimage.html
+#' 
+#' Original Julia version by Peter Kovesi from:
+#' https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/src/utilities.jl
+#' @export 
+pal.sineramp <- function(pal, n=150, nx=512, ny=256,
+                         amp=12.5, wavelen=8, pow=2) {
 
+  if(is.function(pal)) pal <- pal(n)
+  
+  
+  # Adjust width of image so there is an integer number of cycles of
+  # the sinewave.  Helps for cyclic color palette.
+  # May still be a slight discontinuity along the edge.
+  cycles = round(nx/wavelen)
+  nx = cycles*wavelen
+  
+  # Sine wave
+  xval = 0:(nx-1)
+  fx = amp*sin( 1.0/wavelen * 2*pi*xval)
 
-# ----------------------------------------------------------------------------
-# ----------------------------------------------------------------------------
+  # Vertical dampening of the wave
+  img = outer(fx, seq(0,1,length=ny), function(x,y) x*y^pow)
 
-if(FALSE){
-#lib(RColorBrewer)
-# sequential max 9
-blues <- colorRampPalette(brewer.pal(9,"Blues"))
-pal.test(blues)
-bugn <- colorRampPalette(brewer.pal(9,"BuGn"))
-pal.test(bugn)
-bupu <- colorRampPalette(brewer.pal(9,"BuPu"))
-pal.test(bupu)
-gnbu <- colorRampPalette(brewer.pal(9,"GnBu"))
-pal.test(gnbu)
-greens <- colorRampPalette(brewer.pal(9,"Greens"))
-pal.test(greens)
-greys <- colorRampPalette(brewer.pal(9,"Greys"))
-pal.test(greys)
-oranges <- colorRampPalette(brewer.pal(9,"Oranges"))
-pal.test(oranges)
-orrd <- colorRampPalette(brewer.pal(9,"OrRd"))
-pal.test(orrd)
-pubu <- colorRampPalette(brewer.pal(9,"PuBu"))
-pal.test(pubu)
-pubugn <- colorRampPalette(brewer.pal(9,"PuBuGn"))
-pal.test(pubugn)
-purd <- colorRampPalette(brewer.pal(9,"PuRd"))
-pal.test(purd)
-purples <- colorRampPalette(brewer.pal(9,"Purples"))
-pal.test(purples)
-rdpu <- colorRampPalette(brewer.pal(9,"RdPu"))
-pal.test(rdpu)
-reds <- colorRampPalette(brewer.pal(9,"Reds"))
-pal.test(reds)
-ylgn <- colorRampPalette(brewer.pal(9,"YlGn"))
-pal.test(ylgn)
-ylgnbu <- colorRampPalette(brewer.pal(9,"YlGnBu"))
-pal.test(ylgnbu)
-ylorbr <- colorRampPalette(brewer.pal(9,"YlOrBr"))
-pal.test(ylorbr)
-ylorrd <- colorRampPalette(brewer.pal(9,"YlOrRd"))
-pal.test(ylorrd)
+  # Add ramp across entire image
+  img = img + outer(seq(0,1,length=nx), seq(1,1,length=ny), '*') * (255-2*amp)
 
-# div max 11
-brbg <- colorRampPalette(brewer.pal(11,"BrBG"))
-pal.test(brbg)
-piyg <- colorRampPalette(brewer.pal(11,"PiYG"))
-pal.test(piyg)
-prgn <- colorRampPalette(brewer.pal(11,"PRGn"))
-pal.test(prgn)
-puor <- colorRampPalette(brewer.pal(11,"PuOr"))
-pal.test(puor)
-rdbu <- colorRampPalette(brewer.pal(11,"RdBu"))
-pal.test(rdbu)
-rdgy <- colorRampPalette(brewer.pal(11,"RdGy"))
-pal.test(rdgy)
-rdylbl <- colorRampPalette(brewer.pal(11,"RdYlBu"))
-pal.test(rdylbl)
-rdylgn <- colorRampPalette(brewer.pal(11,"RdYlGn"))
-pal.test(rdylgn)
-spectral <- colorRampPalette(brewer.pal(11,"Spectral"))
-pal.test(spectral)
+  # Normalise each row (offset and rescale into [0,1]). Important for cyclic
+  # color maps
+  img <- apply(img, 2, function(x){
+    x = x - min(x) # set smallest value to 0
+    x = x/max(x) # set largest value to 1
+    x
+  })
 
-# qual
-accent <- colorRampPalette(brewer.pal(8,"Accent"))
-pal.test(accent, n=8)
-
-dark2 <- colorRampPalette(brewer.pal(8,"Dark2"))
-pal.test(dark2)
-
-paired <- colorRampPalette(brewer.pal(12,"Paired"))
-pal.test(paired)
-
-pastel1 <- colorRampPalette(brewer.pal(9,"Pastel1"))
-pal.test(pastel1)
-
-pastel2 <- colorRampPalette(brewer.pal(8,"Pastel2"))
-pal.test(pastel2)
-
-set1 <- colorRampPalette(brewer.pal(9,"Set1"))
-pal.test(set1)
-
-set2 <- colorRampPalette(brewer.pal(8,"Set2"))
-pal.test(set2)
-
-set3 <- colorRampPalette(brewer.pal(12,"Set3"))
-pal.test(set3)
-
-pal.bands(c('accent','dark2','paired','pastel1','pastel2','set1','set2','set3'))
+  image(img, col=pal, axes=FALSE)
+  invisible()
 }
 
- 
+paltest.volcano <- function(pal, n=100){
+
+  # need to fix...
+  # wonky things can happen with filled.contour because it uses 'pretty'
+  # for the 'approximate' number of levels
+  
+  if(is.function(pal)) {
+    pal <- pal(n)
+  } else {
+    n=length(pal)
+  }
+  
+  #filled.contour(volcano, col=pal, color.palette = pal, n=n+1, asp = 1, axes=0)
+  image(volcano, col=pal, axes=FALSE, asp=1)
+  
+}
+
+# ----------------------------------------------------------------------------
+
+#' @title .title
+#'
+#' .desc
+#'
+#' The distance between two palettes (of equal length) is calculated pointwise using
+#' the Lab color space.  A 'just noticeable difference' between colors is roughly 2.3.
+#'
+#' @param pal1 A color palette (function or vector)
+#' @param pal2 A color palette (function or vector)
+#' @param n Number of colors to use
+#' @return 
+#' @author Kevin Wright
+#' @examples 
+#' \dontrun{}
+#' @references
+#' https://en.wikipedia.org/wiki/Color_difference
+#' @export 
+pal.dist <- function(pal1, pal2, n){
+  
+  # Convert from function to vector
+  if(is.function(pal1) & is.function(pal2)) {
+    pal1 <- pal1(n)
+    pal2 <- pal2(n)
+  }
+  
+  if(length(pal1) != length(pal2)) stop("Palettes must have same length")
+
+  # https://en.wikipedia.org/wiki/Color_difference
+  # Use CIE76 formula. Just noticeable difference is 2.3
+  p1 <- convertColor(t(col2rgb(pal1)), from="sRGB",to="Lab",scale.in=255)
+  p2 <- convertColor(t(col2rgb(pal2)), from="sRGB",to="Lab",scale.in=255)
+  delta <- apply((p1-p2), 1, function(x) sqrt(sum(x^2)))
+  return(delta)
+}
+
+## interleave <- function(v1,v2) {
+##   ord1 <- 2*(1:length(v1))-1
+##   ord2 <- 2*(1:length(v2))
+##   c(v1,v2)[order(c(ord1,ord2))]
+## }
+# https://stat.ethz.ch/pipermail/r-help/2006-March/101023.html
+interleave(rep(1,5),rep(3,8))
+pa0 <- c("#ff0000","#00ff00","#0000ff")
+pa1 <- c("#fa0000","#00fa00","#0000fa") # 2.4
+pa2 <- c("#f40000","#00f400","#0000f4") # 5.2
+pa12 <- interleave(pa1,pa2)
+pie(rep(1, 2*length(pa2)), col=pa12)
+pal.chips(pa1,pa0,pa2)
+max(pal.dist(pa0,pa1)) # 2.4
+max(pal.dist(pa0,pa2)) # 5.2
+
+# palettes that are defined by functions are sometimes difficult to compress
+# into a colorRampPalette with a small number of colors
+pal.chips(terrain.colors(11), terrain.colors(21), terrain.colors(31), terrain.colors(41), terrain.colors(51))
+pal.chips(heat.colors(11), heat.colors(21), heat.colors(31), heat.colors(41), heat.colors(51))
+pal.chips(topo.colors(11), topo.colors(21), topo.colors(31), topo.colors(41), topo.colors(51))
+pal.chips(rainbow(11), rainbow(21), rainbow(31), rainbow(41), rainbow(51))
+pal.chips(cm.colors(11), cm.colors(21), cm.colors(31), cm.colors(41), cm.colors(51))
+
+# topo.colors has a sharp boundary, not captured very well by colorRampPalette
+# heat.colors needs 80+ colors to reproduce. Why?
+palfun <- coolwarm
+nsamp <- 15
+p1 <- palfun(255)
+p2 <- colorRampPalette( palfun(nsamp) )(255)
+pal.chips(p1,p2,palfun(nsamp))
+max(pal.dist(p1,p2))
+
+# ----------------------------------------------------------------------------
+
+#' @title Compress a color palette function to fewer colors
+#'
+#' Compress a color palette function to fewer colors
+#'
+#' Some color palette functions are defined with more colors than 
+#' needed.  This function compresses a color palette function down to a sample
+#' of colors that can be passed into 'colorRampPalette' and re-create the
+#' original palette with a just-noticeable-difference.
+#'
+#' Color palettes that are defined as a smoothly varying ramp between a set of
+#' colors often compress quite well.
+#' Color palettes that are defined by functions may not compress well.
+#' See the examples.
+#'
+#' @param pal A palette function
+#' @param n Initial number of colors to use
+#' @return A vector of colors
+#' @author Kevin Wright
+#' @examples
+#' # The 'cm.colors' palette compresses to only 3 colors
+#' cm2 <- pal.compress(cm.colors, n=3)
+#' pal.chips(cm.colors(255), colorRampPalette(cm2)(255), cm2)
+#' title("cm.colors")
+#' # The 'heat.colors' palette needs 84 colors
+#' heat2 <- pal.compress(heat.colors, n=3)
+#' pal.chips(heat.colors(255), colorRampPalette(heat2)(255), heat2)
+#' title("heat.colors")
+#' # The 'topo.colors' palette needs 249 colors because of the discontinuity
+#' # topo2 <- pal.compress(topo.colors, n=3)
+#' # pal.chips(list(topo.colors(255), colorRampPalette(topo2)(255), topo2))
+#' # title("topo.colors")
+#' 
+#' @references 
+#' None
+#' @export 
+pal.compress <- function(pal, n=5) {
+  # pal is a function
+  pal255 <- pal(255)
+  
+  done <- FALSE
+  while(!done) {
+    palc <- colorRampPalette(pal(n))(255) # compressed palette ramp
+    p1 <- convertColor(t(col2rgb(pal255)), from="sRGB",to="Lab",scale.in=255)
+    p2 <- convertColor(t(col2rgb(palc)), from="sRGB",to="Lab",scale.in=255)
+    delta <- max(apply((p1-p2), 1, function(x) sqrt(sum(x^2))))
+    if(delta >  2.5) n=n+1 else done=TRUE
+  }
+  return(pal(n))
+}
+
+inferno <- function(n) {
+  colorRampPalette(rgb(subset(matplot, palette=="inferno")[,c('red','green','blue')]))(n)
+}
+
+magma <- function(n) {
+  colorRampPalette(rgb(subset(matplot, palette=="magma")[,c('red','green','blue')]))(n)
+}
+
+plasma <- function(n) {
+  colorRampPalette(rgb(subset(matplot, palette=="plasma")[,c('red','green','blue')]))(n)
+}
+
+viridis <- function(n) {
+  colorRampPalette(rgb(subset(matplot, palette=="viridis")[,c('red','green','blue')]))(n)
+}
+pal.chips(list(inferno,magma, plasma,viridis))
+pal.chips(list(viridis(21)))
 

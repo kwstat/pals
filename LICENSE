@@ -1,0 +1,17 @@
+
+ColorBrewer palettes by Cindy Brewer
+Released under the Apache License, Version 2.0
+http://www.personal.psu.edu/cab38/ColorBrewer/ColorBrewer_RGB.html
+
+Matplotlib colormaps by Nathaniel J. Smith, Stefan van der Walt,
+and (in the case of viridis) Eric Firing.
+Released under CC0 license / public domain
+https://github.com/BIDS/colormap/blob/master/colormaps.py
+
+Code by Peter Kovesi
+Released under the MIT "Expat" License.
+https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/LICENSE.md
+
+Color maps by Peter Kovesi
+Released under Creative Commons BY license.
+

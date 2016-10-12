@@ -1,0 +1,51 @@
+
+---
+title: ""
+author: "Kevin Wright"
+date: "`r Sys.Date()`"
+bibliography: pals.bib
+output:
+  html_document:
+    highlight: tango
+vignette: >
+  % \VignetteIndexEntry{}
+  % \VignetteEncoding{UTF-8}
+  % \VignetteEngine{knitr::rmarkdown}
+---
+<style type="text/css">
+body, td { font-size: 14pt; color: #000; padding:1em; }
+code, pre, #ws, #message { font-size: 12pt;
+  color: #000; background-color: #f5f5f5; }
+code {border: 1px solid #e0e0e0; padding: 0 5px;}
+pre > code { border: 0; }
+</style>
+
+# Abstract
+
+Discussions of color palettes...
+
+
+```{r}
+require(pals)
+pal.test(parula)
+pal.test(viridis)
+```
+
+# Kovesi
+
+In the jet palette below, the sine wave is difficult to see along the top edge in the middle of the green and red regions, and there is some non uniformity in the cyan and orange regions along the bottom.  The tol.rainbow palette improves both problems, but the sine wave is still somewhat indistinct in the orange region.
+
+```{r}
+op <- par(mfrow=c(2,1), mar=c(1,1,1,1))
+pal.sineramp(jet)
+mtext("jet",line=0)
+pal.sineramp(tol.rainbow)
+mtext("tol.rainbow",line=0)
+par(op)
+
+```
+# Ocean
+```{r}
+library(oce)
+oce.colorsPalette(5)
+```
