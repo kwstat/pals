@@ -8,7 +8,7 @@ output:
   html_document:
     highlight: tango
 vignette: >
-  % \VignetteIndexEntry{}
+  % \VignetteIndexEntry{A Color-Caused Optical Illusion}
   % \VignetteEncoding{UTF-8}
   % \VignetteEngine{knitr::rmarkdown}
 ---
@@ -19,6 +19,14 @@ code, pre, #ws, #message { font-size: 12pt;
 code {border: 1px solid #e0e0e0; padding: 0 5px;}
 pre > code { border: 0; }
 </style>
+
+##  Setup
+
+```{r setup, echo=FALSE, results="hide"}
+library("knitr")
+opts_chunk$set(fig.align="center", fig.width=6, fig.height=6)
+options(width=90)
+```
 
 @cleveland1983color conducted experiments with different partitionings of
 colored-areas that were nearly the same size.  (Here less than 1% different.)

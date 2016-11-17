@@ -1,56 +1,127 @@
-# ocean.R
-# Time-stamp: <30 Sep 2016 15:02:18 c:/x/rpack/pals/R/ocean.R>
-# Copyright: Kevin Wright, 2016. License: GPL-2.
+# sysdata.R
+# Time-stamp: <16 Nov 2016 17:55:45 c:/x/rpack/pals/data-raw/make_sysdata.r>
 
-#' Oceanography palettes
-#'
-#' These palettes have been designed to be a collection of perceptually
-#' uniform colormaps designed for oceanographic data display.
-#'
-#' The 'oxy' palette does not include gray as shown in Thyng (2016).
-#' 
-#' The 'balance', 'delta', and 'curl' palettes were originally given
-#' as 2*256 colors (256 each for the left and right half of the palette)
-#' and have been downsampled to 256 colors.
-#'
-#' The palettes from matplotlib have been converted from RGB codes to
-#' hexadecimal strings for use in this package.
-#'
-#' @param n Number of colors
-#' @return None
-#' @author Palette colors by Kristen Thyng. R code by Kevin Wright
-#' @examples 
-#' \dontrun{
-#' pal.test(ocean.thermal)
-#' pal.test(ocean.haline)
-#' pal.test(ocean.solar)
-#' pal.test(ocean.ice)
-#' pal.test(ocean.gray)
-#' pal.test(ocean.oxy)
-#' pal.test(ocean.deep)
-#' pal.test(ocean.dense)
-#' pal.test(ocean.algae)
-#' pal.test(ocean.matter)
-#' pal.test(ocean.turbid)
-#' pal.test(ocean.speed)
-#' pal.test(ocean.amp)
-#' pal.test(ocean.tempo)
-#' pal.test(ocean.phase)
-#' pal.test(ocean.balance)
-#' pal.test(ocean.delta)
-#' pal.test(ocean.curl)
-#' }
-#' @references
-#' Thyng, K.M., C.A. Greene, R.D. Hetland, H.M. Zimmerle, and S.F. DiMarco (2016).
-#' True colors of oceanography: Guidelines for effective and accurate colormap selection.
-#' \emph{Oceanography}, 29(3):9–13, http://dx.doi.org/10.5670/oceanog.2016.66.
-#' @name ocean
-NULL
+lib(dplyr)
+lib(readr)
 
-#' @export
-#' @rdname ocean
-ocean.algae <- colorRampPalette(
-c("#122414", "#122515", "#122616", "#132716", "#132817", "#132918", 
+# ----------------------------------------------------------------------------
+
+# Matplotlib colormaps by Nathaniel J. Smith, Stefan van der Walt,
+# and (in the case of viridis) Eric Firing.
+# https://github.com/BIDS/colormap/blob/master/colormaps.py
+# Released under CC0 license / public domain
+
+# The file was edited in emacs to change from python to csv
+
+# ----------------------------------------------------------------------------
+
+pal.compress <- function(pal, n=5, thresh=2.5) {
+  # pal is a function
+  pal255 <- pal(255)
+  
+  done <- FALSE
+  while(!done) {
+    palc <- colorRampPalette(pal(n))(255) # compressed palette ramp
+    p1 <- convertColor(t(col2rgb(pal255)), from="sRGB",to="Lab",scale.in=255)
+    p2 <- convertColor(t(col2rgb(palc)), from="sRGB",to="Lab",scale.in=255)
+    delta <- max(apply((p1-p2), 1, function(x) sqrt(sum(x^2))))
+    if(delta >  thresh) n=n+1 else done=TRUE
+  }
+  return(pal(n))
+}
+
+setwd("c:/x/rpack/pals/data-raw")
+colrs <- read.csv("colrs.csv")
+
+# ----------------------------------------------------------------------------
+
+# Initialize list to hold palettes in sysdata
+
+syspals <- list()
+
+# ----------------------------------------------------------------------------
+
+# coolwarm
+
+# Values from Moreland Table 2
+
+colrs %>% filter(palette=="coolwarm") %>% select(red,green,blue) %>% rgb(., max=255) %>% colorRampPalette %>% pal.compress -> syspals$coolwarm
+
+syspals$warmcool <- rev(syspals$coolwarm)
+
+# ----------------------------------------------------------------------------
+
+# glasbey
+
+colrs %>% filter(palette=="glasbey") %>% select(red,green,blue) %>% rgb(., max=255) -> syspals$glasbey
+
+# ----------------------------------------------------------------------------
+
+# jet
+
+syspals$jet <- c("#00007F", "blue", "#007FFF", "cyan",
+                 "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000")
+
+# ----------------------------------------------------------------------------
+
+# stepped
+
+# http://geog.uoregon.edu/datagraphics/color/StepSeq_25.txt
+# Similar to the HSV codes from oregon.edu, but using 4 steps instead of 5
+
+# Even though the columns are called red, green, blue, the numbers
+# are really HSV
+
+colrs %>% filter(palette=="stepped") %>% select(red,green,blue) %>%
+  mutate(red=red/360) %>% as.matrix %>% hsv -> syspals$stepped
+
+# ----------------------------------------------------------------------------
+
+# tol
+
+myrgb <- function(x) rgb(x$red, x$green, x$blue, max=255)
+
+colrs %>% filter(palette=="tol") ->  tol
+syspals$tol <- split(tol, tol$ncolors) %>% lapply(., myrgb)
+
+
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+
+# Matplotlib, viridis
+
+colrs %>% filter(palette=="viridis") %>% select(red,green,blue) %>%
+  rgb %>% colorRampPalette %>% pal.compress -> syspals$viridis
+colrs %>% filter(palette=="inferno") %>% select(red,green,blue) %>%
+  rgb %>% colorRampPalette %>% pal.compress -> syspals$inferno
+colrs %>% filter(palette=="magma") %>% select(red,green,blue) %>%
+  rgb %>% colorRampPalette %>% pal.compress -> syspals$magma
+colrs %>% filter(palette=="plasma") %>% select(red,green,blue) %>%
+  rgb %>% colorRampPalette %>% pal.compress -> syspals$plasma
+
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+
+# Niccoli palettes are already more-or-less compressed
+
+colrs %>% filter(palette=="cubicyf") %>% select(red,green,blue) %>%
+  rgb -> syspals$cubicyf
+colrs %>% filter(palette=="isol") %>% select(red,green,blue) %>%
+  rgb -> syspals$isol
+colrs %>% filter(palette=="cubicl") %>% select(red,green,blue) %>%
+  rgb -> syspals$cubicl
+colrs %>% filter(palette=="linearl") %>% select(red,green,blue) %>%
+  rgb -> syspals$linearl
+colrs %>% filter(palette=="linearlhot") %>% select(red,green,blue) %>%
+  rgb -> syspals$linearlhot
+
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+
+ocean.algae <- c("#122414", "#122515", "#122616", "#132716", "#132817", "#132918", 
 "#142918", "#142A19", "#142B1A", "#142C1A", "#152D1B", "#152E1C", 
 "#152F1C", "#162F1D", "#16301E", "#16311E", "#16321F", "#173320", 
 "#173420", "#173521", "#173522", "#173622", "#183723", "#183824", 
@@ -92,12 +163,9 @@ c("#122414", "#122515", "#122616", "#132716", "#132817", "#132918",
 "#BDE6B1", "#BEE7B3", "#BFE8B4", "#C0E9B6", "#C2EAB7", "#C3EBB9", 
 "#C4EBBA", "#C5ECBB", "#C7EDBD", "#C8EEBE", "#C9EFC0", "#CAF0C1", 
 "#CCF1C3", "#CDF2C4", "#CEF3C5", "#CFF4C7", "#D1F4C8", "#D2F5CA", 
-"#D3F6CB", "#D4F7CD", "#D6F8CE", "#D7F9D0"))
+"#D3F6CB", "#D4F7CD", "#D6F8CE", "#D7F9D0")
 
-#' @export
-#' @rdname ocean
-ocean.deep <- colorRampPalette(
-c("#281A2C", "#281B2D", "#291C2F", "#2A1C30", "#2B1D32", "#2B1E33", 
+ocean.deep <- c("#281A2C", "#281B2D", "#291C2F", "#2A1C30", "#2B1D32", "#2B1E33", 
 "#2C1F34", "#2D1F36", "#2D2037", "#2E2139", "#2F223A", "#2F223B", 
 "#30233D", "#30243E", "#312540", "#322541", "#322643", "#332744", 
 "#342846", "#342847", "#352949", "#352A4A", "#362A4C", "#362B4D", 
@@ -106,7 +174,7 @@ c("#281A2C", "#281B2D", "#291C2F", "#2A1C30", "#2B1D32", "#2B1E33",
 "#3D3562", "#3D3564", "#3E3666", "#3E3767", "#3F3869", "#3F386B", 
 "#3F396C", "#403A6E", "#403B70", "#403C71", "#403C73", "#413D75", 
 "#413E76", "#413F78", "#41407A", "#41407B", "#41417D", "#41427E", 
-"#424380", "#414481", "#414583", "#414684", "#414785", "#414887", 
+ "#424380", "#414481", "#414583", "#414684", "#414785", "#414887", 
 "#414988", "#414A89", "#414B8A", "#404C8B", "#404D8C", "#404E8D", 
 "#404F8D", "#3F508E", "#3F528F", "#3F538F", "#3F5490", "#3F5590", 
 "#3E5691", "#3E5791", "#3E5892", "#3E5992", "#3E5A92", "#3E5B93", 
@@ -139,11 +207,9 @@ c("#281A2C", "#281B2D", "#291C2F", "#2A1C30", "#2B1D32", "#2B1E33",
 "#D2EEB5", "#D4EFB6", "#D7EFB7", "#D9F0B8", "#DBF1B9", "#DDF2BA", 
 "#DFF2BB", "#E1F3BC", "#E3F4BD", "#E5F4BE", "#E7F5BF", "#E9F6C0", 
 "#EBF7C1", "#EDF7C3", "#EFF8C4", "#F1F9C5", "#F3FAC6", "#F5FAC7", 
-"#F7FBC8", "#F9FCCA", "#FBFDCB", "#FDFECC"))
+"#F7FBC8", "#F9FCCA", "#FBFDCB", "#FDFECC")
 
-#' @export
-#' @rdname ocean
-ocean.dense <- colorRampPalette(
+ocean.dense <- 
 c("#360E24", "#380F25", "#390F27", "#3A0F28", "#3B0F29", "#3C102A", 
 "#3E102B", "#3F102D", "#40102E", "#41112F", "#421130", "#441132", 
 "#451133", "#461234", "#471236", "#481237", "#491238", "#4A133A", 
@@ -186,11 +252,9 @@ c("#360E24", "#380F25", "#390F27", "#3A0F28", "#3B0F29", "#3C102A",
 "#C2DFE6", "#C4E0E6", "#C6E1E7", "#C7E2E7", "#C9E3E8", "#CBE4E8", 
 "#CCE4E8", "#CEE5E9", "#D0E6E9", "#D1E7EA", "#D3E8EA", "#D5E9EB", 
 "#D7E9EB", "#D8EAEC", "#DAEBEC", "#DCECED", "#DDEDED", "#DFEDEE", 
-"#E1EEEF", "#E3EFEF", "#E4F0F0", "#E6F1F1"))
+"#E1EEEF", "#E3EFEF", "#E4F0F0", "#E6F1F1")
 
-#' @export
-#' @rdname ocean
-ocean.gray <- colorRampPalette(
+ocean.gray <- 
 c("#000000", "#000000", "#000000", "#000000", "#010101", "#010101", 
 "#020202", "#020202", "#030303", "#030303", "#040404", "#050505", 
 "#050505", "#060606", "#070707", "#080808", "#090909", "#0A0A0A", 
@@ -233,11 +297,9 @@ c("#000000", "#000000", "#000000", "#000000", "#010101", "#010101",
 "#E3E3E2", "#E5E4E3", "#E6E6E4", "#E7E7E6", "#E8E8E7", "#EAEAE8", 
 "#EBEBEA", "#ECECEB", "#EEEDEC", "#EFEFED", "#F0F0EF", "#F2F1F0", 
 "#F3F3F1", "#F4F4F3", "#F5F5F4", "#F7F7F5", "#F8F8F7", "#F9F9F8", 
-"#FBFBF9", "#FCFCFB", "#FEFDFC", "#FFFFFD"))
+"#FBFBF9", "#FCFCFB", "#FEFDFC", "#FFFFFD")
 
-#' @export
-#' @rdname ocean
-ocean.haline <- colorRampPalette(
+ocean.haline <- 
 c("#2A186C", "#2A196E", "#2A1971", "#2B1973", "#2B1975", "#2C1A78", 
 "#2C1A7A", "#2D1A7D", "#2D1A7F", "#2D1B82", "#2E1B84", "#2E1B87", 
 "#2E1C89", "#2E1C8C", "#2E1C8E", "#2E1D91", "#2E1D93", "#2E1E95", 
@@ -280,11 +342,9 @@ c("#2A186C", "#2A196E", "#2A1971", "#2B1973", "#2B1975", "#2C1A78",
 "#D8E273", "#DAE375", "#DCE377", "#DEE479", "#E0E57A", "#E1E57C", 
 "#E3E67E", "#E5E680", "#E7E781", "#E9E783", "#EBE885", "#ECE987", 
 "#EEE989", "#F0EA8A", "#F2EA8C", "#F3EB8E", "#F5EC90", "#F7EC92", 
-"#F8ED94", "#FAEE96", "#FCEE98", "#FDEF9A"))
+"#F8ED94", "#FAEE96", "#FCEE98", "#FDEF9A")
 
-#' @export
-#' @rdname ocean
-ocean.ice <- colorRampPalette(
+ocean.ice <- 
 c("#040613", "#050614", "#050715", "#060817", "#070918", "#080A1A", 
 "#090B1B", "#0A0C1D", "#0B0D1E", "#0C0D1F", "#0D0E21", "#0E0F22", 
 "#0F1024", "#101125", "#111227", "#121328", "#13132A", "#14142B", 
@@ -327,11 +387,9 @@ c("#040613", "#050614", "#050715", "#060817", "#070918", "#080A1A",
 "#C4E7EA", "#C6E8EB", "#C8E9EC", "#C9EAED", "#CBEBEE", "#CDECEF", 
 "#CFEDEF", "#D1EEF0", "#D3EFF1", "#D5F0F2", "#D6F1F3", "#D8F2F4", 
 "#DAF3F5", "#DCF4F6", "#DEF5F7", "#E0F6F8", "#E1F7F9", "#E3F9FA", 
-"#E5FAFB", "#E7FBFB", "#E8FCFC", "#EAFDFD"))
+"#E5FAFB", "#E7FBFB", "#E8FCFC", "#EAFDFD")
 
-#' @export
-#' @rdname ocean
-ocean.matter <- colorRampPalette(
+ocean.matter <- 
 c("#2F0F3E", "#300F3F", "#321040", "#331041", "#341141", "#361142", 
 "#371143", "#381144", "#391245", "#3B1246", "#3C1247", "#3D1347", 
 "#3E1348", "#401349", "#41134A", "#42144B", "#44144B", "#45144C", 
@@ -374,11 +432,9 @@ c("#2F0F3E", "#300F3F", "#321040", "#331041", "#341141", "#361142",
 "#FBD094", "#FBD196", "#FBD397", "#FBD498", "#FBD59A", "#FBD79B", 
 "#FCD89C", "#FCDA9D", "#FCDB9F", "#FCDCA0", "#FCDEA1", "#FCDFA3", 
 "#FCE1A4", "#FDE2A5", "#FDE3A7", "#FDE5A8", "#FDE6A9", "#FDE8AB", 
-"#FDE9AC", "#FDEAAD", "#FDECAF", "#FEEDB0"))
+"#FDE9AC", "#FDEAAD", "#FDECAF", "#FEEDB0")
 
-#' @export
-#' @rdname ocean
-ocean.oxy <- colorRampPalette(
+ocean.oxy <- 
 c("#400505", "#410505", "#430606", "#440606", "#450606", "#470607", 
 "#480607", "#490607", "#4B0608", "#4C0708", "#4D0708", "#4F0709", 
 "#500709", "#510709", "#53070A", "#54070A", "#55070B", "#57070B", 
@@ -421,11 +477,9 @@ c("#400505", "#410505", "#430606", "#440606", "#450606", "#470607",
 "#E9E637", "#EAE738", "#EAE839", "#EAEA3B", "#EAEB3D", "#EAED3E", 
 "#EAEE40", "#EAEF43", "#EAF145", "#EBF248", "#EBF34B", "#ECF54E", 
 "#EDF651", "#EEF754", "#EFF857", "#F0F95A", "#F1FA5D", "#F2FB5F", 
-"#F4FC62", "#F5FC64", "#F6FD67", "#F8FE69"))
+"#F4FC62", "#F5FC64", "#F6FD67", "#F8FE69")
 
-#' @export
-#' @rdname ocean
-ocean.phase <- colorRampPalette(
+ocean.phase <- 
 c("#A8780D", "#A9770F", "#AB7611", "#AC7513", "#AE7414", "#AF7316", 
 "#B17218", "#B27119", "#B3701B", "#B56F1D", "#B66E1E", "#B76D20", 
 "#B96C22", "#BA6B23", "#BB6A25", "#BD6926", "#BE6828", "#BF672A", 
@@ -468,11 +522,9 @@ c("#A8780D", "#A9770F", "#AB7611", "#AC7513", "#AE7414", "#AF7316",
 "#7D8B10", "#7F8B0F", "#828A0F", "#84890E", "#86880E", "#88870E", 
 "#8B860D", "#8D850D", "#8F840D", "#91830D", "#93830D", "#95820D", 
 "#97810D", "#99800D", "#9B7F0D", "#9D7E0D", "#9F7D0D", "#A17C0D", 
-"#A27B0D", "#A47A0D", "#A6790D", "#A8780D"))
+"#A27B0D", "#A47A0D", "#A6790D", "#A8780D")
 
-#' @export
-#' @rdname ocean
-ocean.solar <- colorRampPalette(
+ocean.solar <- 
 c("#331418", "#351418", "#361519", "#371519", "#38151A", "#3A161A", 
 "#3B161B", "#3C171B", "#3D171C", "#3E181C", "#40181D", "#41181D", 
 "#42191D", "#43191E", "#451A1E", "#461A1F", "#471A1F", "#481B1F", 
@@ -515,11 +567,9 @@ c("#331418", "#351418", "#361519", "#371519", "#38151A", "#3A161A",
 "#DFE13D", "#DFE23D", "#DFE33E", "#DFE53F", "#DFE63F", "#DFE740", 
 "#DFE941", "#E0EA41", "#E0EB42", "#E0ED43", "#E0EE43", "#E0F044", 
 "#E0F145", "#E0F245", "#E0F446", "#E0F547", "#E0F647", "#E0F848", 
-"#E0F949", "#E0FB49", "#E1FC4A", "#E1FD4B"))
+"#E0F949", "#E0FB49", "#E1FC4A", "#E1FD4B")
 
-#' @export
-#' @rdname ocean
-ocean.thermal <- colorRampPalette(
+ocean.thermal <- 
 c("#042333", "#042435", "#042537", "#042539", "#05263B", "#05273D", 
 "#05273F", "#052841", "#052943", "#062945", "#062A47", "#062B49", 
 "#072B4B", "#072C4D", "#072C50", "#082D52", "#082E54", "#092E56", 
@@ -562,11 +612,9 @@ c("#042333", "#042435", "#042537", "#042539", "#05263B", "#05273D",
 "#F5D748", "#F5D849", "#F4DA4A", "#F4DC4B", "#F3DD4B", "#F3DF4C", 
 "#F2E14D", "#F2E24E", "#F1E44F", "#F1E650", "#F0E851", "#EFE951", 
 "#EFEB52", "#EEED53", "#EDEE54", "#EDF055", "#ECF256", "#EBF457", 
-"#EAF558", "#EAF759", "#E9F95A", "#E8FA5B"))
+"#EAF558", "#EAF759", "#E9F95A", "#E8FA5B")
 
-#' @export
-#' @rdname ocean
-ocean.turbid <- colorRampPalette(
+ocean.turbid <- 
 c("#221F1B", "#231F1C", "#24201C", "#25211D", "#26211D", "#27221E", 
 "#28231E", "#29231F", "#2A241F", "#2B241F", "#2C2520", "#2D2620", 
 "#2E2621", "#2F2721", "#302822", "#312822", "#322923", "#332A23", 
@@ -609,11 +657,9 @@ c("#221F1B", "#231F1C", "#24201C", "#25211D", "#26211D", "#27221E",
 "#DDDD8D", "#DEDF8E", "#DEE08F", "#DFE191", "#DFE292", "#E0E394", 
 "#E0E495", "#E1E597", "#E2E798", "#E2E89A", "#E3E99B", "#E3EA9C", 
 "#E4EB9E", "#E4EC9F", "#E5EEA1", "#E5EFA2", "#E6F0A4", "#E6F1A5", 
-"#E7F2A7", "#E8F3A8", "#E8F5AA", "#E9F6AB"))
+"#E7F2A7", "#E8F3A8", "#E8F5AA", "#E9F6AB")
 
-#' @export
-#' @rdname ocean
-ocean.balance <- colorRampPalette(
+ocean.balance <- 
 c("#181C43", "#191E46", "#1A1F49", "#1B214C", "#1C224F", "#1D2352", 
 "#1E2555", "#1F2658", "#20275B", "#21295F", "#212A62", "#222B65", 
 "#232D68", "#242E6C", "#252F6F", "#253073", "#263276", "#27337A", 
@@ -656,11 +702,9 @@ c("#181C43", "#191E46", "#1A1F49", "#1B214C", "#1C224F", "#1D2352",
 "#730E27", "#700E27", "#6D0E26", "#6B0F25", "#680F25", "#650F24", 
 "#630E23", "#600E22", "#5D0E21", "#5B0E20", "#580E1F", "#560E1E", 
 "#530D1D", "#510D1C", "#4E0D1A", "#4B0C19", "#490C18", "#460B17", 
-"#440B16", "#410A14", "#3F0A13", "#3C0912"))
+"#440B16", "#410A14", "#3F0A13", "#3C0912")
 
-#' @export
-#' @rdname ocean
-ocean.curl <- colorRampPalette(
+ocean.curl <- 
 c("#151D44", "#151F45", "#162146", "#162347", "#172548", "#172749", 
 "#18294A", "#182B4B", "#182D4C", "#192F4D", "#19314F", "#1A3350", 
 "#1A3551", "#1A3652", "#1B3853", "#1B3A54", "#1B3C56", "#1B3E57", 
@@ -703,11 +747,9 @@ c("#151D44", "#151F45", "#162146", "#162347", "#172548", "#172749",
 "#6A165A", "#681659", "#651558", "#621557", "#601455", "#5D1454", 
 "#5A1452", "#581351", "#55134F", "#53134E", "#50124C", "#4D124A", 
 "#4B1248", "#481146", "#461144", "#431042", "#401040", "#3E0F3E", 
-"#3B0F3C", "#390E3A", "#360E37", "#340D35"))
+"#3B0F3C", "#390E3A", "#360E37", "#340D35")
 
-#' @export
-#' @rdname ocean
-ocean.delta <- colorRampPalette(
+ocean.delta <- 
 c("#112040", "#122143", "#142246", "#152449", "#16254C", "#17264F", 
 "#192853", "#1A2956", "#1B2A59", "#1C2C5D", "#1E2D60", "#1F2E64", 
 "#203067", "#21316B", "#22326F", "#233372", "#243576", "#25367A", 
@@ -750,11 +792,9 @@ c("#112040", "#122143", "#142246", "#152449", "#16254C", "#17264F",
 "#144B2A", "#14492A", "#154729", "#164528", "#174327", "#174127", 
 "#183F26", "#183E25", "#193C24", "#193A23", "#193822", "#193621", 
 "#19341F", "#19321E", "#19301D", "#192E1C", "#192C1A", "#192B19", 
-"#182917", "#182716", "#182514", "#172313"))
+"#182917", "#182716", "#182514", "#172313")
 
-#' @export
-#' @rdname ocean
-ocean.amp <- colorRampPalette(
+ocean.amp <- 
 c("#F1EDEC", "#F1ECEB", "#F0EBE9", "#EFE9E8", "#EFE8E7", "#EEE7E5", 
 "#EEE6E4", "#EDE5E3", "#EDE3E1", "#ECE2E0", "#ECE1DE", "#EBE0DD", 
 "#EBDFDC", "#EADDDA", "#EADCD9", "#E9DBD7", "#E9DAD6", "#E9D9D4", 
@@ -797,11 +837,9 @@ c("#F1EDEC", "#F1ECEB", "#F0EBE9", "#EFE9E8", "#EFE8E7", "#EEE7E5",
 "#570E1E", "#560E1E", "#540D1D", "#530D1D", "#520D1C", "#510D1C", 
 "#4F0D1B", "#4E0D1A", "#4D0C1A", "#4B0C19", "#4A0C19", "#490C18", 
 "#480B17", "#460B17", "#450B16", "#440B16", "#430A15", "#410A14", 
-"#400A14", "#3F0A13", "#3D0912", "#3C0912"))
+"#400A14", "#3F0A13", "#3D0912", "#3C0912")
 
-#' @export
-#' @rdname ocean
-ocean.speed <- colorRampPalette(
+ocean.speed <- 
 c("#FFFDCD", "#FEFCCB", "#FEFAC9", "#FDF9C7", "#FCF8C5", "#FCF7C2", 
 "#FBF6C0", "#FAF4BE", "#F9F3BC", "#F9F2BA", "#F8F1B8", "#F7F0B6", 
 "#F7EEB4", "#F6EDB1", "#F6ECAF", "#F5EBAD", "#F4EAAB", "#F3E9A9", 
@@ -844,11 +882,9 @@ c("#FFFDCD", "#FEFCCB", "#FEFAC9", "#FDF9C7", "#FCF8C5", "#FCF7C2",
 "#193721", "#193621", "#193520", "#19341F", "#19331F", "#19321E", 
 "#19311E", "#19301D", "#192F1C", "#192E1C", "#192D1B", "#192C1A", 
 "#192C19", "#192B19", "#192A18", "#182917", "#182817", "#182716", 
-"#182615", "#182514", "#172413", "#172313"))
+"#182615", "#182514", "#172413", "#172313")
 
-#' @export
-#' @rdname ocean
-ocean.tempo <- colorRampPalette(
+ocean.tempo <- 
 c("#FFF6F4", "#FDF5F3", "#FCF4F1", "#FBF3F0", "#F9F2EE", "#F8F1ED", 
 "#F7F0EB", "#F5EFEA", "#F4EEE8", "#F2EDE7", "#F1ECE5", "#F0EBE4", 
 "#EEEAE2", "#EDEAE1", "#EBE9DF", "#EAE8DE", "#E9E7DD", "#E7E6DB", 
@@ -891,8 +927,162 @@ c("#FFF6F4", "#FDF5F3", "#FCF4F1", "#FBF3F0", "#F9F2EE", "#F8F1ED",
 "#19324F", "#19314F", "#19304E", "#192F4D", "#192E4D", "#182D4C", 
 "#182C4C", "#182B4B", "#182A4B", "#18294A", "#17284A", "#172749", 
 "#172648", "#172548", "#172447", "#162347", "#162246", "#162146", 
-"#162045", "#151F45", "#151E44", "#151D44"))
+"#162045", "#151F45", "#151E44", "#151D44")
 
+ocean.algae %>% colorRampPalette %>% pal.compress -> syspals$ocean.algae
+ocean.deep %>% colorRampPalette %>% pal.compress -> syspals$ocean.deep
+ocean.dense %>% colorRampPalette %>% pal.compress -> syspals$ocean.dense
+ocean.gray %>% colorRampPalette %>% pal.compress -> syspals$ocean.gray
+ocean.haline %>% colorRampPalette %>% pal.compress -> syspals$ocean.haline
+ocean.ice %>% colorRampPalette %>% pal.compress -> syspals$ocean.ice
+ocean.matter %>% colorRampPalette %>% pal.compress -> syspals$ocean.matter
+ocean.oxy %>% colorRampPalette %>% pal.compress -> syspals$ocean.oxy
+ocean.phase %>% colorRampPalette %>% pal.compress -> syspals$ocean.phase
+ocean.solar %>% colorRampPalette %>% pal.compress -> syspals$ocean.solar
+ocean.thermal %>% colorRampPalette %>% pal.compress -> syspals$ocean.thermal
+ocean.turbid %>% colorRampPalette %>% pal.compress -> syspals$ocean.turbid
+ocean.balance %>% colorRampPalette %>% pal.compress -> syspals$ocean.balance
+ocean.curl %>% colorRampPalette %>% pal.compress -> syspals$ocean.curl
+ocean.delta %>% colorRampPalette %>% pal.compress -> syspals$ocean.delta
+ocean.amp %>% colorRampPalette %>% pal.compress -> syspals$ocean.amp
+ocean.speed %>% colorRampPalette %>% pal.compress -> syspals$ocean.speed
+ocean.tempo %>% colorRampPalette %>% pal.compress -> syspals$ocean.tempo
 
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
+# Brewer
+
+colrs %>% filter(palette=="accent") -> accent
+syspals$brewer.accent <- split(accent, accent$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="blues") -> blues
+syspals$brewer.blues <- split(blues, blues$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="brbg") -> brbg
+syspals$brewer.brbg <- split(brbg, brbg$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="bugn") -> bugn
+syspals$brewer.bugn <- split(bugn, bugn$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="bupu") -> bupu
+syspals$brewer.bupu <- split(bupu, bupu$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="dark2") -> dark2
+syspals$brewer.dark2 <- split(dark2     , dark2$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="gnbu") -> gnbu
+syspals$brewer.gnbu <- split(gnbu, gnbu$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="greens") -> greens
+syspals$brewer.greens <- split(greens, greens$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="greys") -> greys
+syspals$brewer.greys <- split(greys, greys$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="oranges") -> oranges
+syspals$brewer.oranges <- split(oranges, oranges$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="orrd") -> orrd
+syspals$brewer.orrd <- split(orrd, orrd$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="paired") -> paired
+syspals$brewer.paired <- split(paired, paired$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="pastel1") -> pastel1
+syspals$brewer.pastel1 <- split(pastel1, pastel1$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="pastel2") -> pastel2
+syspals$brewer.pastel2 <- split(pastel2, pastel2$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="piyg") -> piyg
+syspals$brewer.piyg <- split(piyg, piyg$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="prgn") -> prgn
+syspals$brewer.prgn <- split(prgn, prgn$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="pubu") -> pubu
+syspals$brewer.pubu <- split(pubu, pubu$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="pubugn") -> pubugn
+syspals$brewer.pubugn <- split(pubugn, pubugn$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="puor") -> puor
+syspals$brewer.puor <- split(puor, puor$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="purd") -> purd
+syspals$brewer.purd <- split(purd, purd$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="purples") -> purples
+syspals$brewer.purples <- split(purples, purples$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="rdbu") -> rdbu
+syspals$brewer.rdbu <- split(rdbu, rdbu$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="rdgy") -> rdgy
+syspals$brewer.rdgy <- split(rdgy, rdgy$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="rdpu") -> rdpu
+syspals$brewer.rdpu <- split(rdpu, rdpu$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="reds") -> reds
+syspals$brewer.reds <- split(reds, reds$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="rdylbu") -> rdylbu
+syspals$brewer.rdylbu <- split(rdylbu, rdylbu$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="rdylgn") -> rdylgn
+syspals$brewer.rdylgn <- split(rdylgn, rdylgn$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="set1") -> set1
+syspals$brewer.set1 <- split(set1, set1$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="set2") -> set2
+syspals$brewer.set2 <- split(set2, set2$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="set3") -> set3
+syspals$brewer.set3 <- split(set3, set3$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="spectral") -> spectral
+syspals$brewer.spectral <- split(spectral, spectral$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="ylgn") -> ylgn
+syspals$brewer.ylgn <- split(ylgn, ylgn$ncolors) %>% lapply(.,myrgb)
+
+colrs %>% filter(palette=="ylgnbu") -> ylgnbu
+syspals$brewer.ylgnbu <- split(ylgnbu, ylgnbu$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="ylorbr") -> ylorbr
+syspals$brewer.ylorbr <- split(ylorbr, ylorbr$ncolors) %>% lapply(., myrgb)
+
+colrs %>% filter(palette=="ylorrd") -> ylorrd
+syspals$brewer.ylorrd <- split(ylorrd, ylorrd$ncolors) %>% lapply(., myrgb)
+
+# ----------------------------------------------------------------------------
+
+# parula
+# mpl-colormaps have CC0 license.
+# https://github.com/BIDS/colormap/blob/master/parula.py
+
+colrs %>% filter(palette=="parula") %>% select(red,green,blue) %>% rgb %>% colorRampPalette %>% pal.compress -> syspals$parula
+
+# This is an almost identical map, rounded to 4 decimals
+# http://www.gnuplotting.org/data/parula.pal
+# But, gnuplotting license is not free
+
+# ----------------------------------------------------------------------------
+
+# Now save all objects into R/sysdata.rda
+devtools::use_data(syspals, pkg="c:/x/rpack/pals", internal=TRUE, overwrite=TRUE)
+
+# file.info("R/sysdata.rda")
+# file.size("R/sysdata.rda") # in bytes
+# check rda to verify the best compression
+# tools::checkRdaFiles("R/sysdata.rda")
+# resave rda with a better compression if available
+# tools::resaveRdaFiles("R/sysdata.rda")
+# tools::checkRdaFiles("R/sysdata.rda") # actually bigger!
+
+# ----------------------------------------------------------------------------
 

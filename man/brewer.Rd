@@ -2,112 +2,115 @@
 % Please edit documentation in R/brewer.R
 \name{brewer}
 \alias{brewer}
-\alias{brewer_accent}
-\alias{brewer_blues}
-\alias{brewer_brbg}
-\alias{brewer_bugn}
-\alias{brewer_bupu}
-\alias{brewer_dark2}
-\alias{brewer_gnbu}
-\alias{brewer_greens}
-\alias{brewer_greys}
-\alias{brewer_oranges}
-\alias{brewer_orrd}
-\alias{brewer_paired}
-\alias{brewer_pastel1}
-\alias{brewer_pastel2}
-\alias{brewer_piyg}
-\alias{brewer_prgn}
-\alias{brewer_pubu}
-\alias{brewer_pubugn}
-\alias{brewer_puor}
-\alias{brewer_purd}
-\alias{brewer_purples}
-\alias{brewer_rdbu}
-\alias{brewer_rdgy}
-\alias{brewer_rdpu}
-\alias{brewer_rdylbl}
-\alias{brewer_rdylgn}
-\alias{brewer_reds}
-\alias{brewer_set1}
-\alias{brewer_set2}
-\alias{brewer_set3}
-\alias{brewer_spectral}
-\alias{brewer_ylgn}
-\alias{brewer_ylgnbu}
-\alias{brewer_ylorbr}
-\alias{brewer_ylorrd}
+\alias{brewer.accent}
+\alias{brewer.blues}
+\alias{brewer.brbg}
+\alias{brewer.bugn}
+\alias{brewer.bupu}
+\alias{brewer.dark2}
+\alias{brewer.gnbu}
+\alias{brewer.greens}
+\alias{brewer.greys}
+\alias{brewer.oranges}
+\alias{brewer.orrd}
+\alias{brewer.paired}
+\alias{brewer.pastel1}
+\alias{brewer.pastel2}
+\alias{brewer.piyg}
+\alias{brewer.prgn}
+\alias{brewer.pubu}
+\alias{brewer.pubugn}
+\alias{brewer.puor}
+\alias{brewer.purd}
+\alias{brewer.purples}
+\alias{brewer.rdbu}
+\alias{brewer.rdgy}
+\alias{brewer.rdpu}
+\alias{brewer.rdylbu}
+\alias{brewer.rdylgn}
+\alias{brewer.reds}
+\alias{brewer.set1}
+\alias{brewer.set2}
+\alias{brewer.set3}
+\alias{brewer.spectral}
+\alias{brewer.ylgn}
+\alias{brewer.ylgnbu}
+\alias{brewer.ylorbr}
+\alias{brewer.ylorrd}
 \title{ColorBrewer palettes}
 \usage{
-brewer_blues(n)
+brewer.blues(n)
 
-brewer_bugn(n)
+brewer.bugn(n)
 
-brewer_bupu(n)
+brewer.bupu(n)
 
-brewer_gnbu(n)
+brewer.gnbu(n)
 
-brewer_greens(n)
+brewer.greens(n)
 
-brewer_greys(n)
+brewer.greys(n)
 
-brewer_oranges(n)
+brewer.oranges(n)
 
-brewer_orrd(n)
+brewer.orrd(n)
 
-brewer_pubu(n)
+brewer.pubu(n)
 
-brewer_pubugn(n)
+brewer.pubugn(n)
 
-brewer_purd(n)
+brewer.purd(n)
 
-brewer_purples(n)
+brewer.purples(n)
 
-brewer_rdpu(n)
+brewer.rdpu(n)
 
-brewer_reds(n)
+brewer.reds(n)
 
-brewer_ylgn(n)
+brewer.ylgn(n)
 
-brewer_ylgnbu(n)
+brewer.ylgnbu(n)
 
-brewer_ylorbr(n)
+brewer.ylorbr(n)
 
-brewer_ylorrd(n)
+brewer.ylorrd(n)
 
-brewer_brbg(n)
+brewer.brbg(n)
 
-brewer_piyg(n)
+brewer.piyg(n)
 
-brewer_prgn(n)
+brewer.prgn(n)
 
-brewer_puor(n)
+brewer.puor(n)
 
-brewer_rdbu(n)
+brewer.rdbu(n)
 
-brewer_rdgy(n)
+brewer.rdgy(n)
 
-brewer_rdylbl(n)
+brewer.rdylbu(n)
 
-brewer_rdylgn(n)
+brewer.rdylgn(n)
 
-brewer_spectral(n)
+brewer.spectral(n)
 
-brewer_accent(n)
+brewer.accent(n)
 
-brewer_dark2(n)
+brewer.dark2(n)
 
-brewer_paired(n)
+brewer.paired(n)
 
-brewer_pastel1(n)
+brewer.pastel1(n)
 
-brewer_pastel2(n)
+brewer.pastel2(n)
 
-brewer_set1(n)
+brewer.set1(n)
 
-brewer_set2(n)
+brewer.set2(n)
 
-brewer_set3(n)
+brewer.set3(n)
+}
+\arguments{
+\item{n}{The number of colors to display for palette functions.}
 }
 \description{
 These functions provide a unified interface to the ColorBrewer palettes.
@@ -120,50 +123,63 @@ For consistency with the rest of this package, the palette names use lower-case 
 
 # Qualitative
 
-pal.test(brewer_blues)
-pal.test(brewer_bugn)
-pal.test(brewer_bupu)
-pal.test(brewer_gnbu)
-pal.test(brewer_greens)
-pal.test(brewer_greys)
-pal.test(brewer_oranges)
-pal.test(brewer_orrd)
-pal.test(brewer_pubu)
-pal.test(brewer_pubugn)
-pal.test(brewer_purd)
-pal.test(brewer_purples)
-pal.test(brewer_rdpu)
-pal.test(brewer_reds)
-pal.test(brewer_ylgn)
-pal.test(brewer_ylgnbu)
-pal.test(brewer_ylorbr)
-pal.test(brewer_ylorrd)
+pal.test(brewer.blues)
+pal.test(brewer.bugn)
+pal.test(brewer.bupu)
+pal.test(brewer.gnbu)
+pal.test(brewer.greens)
+pal.test(brewer.greys)
+pal.test(brewer.oranges)
+pal.test(brewer.orrd)
+pal.test(brewer.pubu)
+pal.test(brewer.pubugn)
+pal.test(brewer.purd)
+pal.test(brewer.purples)
+pal.test(brewer.rdpu)
+pal.test(brewer.reds)
+pal.test(brewer.ylgn)
+pal.test(brewer.ylgnbu)
+pal.test(brewer.ylorbr)
+pal.test(brewer.ylorrd)
 
 # Diverging, max 11
 
-pal.test(brewer_brbg)
-pal.test(brewer_piyg)
-pal.test(brewer_prgn)
-pal.test(brewer_puor)
-pal.test(brewer_rdbu)
-pal.test(brewer_rdgy)
-pal.test(brewer_rdylbl)
-pal.test(brewer_rdylgn)
-pal.test(brewer_spectral)
+pal.test(brewer.brbg)
+pal.test(brewer.piyg)
+pal.test(brewer.prgn)
+pal.test(brewer.puor)
+pal.test(brewer.rdbu)
+pal.test(brewer.rdgy)
+pal.test(brewer.rdylbu)
+pal.test(brewer.rdylgn)
+pal.test(brewer.spectral)
 
 # Qualtitative
 # These are weird...don't do this
 
-pal.test(brewer_accent)
-pal.test(brewer_dark2)
-pal.test(brewer_paired)
-pal.test(brewer_pastel1)
-pal.test(brewer_pastel2)
-pal.test(brewer_set1)
-pal.test(brewer_set2)
-pal.test(brewer_set3)
+pal.test(brewer.accent)
+pal.test(brewer.dark2)
+pal.test(brewer.paired)
+pal.test(brewer.pastel1)
+pal.test(brewer.pastel2)
+pal.test(brewer.set1)
+pal.test(brewer.set2)
+pal.test(brewer.set3)
 
-pal.bands(c('brewer_accent','brewer_dark2','brewer_paired','brewer_pastel1','brewer_pastel2','brewer_set1','brewer_set2','brewer_set3'))
+pal.bands(brewer.accent,brewer.dark2,brewer.paired,brewer.pastel1,
+          brewer.pastel2,brewer.set1,brewer.set2,brewer.set3)
+
+pal.bands(brewer.accent(3),brewer.accent(4),brewer.accent(5),brewer.accent(6),
+          brewer.accent(7),brewer.accent(8),brewer.accent(9),brewer.accent(10),
+          brewer.accent(11),brewer.accent(12))
+# Need to move this to 'tests'         
+#brewer.purd(1)
+#brewer.purd(2)
+brewer.purd(3)
+brewer.purd(9)
+brewer.purd(25)
+pal.bands(brewer.purd)
+pal.bands(brewer.purd(3),brewer.purd(4),brewer.purd(5),brewer.purd(6),brewer.purd(7),brewer.purd(8),brewer.purd(9),brewer.purd(10),brewer.purd(11),brewer.purd(12),brewer.purd(13),brewer.purd(14),brewer.purd(15),brewer.purd(100))
 
 }
 

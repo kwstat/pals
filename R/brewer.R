@@ -1,5 +1,5 @@
 # brewer.R
-# Time-stamp: <30 Sep 2016 14:19:06 c:/x/rpack/pals/R/brewer.r>
+# Time-stamp: <16 Nov 2016 18:51:34 c:/x/rpack/pals/R/brewer.R>
 
 #' ColorBrewer palettes
 #'
@@ -8,204 +8,334 @@
 #' The palette names begin with 'brewer' to make it easier to use auto-completion.
 #' For consistency with the rest of this package, the palette names use lower-case letters.
 #' 
-#' @import RColorBrewer
 #' @examples
 #'
 #' # Qualitative
 #' 
-#' pal.test(brewer_blues)
-#' pal.test(brewer_bugn)
-#' pal.test(brewer_bupu)
-#' pal.test(brewer_gnbu)
-#' pal.test(brewer_greens)
-#' pal.test(brewer_greys)
-#' pal.test(brewer_oranges)
-#' pal.test(brewer_orrd)
-#' pal.test(brewer_pubu)
-#' pal.test(brewer_pubugn)
-#' pal.test(brewer_purd)
-#' pal.test(brewer_purples)
-#' pal.test(brewer_rdpu)
-#' pal.test(brewer_reds)
-#' pal.test(brewer_ylgn)
-#' pal.test(brewer_ylgnbu)
-#' pal.test(brewer_ylorbr)
-#' pal.test(brewer_ylorrd)
+#' pal.test(brewer.blues)
+#' pal.test(brewer.bugn)
+#' pal.test(brewer.bupu)
+#' pal.test(brewer.gnbu)
+#' pal.test(brewer.greens)
+#' pal.test(brewer.greys)
+#' pal.test(brewer.oranges)
+#' pal.test(brewer.orrd)
+#' pal.test(brewer.pubu)
+#' pal.test(brewer.pubugn)
+#' pal.test(brewer.purd)
+#' pal.test(brewer.purples)
+#' pal.test(brewer.rdpu)
+#' pal.test(brewer.reds)
+#' pal.test(brewer.ylgn)
+#' pal.test(brewer.ylgnbu)
+#' pal.test(brewer.ylorbr)
+#' pal.test(brewer.ylorrd)
 #'
 #' # Diverging, max 11
 #' 
-#' pal.test(brewer_brbg)
-#' pal.test(brewer_piyg)
-#' pal.test(brewer_prgn)
-#' pal.test(brewer_puor)
-#' pal.test(brewer_rdbu)
-#' pal.test(brewer_rdgy)
-#' pal.test(brewer_rdylbl)
-#' pal.test(brewer_rdylgn)
-#' pal.test(brewer_spectral)
+#' pal.test(brewer.brbg)
+#' pal.test(brewer.piyg)
+#' pal.test(brewer.prgn)
+#' pal.test(brewer.puor)
+#' pal.test(brewer.rdbu)
+#' pal.test(brewer.rdgy)
+#' pal.test(brewer.rdylbu)
+#' pal.test(brewer.rdylgn)
+#' pal.test(brewer.spectral)
 #'
 #' # Qualtitative
 #' # These are weird...don't do this
 #' 
-#' pal.test(brewer_accent)
-#' pal.test(brewer_dark2)
-#' pal.test(brewer_paired)
-#' pal.test(brewer_pastel1)
-#' pal.test(brewer_pastel2)
-#' pal.test(brewer_set1)
-#' pal.test(brewer_set2)
-#' pal.test(brewer_set3)
+#' pal.test(brewer.accent)
+#' pal.test(brewer.dark2)
+#' pal.test(brewer.paired)
+#' pal.test(brewer.pastel1)
+#' pal.test(brewer.pastel2)
+#' pal.test(brewer.set1)
+#' pal.test(brewer.set2)
+#' pal.test(brewer.set3)
 #'
-#' pal.bands(c('brewer_accent','brewer_dark2','brewer_paired','brewer_pastel1','brewer_pastel2','brewer_set1','brewer_set2','brewer_set3'))
+#' pal.bands(brewer.accent,brewer.dark2,brewer.paired,brewer.pastel1,
+#'           brewer.pastel2,brewer.set1,brewer.set2,brewer.set3)
+#'
+#' pal.bands(brewer.accent(3),brewer.accent(4),brewer.accent(5),brewer.accent(6),
+#'           brewer.accent(7),brewer.accent(8),brewer.accent(9),brewer.accent(10),
+#'           brewer.accent(11),brewer.accent(12))
+#' # Need to move this to 'tests'         
+#' #brewer.purd(1)
+#' #brewer.purd(2)
+#' brewer.purd(3)
+#' brewer.purd(9)
+#' brewer.purd(25)
+#' pal.bands(brewer.purd)
+#' pal.bands(brewer.purd(3),brewer.purd(4),brewer.purd(5),brewer.purd(6),brewer.purd(7),brewer.purd(8),brewer.purd(9),brewer.purd(10),brewer.purd(11),brewer.purd(12),brewer.purd(13),brewer.purd(14),brewer.purd(15),brewer.purd(100))
 #'
 #' @name brewer
 NULL
 
+get.brewer.pal = function(bpal, n){
+  # bpal is a brewer palette list, list item k-2 is a vector of k color
+  rng = as.numeric(names(bpal))
+  maxn = max(rng)
+  if(n < 3) warning("Only accepts n>2")
+  if(n <= maxn) {
+    return(bpal[[n-2]])
+  } else {
+    return(colorRampPalette(bpal[[maxn-2]])(n))
+  }
+}
+
 # ----------------------------------------------------------------------------
 # quantitative
 
+#' @param n The number of colors to display for palette functions.
 #' @export
 #' @rdname brewer
-brewer_blues <- colorRampPalette(brewer.pal(9,"Blues"))
+brewer.blues <- function(n) {
+  get.brewer.pal(syspals$brewer.blues, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_bugn <- colorRampPalette(brewer.pal(9,"BuGn"))
+brewer.bugn <- function(n) {
+  get.brewer.pal(syspals$brewer.bugn, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_bupu <- colorRampPalette(brewer.pal(9,"BuPu"))
+brewer.bupu <- function(n) {
+  get.brewer.pal(syspals$brewer.bupu, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_gnbu <- colorRampPalette(brewer.pal(9,"GnBu"))
+brewer.gnbu <- function(n) {
+  get.brewer.pal(syspals$brewer.gnbu, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_greens <- colorRampPalette(brewer.pal(9,"Greens"))
+brewer.greens <- function(n) {
+  get.brewer.pal(syspals$brewer.greens, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_greys <- colorRampPalette(brewer.pal(9,"Greys"))
+brewer.greys <- function(n) {
+  get.brewer.pal(syspals$brewer.greys, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_oranges <- colorRampPalette(brewer.pal(9,"Oranges"))
+brewer.oranges <- function(n) {
+  get.brewer.pal(syspals$brewer.oranges, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_orrd <- colorRampPalette(brewer.pal(9,"OrRd"))
+brewer.orrd <- function(n) {
+  get.brewer.pal(syspals$brewer.orrd, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_pubu <- colorRampPalette(brewer.pal(9,"PuBu"))
+brewer.pubu <- function(n) {
+  get.brewer.pal(syspals$brewer.pubu, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_pubugn <- colorRampPalette(brewer.pal(9,"PuBuGn"))
+brewer.pubugn <- function(n) {
+  get.brewer.pal(syspals$brewer.pubugn, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_purd <- colorRampPalette(brewer.pal(9,"PuRd"))
+brewer.purd <- function(n) {
+  get.brewer.pal(syspals$brewer.purd, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_purples <- colorRampPalette(brewer.pal(9,"Purples"))
+brewer.purples <- function(n) {
+  get.brewer.pal(syspals$brewer.purples, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_rdpu <- colorRampPalette(brewer.pal(9,"RdPu"))
+brewer.rdpu <- function(n) {
+  get.brewer.pal(syspals$brewer.rdpu, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_reds <- colorRampPalette(brewer.pal(9,"Reds"))
+brewer.reds <- function(n) {
+  get.brewer.pal(syspals$brewer.reds, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_ylgn <- colorRampPalette(brewer.pal(9,"YlGn"))
+brewer.ylgn <- function(n) {
+  get.brewer.pal(syspals$brewer.ylgn, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_ylgnbu <- colorRampPalette(brewer.pal(9,"YlGnBu"))
+brewer.ylgnbu <- function(n) {
+  get.brewer.pal(syspals$brewer.ylgnbu, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_ylorbr <- colorRampPalette(brewer.pal(9,"YlOrBr"))
+brewer.ylorbr <- function(n) {
+  get.brewer.pal(syspals$brewer.ylorbr, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_ylorrd <- colorRampPalette(brewer.pal(9,"YlOrRd"))
+brewer.ylorrd <- function(n) {
+  get.brewer.pal(syspals$brewer.ylorrd, n)
+}
+
 
 # ----------------------------------------------------------------------------
 # diverging
 
 #' @export
 #' @rdname brewer
-brewer_brbg <- colorRampPalette(brewer.pal(11,"BrBG"))
+brewer.brbg <- function(n) {
+  get.brewer.pal(syspals$brewer.brbg, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_piyg <- colorRampPalette(brewer.pal(11,"PiYG"))
+brewer.piyg <- function(n) {
+  get.brewer.pal(syspals$brewer.piyg, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_prgn <- colorRampPalette(brewer.pal(11,"PRGn"))
+brewer.prgn <- function(n) {
+  get.brewer.pal(syspals$brewer.prgn, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_puor <- colorRampPalette(brewer.pal(11,"PuOr"))
+brewer.puor <- function(n) {
+  get.brewer.pal(syspals$brewer.puor, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_rdbu <- colorRampPalette(brewer.pal(11,"RdBu"))
+brewer.rdbu <- function(n) {
+  get.brewer.pal(syspals$brewer.rdbu, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_rdgy <- colorRampPalette(brewer.pal(11,"RdGy"))
+brewer.rdgy <- function(n) {
+  get.brewer.pal(syspals$brewer.rdgy, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_rdylbl <- colorRampPalette(brewer.pal(11,"RdYlBu"))
+brewer.rdylbu <- function(n) {
+  get.brewer.pal(syspals$brewer.rdylbu, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_rdylgn <- colorRampPalette(brewer.pal(11,"RdYlGn"))
+brewer.rdylgn <- function(n) {
+  get.brewer.pal(syspals$brewer.rdylgn, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_spectral <- colorRampPalette(brewer.pal(11,"Spectral"))
+brewer.spectral <- function(n) {
+  get.brewer.pal(syspals$brewer.spectral, n)
+}
+
 
 # ----------------------------------------------------------------------------
 # qualitative
 
 #' @export
 #' @rdname brewer
-brewer_accent <- colorRampPalette(brewer.pal(8,"Accent"))
+brewer.accent <- function(n) {
+  get.brewer.pal(syspals$brewer.accent, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_dark2 <- colorRampPalette(brewer.pal(8,"Dark2"))
+brewer.dark2 <- function(n) {
+  get.brewer.pal(syspals$brewer.dark2, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_paired <- colorRampPalette(brewer.pal(12,"Paired"))
+brewer.paired <- function(n) {
+  get.brewer.pal(syspals$brewer.paired, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_pastel1 <- colorRampPalette(brewer.pal(9,"Pastel1"))
+brewer.pastel1 <- function(n) {
+  get.brewer.pal(syspals$brewer.pastel1, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_pastel2 <- colorRampPalette(brewer.pal(8,"Pastel2"))
+brewer.pastel2 <- function(n) {
+  get.brewer.pal(syspals$brewer.pastel2, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_set1 <- colorRampPalette(brewer.pal(9,"Set1"))
+brewer.set1 <- function(n) {
+  get.brewer.pal(syspals$brewer.set1, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_set2 <- colorRampPalette(brewer.pal(8,"Set2"))
+brewer.set2 <- function(n) {
+  get.brewer.pal(syspals$brewer.set2, n)
+}
+
 
 #' @export
 #' @rdname brewer
-brewer_set3 <- colorRampPalette(brewer.pal(12,"Set3"))
+brewer.set3 <- function(n) {
+  get.brewer.pal(syspals$brewer.set3, n)
+}
+

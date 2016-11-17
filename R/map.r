@@ -1,5 +1,5 @@
 # map.R
-# Time-stamp: <24 Sep 2016 22:05:01 c:/x/rpack/pals/R/map.r>
+# Time-stamp: <16 Nov 2016 21:21:27 c:/x/rpack/pals/R/map.R>
 # Copyright: Kevin Wright, 2016. License: GPL-2.
 
 #' Test palette with a ColorBrewer map.
@@ -25,34 +25,39 @@
 #' intentional.
 #' Also, the map projection used here is different from ColorBrewer.
 #' 
-#' @param pal 
-#' @param n 
-#' @return
-#' None.
+#' @param pal A palette function or a vector of colors.
+#' 
+#' @param n Number of colors to return.
+#' 
+#' @return None.
+#' 
 #' @import maps
 #' @import mapproj
 #' @export
 #' @examples
 #' pal.map()
 #' pal.map(viridis)
+#' 
 #' @author Kevin Wright
+#' 
 #' @references
 #' http://www.personal.psu.edu/cab38/Pub_scans/Brewer_pubs.html
 #' Map based on www.ColorBrewer.org, by Cynthia A. Brewer, Penn State.
 #' 
-pal.map <- function(pal=brewer.pal(12,"Paired"), n=12) {
+pal.map <- function(pal=brewer.paired, n=12) {
 
   if(n > 12) {
-    warning("Re-setting n=12.")
+    message("Re-setting n=12.")
     n = 12
   }
   
   if(is.function(pal))
     pal <- pal(n)
-  
-  co.names <- map("county",
+
+  requireNamespace("maps")
+  co.names <- maps::map("county",
                   xlim=c(-100,-79), ylim=c(29.5,42), mar=c(0,0,0,0), plot=FALSE)$names
-  co.fips <- county.fips$fips[match(co.names, county.fips$polyname)]
+  co.fips <- maps::county.fips$fips[match(co.names, maps::county.fips$polyname)]
 
   # Each row is a region. Column number is the number of classes, 1..12
   # Each element is the class for the region
@@ -377,11 +382,12 @@ if(1){
 ##                 ),
 ##             n=1000, cex=.2)
 
-## dput(county.fips$fips[match(ix, county.fips$polyname)])
+## dput(maps::county.fips$fips[match(ix, maps::county.fips$polyname)])
 }
 
   # plot map
-  map("county", fill=TRUE, col=mapcols,
+  
+  maps::map("county", fill=TRUE, col=mapcols,
       xlim=c(-100,-79), ylim=c(29.5,42), mar=c(0,0,0,0)
       )
 }

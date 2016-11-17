@@ -1,6 +1,6 @@
 
 ---
-title: ""
+title: "Overview of the 'pals' package"
 author: "Kevin Wright"
 date: "`r Sys.Date()`"
 bibliography: pals.bib
@@ -8,7 +8,7 @@ output:
   html_document:
     highlight: tango
 vignette: >
-  % \VignetteIndexEntry{}
+  % \VignetteIndexEntry{Overview of the 'pals' package}
   % \VignetteEncoding{UTF-8}
   % \VignetteEngine{knitr::rmarkdown}
 ---
@@ -24,11 +24,18 @@ pre > code { border: 0; }
 
 Discussions of color palettes...
 
+##  Setup
+
+```{r setup, echo=FALSE, results="hide"}
+library("knitr")
+opts_chunk$set(fig.align="center", fig.width=6, fig.height=6)
+options(width=90)
+```
 
 ```{r}
 require(pals)
-pal.test(parula)
-pal.test(viridis)
+#pal.test(parula)
+#pal.test(viridis)
 ```
 
 # Kovesi
@@ -46,6 +53,4 @@ par(op)
 ```
 # Ocean
 ```{r}
-library(oce)
-oce.colorsPalette(5)
 ```

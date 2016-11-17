@@ -1,0 +1,15 @@
+.gitignore
+.Rproj
+.Rproj\.user
+README.md
+cran-comments.md
+cran_comments.md
+NEWS.md
+.travis\.yml
+data-done
+data-raw
+data-unused
+figure
+notes.org
+^.*\.Rproj$
+^\.Rproj\.user$

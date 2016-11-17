@@ -4,12 +4,12 @@
 \alias{pal.map}
 \title{Test palette with a ColorBrewer map.}
 \usage{
-pal.map(pal = brewer.pal(12, "Paired"), n = 12)
+pal.map(pal = brewer.paired, n = 12)
 }
 \arguments{
-\item{pal}{}
+\item{pal}{A palette function or a vector of colors.}
 
-\item{n}{}
+\item{n}{Number of colors to return.}
 }
 \value{
 None.
@@ -40,6 +40,7 @@ Also, the map projection used here is different from ColorBrewer.
 \examples{
 pal.map()
 pal.map(viridis)
+
 }
 \author{
 Kevin Wright
