@@ -4,12 +4,14 @@
 \alias{pal.safe}
 \title{Test a palette of colors for black/white and colorblind safety}
 \usage{
-pal.safe(pal, n = 100)
+pal.safe(pal, n = 100, title = NULL)
 }
 \arguments{
 \item{pal}{A palette function or a vector of colors.}
 
 \item{n}{The number of colors to display for palette functions.}
+
+\item{title}{Title to display at the top of the test image}
 }
 \value{
 None.
@@ -22,9 +24,10 @@ None.
 }
 \examples{
 pal.safe(glasbey(31))
-pal.safe(rainbow(100))
-pal.safe(cubicyf(100))
-pal.safe(parula)
+pal.safe(rainbow(100), title="rainbow")
+pal.safe(cubicyf(100), title="cubicyf")
+pal.safe(parula, title="parula")
+
 }
 \author{
 Kevin Wright

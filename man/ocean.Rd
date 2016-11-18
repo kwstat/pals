@@ -24,9 +24,15 @@ The palettes from matplotlib have been converted from RGB codes to
 hexadecimal strings for use in this package.
 }
 \examples{
+
+pal.bands(ocean.thermal, ocean.haline, ocean.solar, ocean.ice, ocean.gray,
+          ocean.oxy, ocean.deep, ocean.dense, ocean.algae, ocean.matter,
+          ocean.turbid, ocean.speed, ocean.amp, ocean.tempo, ocean.phase,
+          ocean.balance, ocean.delta, ocean.curl, title="Ocean palettes")
+
 \dontrun{
 pal.test(ocean.thermal)
-pal.test(ocean.haline)
+pal.test(ocean.haline) # better than parula!
 pal.test(ocean.solar)
 pal.test(ocean.ice)
 pal.test(ocean.gray)
@@ -44,6 +50,7 @@ pal.test(ocean.balance)
 pal.test(ocean.delta)
 pal.test(ocean.curl)
 }
+
 }
 \author{
 Palette colors by Kristen Thyng. R code by Kevin Wright

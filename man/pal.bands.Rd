@@ -4,7 +4,7 @@
 \alias{pal.bands}
 \title{Show palettes as colored bands}
 \usage{
-pal.bands(..., n = 100, labels = NULL)
+pal.bands(..., n = 100, labels = NULL, title = NULL)
 }
 \arguments{
 \item{...}{Palettes, either functions or vectors of colors.}
@@ -12,6 +12,8 @@ pal.bands(..., n = 100, labels = NULL)
 \item{n}{The number of colors to display for palette functions.}
 
 \item{labels}{Labels for palettes}
+
+\item{title}{Title at top of page.}
 }
 \description{
 Show palettes as colored bands.

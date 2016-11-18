@@ -4,10 +4,12 @@
 \alias{pal.test}
 \title{Test a palette of colors with multiple images}
 \usage{
-pal.test(pal)
+pal.test(pal, title = substitute(pal))
 }
 \arguments{
 \item{pal}{A palette function or a vector of colors.}
+
+\item{title}{Title to display at the top of the test image}
 }
 \value{
 None.
@@ -34,11 +36,12 @@ with dark colors at one end of the palette hide the peak (e.g. viridis).
 Also try to decide if the upperleft and upperright corners are the same color.
 }
 \examples{
-pal.test(parula)
+pal.test(parula) # fails contrast 1
 pal.test(viridis)
 pal.test(coolwarm)
+
 }
 \references{
-# See links inline.
+# See links above.
 }
 

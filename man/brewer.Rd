@@ -113,16 +113,30 @@ brewer.set3(n)
 \item{n}{The number of colors to display for palette functions.}
 }
 \description{
-These functions provide a unified interface to the ColorBrewer palettes.
+These functions provide a unified access to the ColorBrewer palettes.
 }
 \details{
 The palette names begin with 'brewer' to make it easier to use auto-completion.
-For consistency with the rest of this package, the palette names use lower-case letters.
 }
 \examples{
 
-# Qualitative
+# Sequential
+pal.bands(brewer.blues, brewer.bugn, brewer.bupu, brewer.gnbu, brewer.greens,
+          brewer.greys, brewer.oranges, brewer.orrd, brewer.pubu, brewer.pubugn,
+          brewer.purd, brewer.purples, brewer.rdpu, brewer.reds, brewer.ylgn,
+          brewer.ylgnbu, brewer.ylorbr, brewer.ylorrd)
+# Diverging
+pal.bands(brewer.brbg, brewer.piyg, brewer.prgn, brewer.puor, brewer.rdbu,
+          brewer.rdgy, brewer.rdylbu, brewer.rdylgn, brewer.spectral)
+# Qualtitative
+pal.bands(brewer.accent(8), brewer.dark2(8), brewer.paired(12), brewer.pastel1(9),
+          brewer.pastel2(8), brewer.set1(9), brewer.set2(8), brewer.set3(10),
+          labels=c("brewer.accent", "brewer.dark2", "brewer.paired", "brewer.pastel1",
+          "brewer.pastel2", "brewer.set1", "brewer.set2", "brewer.set3"))
 
+\dontrun{
+
+# Sequential
 pal.test(brewer.blues)
 pal.test(brewer.bugn)
 pal.test(brewer.bupu)
@@ -130,9 +144,9 @@ pal.test(brewer.gnbu)
 pal.test(brewer.greens)
 pal.test(brewer.greys)
 pal.test(brewer.oranges)
-pal.test(brewer.orrd)
-pal.test(brewer.pubu)
-pal.test(brewer.pubugn)
+pal.test(brewer.orrd) 
+pal.test(brewer.pubu) # good
+pal.test(brewer.pubugn) # good
 pal.test(brewer.purd)
 pal.test(brewer.purples)
 pal.test(brewer.rdpu)
@@ -142,8 +156,7 @@ pal.test(brewer.ylgnbu)
 pal.test(brewer.ylorbr)
 pal.test(brewer.ylorrd)
 
-# Diverging, max 11
-
+# Diverging, max n=11 colors
 pal.test(brewer.brbg)
 pal.test(brewer.piyg)
 pal.test(brewer.prgn)
@@ -154,9 +167,7 @@ pal.test(brewer.rdylbu)
 pal.test(brewer.rdylgn)
 pal.test(brewer.spectral)
 
-# Qualtitative
-# These are weird...don't do this
-
+# Qualtitative. These are weird...don't do this
 pal.test(brewer.accent)
 pal.test(brewer.dark2)
 pal.test(brewer.paired)
@@ -166,20 +177,20 @@ pal.test(brewer.set1)
 pal.test(brewer.set2)
 pal.test(brewer.set3)
 
-pal.bands(brewer.accent,brewer.dark2,brewer.paired,brewer.pastel1,
-          brewer.pastel2,brewer.set1,brewer.set2,brewer.set3)
-
-pal.bands(brewer.accent(3),brewer.accent(4),brewer.accent(5),brewer.accent(6),
-          brewer.accent(7),brewer.accent(8),brewer.accent(9),brewer.accent(10),
-          brewer.accent(11),brewer.accent(12))
-# Need to move this to 'tests'         
-#brewer.purd(1)
-#brewer.purd(2)
+# Need to move these to 'tests'         
+pal.bands(brewer.accent(3), brewer.accent(4), brewer.accent(5), brewer.accent(6),
+          brewer.accent(7), brewer.accent(8), brewer.accent(9), brewer.accent(10),
+          brewer.accent(11), brewer.accent(12))
+#brewer.purd(1) # Should err
+#brewer.purd(2) # Should err
 brewer.purd(3)
 brewer.purd(9)
 brewer.purd(25)
-pal.bands(brewer.purd)
-pal.bands(brewer.purd(3),brewer.purd(4),brewer.purd(5),brewer.purd(6),brewer.purd(7),brewer.purd(8),brewer.purd(9),brewer.purd(10),brewer.purd(11),brewer.purd(12),brewer.purd(13),brewer.purd(14),brewer.purd(15),brewer.purd(100))
+pal.bands(brewer.purd(3), brewer.purd(4), brewer.purd(5), brewer.purd(6),
+          brewer.purd(7), brewer.purd(8), brewer.purd(9), brewer.purd(10),
+          brewer.purd(11), brewer.purd(12), brewer.purd(13), brewer.purd(14),
+          brewer.purd(15), brewer.purd(100))
+}
 
 }
 

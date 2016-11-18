@@ -1,5 +1,5 @@
 # tools.R
-# Time-stamp: <16 Nov 2016 21:22:07 c:/x/rpack/pals/R/tools.R>
+# Time-stamp: <17 Nov 2016 20:11:45 c:/x/rpack/pals/R/tools.R>
 # Copyright: Kevin Wright, 2016. License: GPL-2.
 
 # ----------------------------------------------------------------------------
@@ -13,13 +13,15 @@
 #' @param n The number of colors to display for palette functions.
 #' 
 #' @param labels Labels for palettes
+#'
+#' @param title Title at top of page.
 #' 
 #' @examples
 #' pal.bands(cubehelix, gnuplot, jet, tol.rainbow, inferno, magma, plasma, viridis, parula, n=51)
 #' pal.bands(c('red','white','blue'), rainbow)
 #'
 #' @export
-pal.bands <- function(..., n=100, labels=NULL){
+pal.bands <- function(..., n=100, labels=NULL, title=NULL){
 
   if(n < 3) warning("Using n=3")
   
@@ -79,6 +81,8 @@ pal.bands <- function(..., n=100, labels=NULL){
        labels = rev(labels),
        cex=0.6, xpd = TRUE, adj = 1)
 
+  if(!is.null(title)) title(title)
+  
 }
 if(FALSE){
 pal.bands(c('red','white','blue'),c('blue','yellow'), c('black','red','gold'), labels=c('USA','Sweden','Germany'))
@@ -239,20 +243,23 @@ pal.scatter <- function(pal, n){
 #' 
 #' @param n The number of colors to display for palette functions.
 #' 
+#' @param title Title to display at the top of the test image
+#' 
 #' @return
 #' None.
 #' @author Kevin Wright
 #' @examples 
 #' pal.safe(glasbey(31))
-#' pal.safe(rainbow(100))
-#' pal.safe(cubicyf(100))
-#' pal.safe(parula)
+#' pal.safe(rainbow(100), title="rainbow")
+#' pal.safe(cubicyf(100), title="cubicyf")
+#' pal.safe(parula, title="parula")
+#' 
 #' @references 
 #' None
 #' @export
 #' @importFrom colorspace desaturate
 #' @importFrom dichromat dichromat
-pal.safe <- function(pal, n=100){
+pal.safe <- function(pal, n=100, title=NULL){
 
   if(is.function(pal)) pal <- pal(n)
 
@@ -281,6 +288,7 @@ pal.safe <- function(pal, n=100){
        labels = rev(labs),
        cex=0.6, xpd = TRUE, adj = 1)
 
+  if(!is.null(title)) title(title)
 }
 
 
@@ -308,19 +316,24 @@ pal.safe <- function(pal, n=100){
 #' Also try to decide if the upperleft and upperright corners are the same color.
 #' 
 #' @param pal A palette function or a vector of colors.
+#'
+#' @param title Title to display at the top of the test image
 #' 
 #' @return None.
 #' @export 
 #' @examples
-#' pal.test(parula)
+#' pal.test(parula) # fails contrast 1
 #' pal.test(viridis)
 #' pal.test(coolwarm)
-#' @references
-#' # See links inline.
 #' 
-pal.test <- function(pal){
+#' @references
+#' # See links above.
+#' 
+pal.test <- function(pal, title=substitute(pal)){
 
-  op <- par(mfrow=c(2,3),mar=c(2,2,1,1), bg="gray80")
+  op <- par(mfrow=c(2,3),
+            oma=c(0,0,2,0), # save space for title
+            mar=c(2,2,1,1), bg="gray80")
 
   if(is.function(pal)) {
     # pal is a function
@@ -391,6 +404,13 @@ pal.test <- function(pal){
   # luv <- as(colorspace::hex2RGB(cols), "LUV")
   # lines(x,luv@coords[,1] * 2.5 , col="white") 
 
+  
+  # Title. What to do if it is a vector instead???
+  # browser()
+  if(!is.null(title)) {
+    title(title, outer=TRUE)
+  }
+  
   on.exit(op)
   par(op)
 }

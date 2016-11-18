@@ -59,8 +59,8 @@ Similar to cubicyf(), but has red at high end
 \examples{
 pal.test(cubicyf) # purple blue green
 pal.test(cubicl) # purple blue green orange
-pal.test(isol) # magenta blue green red
-pal.test(linearl) # black blue green tan
+pal.test(isol) # magenta blue green red. Poor in green area.
+pal.test(linearl) # black blue green tan. Poor in black area.
 pal.test(linearlhot) # black red yellow
 pal.bands(cubicyf,cubicl,isol,linearl,linearlhot)
 

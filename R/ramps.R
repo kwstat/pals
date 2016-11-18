@@ -1,5 +1,5 @@
 # ramps.R
-# Time-stamp: <16 Nov 2016 21:01:17 c:/x/rpack/pals/R/ramps.R>
+# Time-stamp: <17 Nov 2016 19:59:13 c:/x/rpack/pals/R/ramps.R>
 # Copyright: Kevin Wright, 2016. License: GPL-2.
 
 # R auto-loads R/sysdata.rda, which contains the 'syspals' object.
@@ -273,11 +273,19 @@ warmcool <- function(n){
 #' @param n Number of colors
 #' 
 #' @return None
+#' 
 #' @author Palette colors by Kristen Thyng. R code by Kevin Wright
-#' @examples 
+#' 
+#' @examples
+#'
+#' pal.bands(ocean.thermal, ocean.haline, ocean.solar, ocean.ice, ocean.gray,
+#'           ocean.oxy, ocean.deep, ocean.dense, ocean.algae, ocean.matter,
+#'           ocean.turbid, ocean.speed, ocean.amp, ocean.tempo, ocean.phase,
+#'           ocean.balance, ocean.delta, ocean.curl, title="Ocean palettes")
+#' 
 #' \dontrun{
 #' pal.test(ocean.thermal)
-#' pal.test(ocean.haline)
+#' pal.test(ocean.haline) # better than parula!
 #' pal.test(ocean.solar)
 #' pal.test(ocean.ice)
 #' pal.test(ocean.gray)
@@ -295,6 +303,7 @@ warmcool <- function(n){
 #' pal.test(ocean.delta)
 #' pal.test(ocean.curl)
 #' }
+#' 
 #' @references
 #' Thyng, K.M., C.A. Greene, R.D. Hetland, H.M. Zimmerle, and S.F. DiMarco (2016).
 #' True colors of oceanography: Guidelines for effective and accurate colormap selection.
@@ -417,8 +426,8 @@ ocean.tempo <- function(n) colorRampPalette(syspals$ocean.tempo)(n)
 #' @examples
 #' pal.test(cubicyf) # purple blue green
 #' pal.test(cubicl) # purple blue green orange
-#' pal.test(isol) # magenta blue green red
-#' pal.test(linearl) # black blue green tan
+#' pal.test(isol) # magenta blue green red. Poor in green area.
+#' pal.test(linearl) # black blue green tan. Poor in black area.
 #' pal.test(linearlhot) # black red yellow
 #' pal.bands(cubicyf,cubicl,isol,linearl,linearlhot)
 #' 
