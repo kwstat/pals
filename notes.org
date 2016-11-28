@@ -6,7 +6,7 @@ http://blogs.nature.com/methagora/2013/07/data-visualization-points-of-view.html
 Add St Helens image as used in plotly?
 https://github.com/matplotlib/viscm/tree/master/viscm/examples
 
-Good test image?
+Good test image? Galaxy.
 http://yt-project.org/doc/visualizing/colormaps/index.html
 
 Need an option to reverse any palette
@@ -20,23 +20,21 @@ cubicyf <- colorRampPalette(rgb(colormatrix))
 But then the actual colors get hidden deep inside an environment
 
 
-TODO: gist_earth, interface to colorbrewer
+TODO: gist_earth
 
 
-Best comparison pages
-http://inversed.ru/Blog_2.htm
+Peter Karpov. http://inversed.ru/Blog_2.htm
+
+Peter Karpov. 2016.
+In Search Of A Perfect Colormap.https://twitter.com/inversed_ru
 
 
- 
+
 http://mkweb.bcgsc.ca/
-
-
 
 Matteo Niccoli.  Free to re-use mode/media.
 Credit to Matteo Niccoli as the author and mycarta.wordpress.com
 https://mycarta.wordpress.com/2012/05/29/the-rainbow-is-dead-long-live-the-rainbow-series-outline/
-
-
 
 
 Niccoli
@@ -59,7 +57,6 @@ https://github.com/dankelley/oce/
 
 ----------------------------------------------------------------------------
 
-Done
 
 * Peter Kovesi
 
@@ -69,36 +66,25 @@ http://peterkovesi.com/projects/colourmaps/index.html
 Some interesting comments about the palettes
 https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/src/cmap.jl
 
-* Paul Tol
 
-https://personal.sron.nl/~pault
+* R packages
 
-* Rpackages
-
-https://github.com/btupper/catecolors
-
-https://github.com/ronammar/randomcoloR
-
-ggsci
+** ggsci
 https://github.com/road2stat/ggsci
+ggsci offers a collection of ggplot2 color palettes inspired by scientific journals, data visualization libraries, and science fiction TV shows.
 
-palr
+** palr
 https://github.com/AustralianAntarcticDivision/palr
+palr provides colour palettes for data, based on some well known remotely sensed data sets for sea ice concentration, sea surface temperature and chlorophyll-a.
 
-PaletteTown
-https://github.com/timcdlucas/palettetown
 
-qualpalr
 
-RColorBrewer
-Has one main function brewer.pal with all RGB codes.
+Polychrome
+install.packages("Polychrome", repos="http://R-Forge.R-project.org")
+https://rdrr.io/rforge/Polychrome/man/viewers.html
 
 
 * StackExchange
-
-http://mathematica.stackexchange.com/questions/64513/is-there-an-easy-way-to-use-matteo-niccolis-perceptual-color-maps-for-2d-plots
-
-http://graphicdesign.stackexchange.com/questions/3682/where-can-i-find-a-large-palette-set-of-contrasting-colors-for-coloring-many-d
 
 Interesting palettes at bottom
 https://github.com/d3/d3-scale/blob/master/README.mdinterpolateViridis
@@ -114,7 +100,57 @@ http://stackoverflow.com/questions/15282580/how-to-generate-a-number-of-most-dis
 Color Schemes Appropriate for Scientific Data Graphics
 http://geog.uoregon.edu/datagraphics/color_scales.htm
 
-Polychrome
-install.packages("Polychrome", repos="http://R-Forge.R-project.org")
-https://rdrr.io/rforge/Polychrome/man/viewers.html
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+
+
+* People
+
+** Paul Tol
+
+https://personal.sron.nl/~pault
+
+* StackExchange
+
+http://stackoverflow.com/questions/470690/how-to-automatically-generate-n-distinct-colors
+
+http://stackoverflow.com/questions/2328339/how-to-generate-n-different-colors-for-any-natural-number-n
+
+http://graphicdesign.stackexchange.com/questions/3682/where-can-i-find-a-large-palette-set-of-contrasting-colors-for-coloring-many-d
+
+http://mathematica.stackexchange.com/questions/64513/is-there-an-easy-way-to-use-matteo-niccolis-perceptual-color-maps-for-2d-plots
+
+* R packages
+
+** beyonce
+https://github.com/dill/beyonce
+An R package for beyoncepalettes.tumblr.com
+
+** catecolors
+https://github.com/btupper/catecolors
+Colors from various sources that are suitable for displaying categorical (qualitative) colors.
+
+** palettetown
+https://github.com/timcdlucas/palettetown
+An R package providing pokemon colour palettes.
+
+** qualpalr
+qualpalr generates distinct qualitative color palettes
+https://cran.r-project.org/web/packages/qualpalr/vignettes/introduction.html
+
+** randomcoloR
+https://github.com/ronammar/randomcoloR
+An R package for generating attractive and distinctive colors.
+
+** RColorBrewer
+Has one main function brewer.pal to access ColorBrewer palettes.
+
+** RSkittleBrewer
+https://github.com/alyssafrazee/RSkittleBrewer
+Candy-themed palettes.
+
+** wesanderson
+https://github.com/karthik/wesanderson
+Wes Anderson palettes.
 

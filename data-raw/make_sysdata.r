@@ -1,5 +1,5 @@
 # sysdata.R
-# Time-stamp: <16 Nov 2016 17:55:45 c:/x/rpack/pals/data-raw/make_sysdata.r>
+# Time-stamp: <24 Nov 2016 12:17:57 c:/x/rpack/pals/data-raw/make_sysdata.r>
 
 lib(dplyr)
 lib(readr)
@@ -73,7 +73,8 @@ syspals$jet <- c("#00007F", "blue", "#007FFF", "cyan",
 # are really HSV
 
 colrs %>% filter(palette=="stepped") %>% select(red,green,blue) %>%
-  mutate(red=red/360) %>% as.matrix %>% hsv -> syspals$stepped
+  mutate(red=red/360) %>% as.matrix -> stepcols
+hsv(stepcols[,1], stepcols[,2], stepcols[,3]) -> syspals$stepped
 
 # ----------------------------------------------------------------------------
 
@@ -83,6 +84,14 @@ myrgb <- function(x) rgb(x$red, x$green, x$blue, max=255)
 
 colrs %>% filter(palette=="tol") ->  tol
 syspals$tol <- split(tol, tol$ncolors) %>% lapply(., myrgb)
+
+# ----------------------------------------------------------------------------
+
+# watlington
+
+# http://alumni.media.mit.edu/~wad/color/palette.html
+
+colrs %>% filter(palette=="watlington") %>% select(red,green,blue) %>% rgb(., max=255) -> syspals$watlington
 
 
 # ----------------------------------------------------------------------------

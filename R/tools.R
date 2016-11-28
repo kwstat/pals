@@ -1,6 +1,6 @@
 # tools.R
-# Time-stamp: <17 Nov 2016 20:11:45 c:/x/rpack/pals/R/tools.R>
-# Copyright: Kevin Wright, 2016. License: GPL-2.
+# Time-stamp: <24 Nov 2016 07:25:32 c:/x/rpack/pals/R/tools.R>
+# Copyright: Kevin Wright, 2016. License: GPL-3.
 
 # ----------------------------------------------------------------------------
 
@@ -88,7 +88,7 @@ if(FALSE){
 pal.bands(c('red','white','blue'),c('blue','yellow'), c('black','red','gold'), labels=c('USA','Sweden','Germany'))
 pal.bands(cm.colors, rainbow, topo.colors, heat.colors, c('red','blue'), n=31)
 pal.bands(alphabet)
-pal.bands(alphabet,n=25)
+pal.bands(alphabet,n=25) # omit black
 pal.bands(alphabet,n=26)
 pal.bands(alphabet,n=27)
 pal.bands(cubehelix)
@@ -96,6 +96,7 @@ pal.bands(alphabet,cubehelix)
 pal.bands(cubehelix,alphabet)
 pal.bands(warmcool, c('red','orange','yellow','green','blue','purple'), coolwarm, n=11)
 pal.bands(alphabet,cols25,glasbey,kelly,stepped,tol)
+
 }
 
 # ----------------------------------------------------------------------------
@@ -169,6 +170,8 @@ pal.cube <- function(pal, n=100, label=FALSE, type="RGB"){
 #' @param pal A palette function or a vector of colors.
 #' 
 #' @param n The number of colors to display for palette functions.
+#'
+#' @param miss Fraction of squares with missing values, default .05.
 #' 
 #' @return None.
 #' @author Kevin Wright
@@ -182,8 +185,11 @@ pal.cube <- function(pal, n=100, label=FALSE, type="RGB"){
 #' @references
 #' None
 #' @importFrom stats runif
-pal.heatmap <- function(pal, n=25){
+pal.heatmap <- function(pal, n=25, miss=.05){
 
+  if(miss >  1)
+    warning("`miss` should be less than 1.")
+  
   if(is.function(pal)) {
     pal <- pal(n)
   } else {
@@ -193,8 +199,8 @@ pal.heatmap <- function(pal, n=25){
   xdim <- 15
   ydim <- n
   cellvals <- sample(1:n, size=xdim*ydim, replace=TRUE)
-  # 5% missing values
-  cellvals[runif(xdim*ydim)<.05] <- NA
+  # Introduce random missing values
+  cellvals[runif(xdim*ydim) < miss] <- NA
   mat <- matrix(cellvals, ncol=xdim)
   
   # Add a column of NA and a column for the palette
@@ -738,7 +744,16 @@ pal.maxdist <- function(pal1, pal2, n=255) max(pal.dist(pal1, pal2, n))
 #' pal.bands(tol,n=12)
 #' pal.heatmap(tol, 12)
 #' 
+#' # ----- watlington -----
+#' pal.bands(watlington,n=16)
+#' pal.heatmap(watlington(16))
+
 #' @references
+#' 
+#' Robert M. Boynton. (1989)
+#' Eleven Colors That Are Almost Never Confused. 
+#' Proc. SPIE 1077, \emph{Human Vision, Visual Processing, and Digital Display}, 322-332.
+#' http://doi.org/10.1117/12.952730
 #' 
 #' Chris Glasbey, Gerie van der Heijden, Vivian F. K. Toh, Alision Gray (2007).
 #' Colour Displays for Categorical Images.
@@ -756,6 +771,10 @@ pal.maxdist <- function(pal1, pal2, n=255) max(pal.dist(pal1, pal2, n))
 #' Paul Tol (2012). Color Schemes. SRON technical note, SRON/EPS/TN/09-002.
 #' https://personal.sron.nl/~pault/
 #'
+#' John Watlington.
+#' An Optimum 16 Color Palette.
+#' http://alumni.media.mit.edu/~wad/color/palette.html
+#' 
 #' Color Schemes Appropriate for Scientific Data Graphics
 #' http://geog.uoregon.edu/datagraphics/color_scales.htm
 #' 
@@ -802,6 +821,16 @@ alphabet <- function(n=26) {
     rgb(255, 255, 255, maxColorValue=255, names="white"))
   
   return(pal[1:n])
+}
+
+#' @export
+#' @rdname discrete
+watlington <- function(n=16) {
+  if(n > 16) {
+    message("Only 1 colors are available with 'watlington'.")
+    n <- 16
+  }
+  return(syspals$watlington[1:n])
 }
 
 #' @export
@@ -907,7 +936,7 @@ stepped <- function(n=20) {
 
 #' @export
 #' @rdname discrete
-tol <- function(n) {
+tol <- function(n=12) {
   if(n > 12){
     message("Only 12 colors are available with 'tol'")
     n <- 12

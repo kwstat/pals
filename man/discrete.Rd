@@ -8,9 +8,12 @@
 \alias{kelly}
 \alias{stepped}
 \alias{tol}
+\alias{watlington}
 \title{Discrete palettes}
 \usage{
 alphabet(n = 26)
+
+watlington(n = 16)
 
 cols25(n = 25)
 
@@ -20,7 +23,7 @@ kelly(n = 22)
 
 stepped(n = 20)
 
-tol(n)
+tol(n = 12)
 }
 \arguments{
 \item{n}{Number of colors to return.}
@@ -101,11 +104,19 @@ pal.heatmap(stepped, n=20)
 pal.bands(tol,n=12)
 pal.heatmap(tol, 12)
 
+# ----- watlington -----
+pal.bands(watlington,n=16)
+pal.heatmap(watlington(16))
 }
 \author{
 Palette colors by various authors. R code by Kevin Wright.
 }
 \references{
+Robert M. Boynton. (1989)
+Eleven Colors That Are Almost Never Confused. 
+Proc. SPIE 1077, \emph{Human Vision, Visual Processing, and Digital Display}, 322-332.
+http://doi.org/10.1117/12.952730
+
 Chris Glasbey, Gerie van der Heijden, Vivian F. K. Toh, Alision Gray (2007).
 Colour Displays for Categorical Images.
 \emph{Color Research and Application}, 32, 304-309.
@@ -121,6 +132,10 @@ http://www.iscc.org/pdf/PC54_1724_001.pdf
 
 Paul Tol (2012). Color Schemes. SRON technical note, SRON/EPS/TN/09-002.
 https://personal.sron.nl/~pault/
+
+John Watlington.
+An Optimum 16 Color Palette.
+http://alumni.media.mit.edu/~wad/color/palette.html
 
 Color Schemes Appropriate for Scientific Data Graphics
 http://geog.uoregon.edu/datagraphics/color_scales.htm

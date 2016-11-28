@@ -1,5 +1,6 @@
 # brewer.R
 # Time-stamp: <17 Nov 2016 16:22:04 c:/x/rpack/pals/R/brewer.R>
+# Copyright: Kevin Wright, 2016. License: GPL-3.
 
 #' ColorBrewer palettes
 #'

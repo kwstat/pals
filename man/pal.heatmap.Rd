@@ -4,12 +4,14 @@
 \alias{pal.heatmap}
 \title{Test a palette of colors with a heatmap}
 \usage{
-pal.heatmap(pal, n = 25)
+pal.heatmap(pal, n = 25, miss = 0.05)
 }
 \arguments{
 \item{pal}{A palette function or a vector of colors.}
 
 \item{n}{The number of colors to display for palette functions.}
+
+\item{miss}{Fraction of squares with missing values, default .05.}
 }
 \value{
 None.

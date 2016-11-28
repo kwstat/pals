@@ -1,6 +1,6 @@
 # ramps.R
 # Time-stamp: <17 Nov 2016 19:59:13 c:/x/rpack/pals/R/ramps.R>
-# Copyright: Kevin Wright, 2016. License: GPL-2.
+# Copyright: Kevin Wright, 2016. License: GPL-3.
 
 # R auto-loads R/sysdata.rda, which contains the 'syspals' object.
 # You would think that this code should work:

@@ -1,6 +1,6 @@
 # map.R
 # Time-stamp: <16 Nov 2016 21:21:27 c:/x/rpack/pals/R/map.R>
-# Copyright: Kevin Wright, 2016. License: GPL-2.
+# Copyright: Kevin Wright, 2016. License: GPL-3.
 
 #' Test palette with a ColorBrewer map.
 #'
