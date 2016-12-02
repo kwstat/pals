@@ -25,6 +25,9 @@ A single palette/colormap is shown
 (5) as seen by tritan color-blind
 }
 \details{
+Rates of colorblindness in women are low, but in men the rates are
+around 3 to 7 percent, depending on the race.
+
 What to look for:
 
 1. Are colors still unique when viewed in less-than full color?

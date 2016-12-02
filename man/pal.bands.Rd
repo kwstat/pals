@@ -4,7 +4,7 @@
 \alias{pal.bands}
 \title{Show palettes as colored bands}
 \usage{
-pal.bands(..., n = 100, labels = NULL, title = NULL)
+pal.bands(..., n = 100, labels = NULL, title = NULL, gap = 0.1)
 }
 \arguments{
 \item{...}{Palettes, either functions or vectors of colors.}
@@ -14,6 +14,8 @@ pal.bands(..., n = 100, labels = NULL, title = NULL)
 \item{labels}{Labels for palettes}
 
 \item{title}{Title at top of page.}
+
+\item{gap}{Vertical gap between bars, default is 0.1}
 }
 \description{
 Show palettes as colored bands.
@@ -27,7 +29,7 @@ What to look for:
 The rainbow() palette is poor, showing bright lines at yellow, cyan, pink.
 }
 \examples{
-pal.bands(cubehelix, gnuplot, jet, tol.rainbow, inferno, magma, plasma, viridis, parula, n=51)
+pal.bands(cubehelix, gnuplot, jet, tol.rainbow, inferno, magma, plasma, viridis, parula, gap=.05)
 pal.bands(c('red','white','blue'), rainbow)
 
 }

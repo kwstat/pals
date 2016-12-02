@@ -3,11 +3,15 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/pals)](https://cran.r-project.org/package=pals)
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/pals)](https://cranlogs.r-pkg.org/badges/pals)
 
-Color Palettes and Palette Evaluation Tools
+Color Palettes, Colormaps, and Tools to Evaluate Them
 
 Key features:
 
-* Beta version.
+* Beta version. Mostly complete. Needs a vignette before release.
+
+* Extensive collection of colormaps and palettes.
+
+* Multiple tools to evaluate colormaps.
 
 ## Installation
 
@@ -22,8 +26,9 @@ devtools::install_github("kwstat/pals")
 
 ## Usage
 
-Vignette:
+Vignettes:
 [Examples for the pals package](https://rawgit.com/kwstat/pals/master/vignettes/pals_examples.html)
+[Examples for the pals package](https://rawgit.com/kwstat/pals/master/vignettes/illusion.html)
 
 ```R
 require(pals)

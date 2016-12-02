@@ -88,8 +88,8 @@ pal.heatmap(glasbey(32))
 pal.cube(glasbey, n=32) # Blues are close together
 
 # ----- kelly -----
-#pal.bands(kelly,n=22)
-#pal.heatmap(kelly(22)) # too many orange/pink colors
+pal.bands(kelly,n=22)
+pal.heatmap(kelly(22)) # too many orange/pink colors
 
 # ----- stepped -----
 pal.bands(stepped,n=20)
