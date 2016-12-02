@@ -32,10 +32,12 @@ opts_chunk$set(fig.align="center", fig.width=6, fig.height=6)
 options(width=90)
 ```
 
+## Test a palette
+
 ```{r}
 require(pals)
-#pal.test(parula)
-#pal.test(viridis)
+pal.test(parula)
+pal.test(viridis)
 ```
 
 # Kovesi
