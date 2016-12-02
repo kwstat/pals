@@ -27,8 +27,10 @@ devtools::install_github("kwstat/pals")
 ## Usage
 
 Vignettes:
+
 [Examples for the pals package](https://rawgit.com/kwstat/pals/master/vignettes/pals_examples.html)
-[Examples for the pals package](https://rawgit.com/kwstat/pals/master/vignettes/illusion.html)
+
+[A Color-Caused Optical Illusion](https://rawgit.com/kwstat/pals/master/vignettes/illusion.html)
 
 ```R
 require(pals)
