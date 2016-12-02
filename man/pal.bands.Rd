@@ -18,6 +18,14 @@ pal.bands(..., n = 100, labels = NULL, title = NULL)
 \description{
 Show palettes as colored bands.
 }
+\details{
+What to look for:
+
+1. A good discrete palette has distinct colors.
+
+2. A good continuous colormap does not show boundaries between colors.
+The rainbow() palette is poor, showing bright lines at yellow, cyan, pink.
+}
 \examples{
 pal.bands(cubehelix, gnuplot, jet, tol.rainbow, inferno, magma, plasma, viridis, parula, n=51)
 pal.bands(c('red','white','blue'), rainbow)

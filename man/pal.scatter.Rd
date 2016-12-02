@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{pal.scatter}
 \alias{pal.scatter}
-\title{Test a palette of colors with a scatterplot}
+\title{Show a palette of colors with a scatterplot}
 \usage{
 pal.scatter(pal, n)
 }
@@ -15,10 +15,14 @@ pal.scatter(pal, n)
 None.
 }
 \description{
-Details.
+What to look for:
+}
+\details{
+1. Can the colors of each point be uniquely identified?
 }
 \examples{
 pal.scatter(glasbey, n=31)
+
 }
 \author{
 Kevin Wright

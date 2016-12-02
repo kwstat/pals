@@ -1,5 +1,5 @@
 # ramps.R
-# Time-stamp: <17 Nov 2016 19:59:13 c:/x/rpack/pals/R/ramps.R>
+# Time-stamp: <29 Nov 2016 12:48:41 c:/x/rpack/pals/R/ramps.R>
 # Copyright: Kevin Wright, 2016. License: GPL-3.
 
 # R auto-loads R/sysdata.rda, which contains the 'syspals' object.
@@ -55,25 +55,21 @@
 #' @examples
 #'
 #' # ----- coolwarm -----
-#' filled.contour(volcano, color.palette = coolwarm, nlevels=40, asp = 1, axes=0, main="coolwarm")
+#' pal.volcano(coolwarm)
 #' pal.test(coolwarm)
 #' # Note the mach banding gray line in the following:
-#' filled.contour(volcano,
-#'   color.palette = colorRampPalette(c("#3B4CC0", "lightgray", "#B40426"),space="Lab"),
-#'   nlevels=40, asp = 1, axes=0)
+#' pal.volcano(colorRampPalette(c("#3B4CC0", "lightgray", "#B40426")))
 #'
 #' # ----- cubehelix -----
 #' # Full range of colors. Pink is overwhelming. Not the best choice.
-#' filled.contour(volcano, color.palette = cubehelix, nlevels=40, asp = 1, axes=0, main="cubehelix")
+#' pal.volcano(cubehelix)
 #' pal.test(cubehelix)
 #' 
-#' # Limited to mostly blues/greens
-#' filled.contour(volcano, color.palette = function(n)
-#'   cubehelix(n, start=.5, r=-.75), nlevels=40, asp = 1, axes=0, main="cubehelix")
-#'
+#' # Limited to mostly blues/greens. Dark areas severely too black.
+#' pal.volcano(function(n) cubehelix(n, start=.5, r=-.75))
+#' 
 #' # Similar, but more saturated. See: http://inversed.ru/Blog_2.htm
-#' filled.contour(volcano, color.palette = function(n)
-#'   cubehelix(n, start=.25, r=-.67, hue=1.5), nlevels=40, asp = 1, axes=0, main="cubehelix")
+#' pal.volcano(function(n) cubehelix(n, start=.25, r=-.67, hue=1.5))
 #'
 #' # Dark colors totally lose structure of the volcano peak.
 #' op <- par(mfrow=c(2,2), mar=c(2,2,2,2))
@@ -85,22 +81,21 @@
 #' par(op)
 #'
 #' # ----- gnuplot -----
-#' filled.contour(volcano, color.palette = gnuplot,
-#'                nlevels=40, asp = 1, axes=0, main="gnuplot")
+#' pal.volcano(gnuplot)
 #' pal.test(gnuplot)
 #'
 #' # ----- jet -----
-#' filled.contour(volcano, color.palette = jet, nlevels=40, asp = 1, axes=0,  main="jet")
+#' pal.volcano(jet)
 #' pal.test(jet)
 #'
 #' # ----- parula -----
-#' filled.contour(volcano, color.palette = parula, nlevels=40, asp = 1, axes=0, main="parula")
+#' pal.volcano(parula)
 #' pal.test(parula)
 #'
 #' # ----- tol.rainbow -----
-#' filled.contour(volcano, color.palette = tol.rainbow,
-#'                nlevels=40, asp = 1, axes=0, main="tol.rainbow")
+#' pal.volcano(tol.rainbow)
 #' pal.test(tol.rainbow)
+#' 
 #' @author Palette colors by various authors. R code by Kevin Wright.
 #' 
 #' @references
@@ -120,7 +115,7 @@
 #' Paul Tol (2012). Color Schemes. SRON technical note, SRON/EPS/TN/09-002.
 #' https://personal.sron.nl/~pault/
 #' 
-#' My Favorite Colormap.
+#' My Favorite Colormap. (gnuplot)
 #' https://web.archive.org/web/20040119000943/http://www.ihe.uni-karlsruhe.de/mitarbeiter/vonhagen/palette.en.html
 #'
 #' MathWorks documentation.
@@ -308,6 +303,7 @@ warmcool <- function(n){
 #' Thyng, K.M., C.A. Greene, R.D. Hetland, H.M. Zimmerle, and S.F. DiMarco (2016).
 #' True colors of oceanography: Guidelines for effective and accurate colormap selection.
 #' \emph{Oceanography}, 29(3):9-13, http://dx.doi.org/10.5670/oceanog.2016.66.
+#' 
 #' @name ocean
 NULL
 
@@ -463,12 +459,14 @@ linearl <- function(n) colorRampPalette(syspals$linearl)(n)
 #' @export 
 linearlhot <- function(n) colorRampPalette(syspals$linearlhot)(n)
 
-
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
 
 # Matplotlib colors
 
+#' @examples
+#' pal.bands(magma, inferno, plasma, viridis)
+#' 
 #' @export
 #' @rdname continuous
 magma <- function(n) colorRampPalette(syspals$magma)(n)

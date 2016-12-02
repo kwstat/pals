@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{pal.sineramp}
 \alias{pal.sineramp}
-\title{Test a palette of colors with a sineramp}
+\title{Show a palette of colors with a sineramp}
 \usage{
 pal.sineramp(pal, n = 150, nx = 512, ny = 256, amp = 12.5,
   wavelen = 8, pow = 2)
@@ -27,16 +27,11 @@ For linear dampening, use 1.}
 None
 }
 \description{
-Test palette with a sineramp
-}
-\details{
-Interpretation: Ideally, the sine wave should be equally visible across the
-entire image. Further, at the bottom of the image there should be
-no identifiable features, only a smooth ramp.  The 'jet' palette fails both.
-
 The test image shows a sine wave superimposed on a ramp of the palette.  The
 amplitude of the sine wave is dampened/modulated from full at the top to 0
 at the bottom.
+}
+\details{
 The ramp function that the sine wave is superimposed upon is adjusted slightly
 for each row so that each row of the image spans the full data range of 0 to 255.
 The wavelength is chosen to create a stimulus that is aligned with the
@@ -44,10 +39,16 @@ capabilities of human vision.  For the default amplitude of 12.5, the trough
 to peak distance is 25, which is about 10 percent of the 256 levels of the ramp.
 Some color palettes (like 'jet') have perceptual flat areas that can hide
 fluctations/features of this magnitude.
+
+What to look for:
+
+1. Is the sine wave equally visible across the entire image?
+
+2. At the bottom, is the ramp smooth, or are there features like vertical bands?
 }
 \examples{
-pal.sineramp(jet) # Very poor in green areas
 pal.sineramp(parula)
+pal.sineramp(jet) # Bad: Indistinct wave in green at top. Mach bands at bottom.
 pal.sineramp(brewer.greys(100))
 
 # Show Kovesi's colormaps
@@ -58,6 +59,7 @@ for(i in 1:41) { pal.sineramp(Kovesi$values[[i]]); title(i) }
 pal.sineramp(gnuplot) ; title('gnuplot')
 pal.sineramp(Kovesi$values[[29]]); title('Kovesi 29')
 }
+
 }
 \author{
 Concept by Peter Kovesi. R code by Kevin Wright.

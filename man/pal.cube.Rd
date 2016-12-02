@@ -22,6 +22,11 @@ None
 The supplied color palette is converted to red,green,blue values
 and plotted in a three-dimensional scatterplot.
 }
+\details{
+What to look for:
+
+Most good palettes have colors that are spread somewhat uniformly in 3D.
+}
 \examples{
 \dontrun{
 pal.cube(cubehelix)

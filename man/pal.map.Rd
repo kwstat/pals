@@ -2,7 +2,7 @@
 % Please edit documentation in R/map.R
 \name{pal.map}
 \alias{pal.map}
-\title{Test palette with a ColorBrewer map.}
+\title{Show a palette using a map of U.S. counties}
 \usage{
 pal.map(pal = brewer.paired, n = 12)
 }
@@ -15,9 +15,15 @@ pal.map(pal = brewer.paired, n = 12)
 None.
 }
 \description{
-Display a palette on a choropleth map similar to ColorBrewer.
+What to look for:
 }
 \details{
+1. Are regions distinct?
+
+2. Are outliers within each region distinct?
+
+Display a palette on a choropleth map similar to ColorBrewer.
+
 Broad bands of color are easy to distinguish.
 Does the palette allow visibility of outlier counties in the larger regions?
 Does the palette allow identification of colors when the

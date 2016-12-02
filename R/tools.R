@@ -1,12 +1,20 @@
 # tools.R
-# Time-stamp: <24 Nov 2016 07:25:32 c:/x/rpack/pals/R/tools.R>
+# Time-stamp: <30 Nov 2016 22:17:17 c:/x/rpack/pals/R/tools.R>
 # Copyright: Kevin Wright, 2016. License: GPL-3.
 
 # ----------------------------------------------------------------------------
+# pal.bands
 
 #' Show palettes as colored bands
 #'
 #' Show palettes as colored bands.
+#' 
+#' What to look for:
+#' 
+#' 1. A good discrete palette has distinct colors.
+#' 
+#' 2. A good continuous colormap does not show boundaries between colors.
+#' The rainbow() palette is poor, showing bright lines at yellow, cyan, pink.
 #' 
 #' @param ... Palettes, either functions or vectors of colors.
 #' 
@@ -15,13 +23,15 @@
 #' @param labels Labels for palettes
 #'
 #' @param title Title at top of page.
+#'
+#' @param gap Vertical gap between bars, default is 0.1
 #' 
 #' @examples
-#' pal.bands(cubehelix, gnuplot, jet, tol.rainbow, inferno, magma, plasma, viridis, parula, n=51)
+#' pal.bands(cubehelix, gnuplot, jet, tol.rainbow, inferno, magma, plasma, viridis, parula, gap=.05)
 #' pal.bands(c('red','white','blue'), rainbow)
 #'
 #' @export
-pal.bands <- function(..., n=100, labels=NULL, title=NULL){
+pal.bands <- function(..., n=100, labels=NULL, title=NULL, gap=0.1){
 
   if(n < 3) warning("Using n=3")
   
@@ -65,9 +75,10 @@ pal.bands <- function(..., n=100, labels=NULL, title=NULL){
     # i goes bottom to top, npal+1-i goes top to bottom
     nj <- nc[npal+1 - i]
     shadi <- pals[[npal+1 - i]]
-    brks <- seq(from=0, to=maxn, length=nj+1) # break points between colors
+    brks <- seq(from=0, to=maxn, length=nj+1) # horiz break points between colors
+    # the vertical height of each bar is 1-gap, with 'gap' white fraction at the top
     rect(xleft = brks[1:nj], ybottom = i-1,
-         xright = brks[2:(nj+1)],      ytop = i-0.2, col = shadi, border = NA)
+         xright = brks[2:(nj+1)], ytop = i-gap, col = shadi, border = NA)
     
     # If inidividual colors in a palette have names, add them
     nms <- names(shadi)
@@ -81,6 +92,10 @@ pal.bands <- function(..., n=100, labels=NULL, title=NULL){
        labels = rev(labels),
        cex=0.6, xpd = TRUE, adj = 1)
 
+  # Or, we could overlay the labels on top of the bands, using shadowtext
+  # http://stackoverflow.com/questions/29303480/text-labels-with-outline-in-r
+  # http://blog.revolutionanalytics.com/2009/05/make-text-stand-out-with-outlines.html
+  
   if(!is.null(title)) title(title)
   
 }
@@ -95,308 +110,52 @@ pal.bands(cubehelix)
 pal.bands(alphabet,cubehelix)
 pal.bands(cubehelix,alphabet)
 pal.bands(warmcool, c('red','orange','yellow','green','blue','purple'), coolwarm, n=11)
-pal.bands(alphabet,cols25,glasbey,kelly,stepped,tol)
+pal.bands(alphabet,cols25,glasbey,kelly,stepped,tol,watlington)
 
 }
 
 # ----------------------------------------------------------------------------
+# pal.channels
 
-#' Show a palette of colors in three dimensional RGB or LUV space
+#' Show the red, green, blue, gray amount in colors of a palette
 #'
-#' The supplied color palette is converted to red,green,blue values
-#' and plotted in a three-dimensional scatterplot.
-#' 
+#' The amount of red, green, blue, and gray in colors are shown.
+#'
+#' What to look for:
+#'
+#' 1. Sequential data should usually be shown with a colormap that is smoothly
+#' increasing in lightness, as shown by the gray line.
+#'
 #' @param pal A palette function or a vector of colors.
 #' 
 #' @param n The number of colors to display for palette functions.
-#' 
-#' @param label If TRUE, show color name/value on plot
-#'
-#' @param type Either "RGB" (default) or "LUV".
 #' 
 #' @return None
-#' @import rgl
-#' @export 
-#' @examples
-#' \dontrun{
-#' pal.cube(cubehelix)
-#' pal.cube(glasbey, n=32) # blues are too close to each other
-#' pal.cube(glasbey, n=32, type="LUV")
-#' pal.cube(cols25(25), type="LUV", label=TRUE)
-#' # To open a second cube
-#' rgl.open() # Open a new RGL device
-#' rgl.bg(color = "white") # Setup the background color
-#' pal.cube(colors()[c(1:152, 254:260, 362:657)]) # All R non-grey colors
-#' }
 #' 
-#' @references
-#' None
-#'
-#' @importFrom methods as
-pal.cube <- function(pal, n=100, label=FALSE, type="RGB"){
-
-  if(is.function(pal)) pal <- pal(n)
-
-  if(type=="RGB") {
-    x <- t(col2rgb(pal))
-    xl="red"; yl="green"; zl="blue"
-  } else if (type=="LUV") {
-    luvmat <- methods::as(colorspace::hex2RGB(pal), "LUV")
-    x <- luvmat@coords
-    xl="L"; yl="U"; zl="V"
-  }
-
-  plot3d(x, col=pal,
-         xlab=xl, ylab=yl,zlab=zl,
-         lit=FALSE,
-         size=1.5, type='s')
-  if(label)
-    text3d(x, texts=pal, cex=0.8)
-
-}
-
-# ----------------------------------------------------------------------------
-
-#' Test a palette of colors with a heatmap
-#'
-#' A random heatmap is generated (with 5% missing values) and a key is added
-#' to the heatmap by appending a blank column and then a column with the
-#' palette colors.
-#'
-#' In an effective palette, the value of each cell can be correctly
-#' interpreted using the key on the right side, and missing values
-#' are identified.
-#' 
-#' @param pal A palette function or a vector of colors.
-#' 
-#' @param n The number of colors to display for palette functions.
-#'
-#' @param miss Fraction of squares with missing values, default .05.
-#' 
-#' @return None.
 #' @author Kevin Wright
-#' @export 
+#' 
 #' @examples
-#' pal.heatmap(brewer.paired(12), n=12)
-#' pal.heatmap(coolwarm(12), n=12)
-#' pal.heatmap(tol, n=12)
-#' pal.heatmap(glasbey)
-#' pal.heatmap(kelly, n=22)
-#' @references
+#' pal.channels(viridis(10))
+#' pal.channels(viridis)
+#' 
+#' @references 
 #' None
-#' @importFrom stats runif
-pal.heatmap <- function(pal, n=25, miss=.05){
-
-  if(miss >  1)
-    warning("`miss` should be less than 1.")
-  
+#' 
+#' @export 
+pal.channels <- function(pal,n=150){
   if(is.function(pal)) {
+    # pal is a function
     pal <- pal(n)
   } else {
     n <- length(pal)
   }
   
-  xdim <- 15
-  ydim <- n
-  cellvals <- sample(1:n, size=xdim*ydim, replace=TRUE)
-  # Introduce random missing values
-  cellvals[runif(xdim*ydim) < miss] <- NA
-  mat <- matrix(cellvals, ncol=xdim)
-  
-  # Add a column of NA and a column for the palette
-  mat <- cbind(mat, NA)
-  mat <- cbind(mat, 1:n)
-  image(t(mat), col=pal,axes=FALSE)
-  axis(side=4)
-}
-
-# ----------------------------------------------------------------------------
-
-#' Test a palette of colors with a scatterplot
-#'
-#' Details.
-#' 
-#' @param pal A palette function or a vector of colors.
-#' 
-#' @param n The number of colors to display for palette functions.
-#' 
-#' @return
-#' None.
-#' @author Kevin Wright
-#' @export 
-#' @examples
-#' pal.scatter(glasbey, n=31)
-#' @references
-#' None.
-pal.scatter <- function(pal, n){
-  if(is.function(pal)) pal <- pal(n)
-  
-  plot(runif(100), runif(100), col=pal, pch=16,
-       xlab="", ylab="",
-       xlim=c(0,1), ylim=c(0,1))
-  # Need to add a key
-}
-
-# ----------------------------------------------------------------------------
-
-#' Test a palette of colors for black/white and colorblind safety
-#'
-#' .desc
-#'
-#' .details
-#'
-#' @param pal A palette function or a vector of colors.
-#' 
-#' @param n The number of colors to display for palette functions.
-#' 
-#' @param title Title to display at the top of the test image
-#' 
-#' @return
-#' None.
-#' @author Kevin Wright
-#' @examples 
-#' pal.safe(glasbey(31))
-#' pal.safe(rainbow(100), title="rainbow")
-#' pal.safe(cubicyf(100), title="cubicyf")
-#' pal.safe(parula, title="parula")
-#' 
-#' @references 
-#' None
-#' @export
-#' @importFrom colorspace desaturate
-#' @importFrom dichromat dichromat
-pal.safe <- function(pal, n=100, title=NULL){
-
-  if(is.function(pal)) pal <- pal(n)
-
-  ncolor <- length(pal)
-
-  # pal is a single vector of colors, now make it a list
-  pal <- list(pal,
-              colorspace::desaturate(pal),
-              dichromat::dichromat(pal, type="deutan"),
-              dichromat::dichromat(pal, type="protan"),
-              dichromat::dichromat(pal, type="tritan"))
-  labs <- c("Original","Black/White","Deutan","Protan","Tritan")
-  npal <- 5
-  ylim <- c(0, npal)
-  oldpar <- par(mgp = c(2, 0.25, 0))
-  on.exit(par(oldpar))
-  plot(1, 1, xlim = c(0, ncolor), ylim = ylim,
-       type = "n", axes = FALSE, bty = "n", xlab = "", ylab = "")
-
-  for (i in 1:npal) {
-    shadi <- pal[[(npal+1) - i]] # Plot from bottom to top, reverse palette order
-    rect(xleft = 0:(ncolor - 1), ybottom = i - 1, xright = 1:ncolor, 
-         ytop = i - 0.2, col = shadi, border = NA)
-  }
-  text(rep(-0.1, npal), (1:npal) - 0.6,
-       labels = rev(labs),
-       cex=0.6, xpd = TRUE, adj = 1)
-
-  if(!is.null(title)) title(title)
-}
-
-
-# ----------------------------------------------------------------------------
-
-#' Test a palette of colors with multiple images
-#'
-#' 1. Z-order curve.  See: https://en.wikipedia.org/wiki/Z-order_curve
-#' A good color palette should be able to resolve 4 sub-squares within
-#' each of the 16 squares.
-#' 
-#' 2. Contrast Sensitivity Function. Also called a contrast-resolution grating.
-#' Frequency increases from left to right, contrast decreases from bottom
-#' to top.  You can also think of this as a sine wave with periodicity becoming
-#' shorter at the right side and the amplitude decreasing to 0 at the top.
-#' Poor colormaps hide variation at the top.
-#' See: http://blog.kasson.com/?m=201404.
-#'
-#' 3. Frequency ramp. See: http://inversed.ru/Blog_2.htm
-#' Are the vertical bands visible across the full vertical axis?
-#'
-#' 4. 5. Two images of the 'volcano' elevation data in R using forward/reverse
-#' colors. Try to find the highest point on the volcano peak.  Many palettes
-#' with dark colors at one end of the palette hide the peak (e.g. viridis).
-#' Also try to decide if the upperleft and upperright corners are the same color.
-#' 
-#' @param pal A palette function or a vector of colors.
-#'
-#' @param title Title to display at the top of the test image
-#' 
-#' @return None.
-#' @export 
-#' @examples
-#' pal.test(parula) # fails contrast 1
-#' pal.test(viridis)
-#' pal.test(coolwarm)
-#' 
-#' @references
-#' # See links above.
-#' 
-pal.test <- function(pal, title=substitute(pal)){
-
-  op <- par(mfrow=c(2,3),
-            oma=c(0,0,2,0), # save space for title
-            mar=c(2,2,1,1), bg="gray80")
-
-  if(is.function(pal)) {
-    # pal is a function
-    n <- 150
-    cols64 <- pal(64)
-    cols <- pal(n)
-  } else {
-    n <- length(pal)
-    cols <- pal
-    cols64 <- colorRampPalette(pal)(64)
-  }
-
-  
-  # Z-curve 64
-  zval <- matrix(c( 0, 1, 4 ,5,16,17,20,21,
-                    2, 3, 6 ,7,18,19,22,23,
-                    8, 9,12,13,24,25,28,29,
-                   10,11,14,15,26,27,30,31,
-                   32,33,36,37,48,49,52,53,
-                   34,35,38,39,50,51,54,55,
-                   40,41,44,45,56,57,60,61,
-                   42,43,46,47,58,59,62,63)+1, byrow=TRUE, ncol=8)
-  # Use t() and 8:1 to match Peter Karpov
-  image(t(zval[8:1,]), col=cols64, axes=FALSE)
-
-  
-  # Campbell-Robson Contrast Sensitivity Chart
-  # Are the vertical bands visible across the full vertical axis?
-  # Do the vertical bands blur together
-  x <- seq(0,3*pi,length=200)
-  y <- seq(0,2*pi,length=200)
-  z <- outer(x,y, function(x,y) cos(x^2)/exp(y))
-  image(z, col=cols, axes=FALSE)
-
-
-  ## # Frequency ramp suggested by
-  ## # http://inversed.ru/Blog_2.htm
-  ## x <- seq(0,2*pi,length=200)
-  ## y <- seq(0,2,length=200)
-  ## z <- 5 + outer(x,y, function(x,y) y + x^2 * sin(64*y) / 12)
-  ## image(z, col=cols, axes=FALSE)
-  pal.sineramp(pal=cols, nx=400, wavelen=10)
-
-  # Volcano
-  #image(volcano, col=cols, xaxt="n", yaxt="n")
-  #image(volcano, col=rev(cols), xaxt="n", yaxt="n")
-  paltest.volcano(cols)
-  paltest.volcano(rev(cols))
-
-  
-  # RGB curves
   x <- 1:n
-  colrgb <- col2rgb(cols)
+  colrgb <- col2rgb(pal)
   yr <- colrgb['red',]
   yg <- colrgb['green',]
   yb <- colrgb['blue',]
-  ygr <- col2rgb(colorspace::desaturate(cols))['red',]
+  ygr <- col2rgb(colorspace::desaturate(pal))['red',]
   
   plot(x,yr,col="red",ylim=c(0,255),type="l",lwd=2,xlab="",ylab="")
   lines(x,yg,col="forestgreen",lwd=2)
@@ -407,119 +166,62 @@ pal.test <- function(pal, title=substitute(pal)){
   # Also, viridis() returns colors with alpha levels "#FDE725FF"
   # which failed in hex2RGB (doesn't like alpha level)
   # LUV scale is 0-100, so multiply by 2.55
-  # luv <- as(colorspace::hex2RGB(cols), "LUV")
+  # luv <- as(colorspace::hex2RGB(pal), "LUV")
   # lines(x,luv@coords[,1] * 2.5 , col="white") 
 
-  
-  # Title. What to do if it is a vector instead???
-  # browser()
-  if(!is.null(title)) {
-    title(title, outer=TRUE)
-  }
-  
-  on.exit(op)
-  par(op)
 }
 
 # ----------------------------------------------------------------------------
+# pal.csf
 
-#' Test a palette of colors with a sineramp
-#'
-#' Test palette with a sineramp
-#'
-#' Interpretation: Ideally, the sine wave should be equally visible across the
-#' entire image. Further, at the bottom of the image there should be
-#' no identifiable features, only a smooth ramp.  The 'jet' palette fails both.
-#'
-#' The test image shows a sine wave superimposed on a ramp of the palette.  The
-#' amplitude of the sine wave is dampened/modulated from full at the top to 0
-#' at the bottom.
-#' The ramp function that the sine wave is superimposed upon is adjusted slightly
-#' for each row so that each row of the image spans the full data range of 0 to 255.
-#' The wavelength is chosen to create a stimulus that is aligned with the
-#' capabilities of human vision.  For the default amplitude of 12.5, the trough
-#' to peak distance is 25, which is about 10 percent of the 256 levels of the ramp.
-#' Some color palettes (like 'jet') have perceptual flat areas that can hide
-#' fluctations/features of this magnitude.
+#' Show a palette with a Campbell-Robson Contrast Sensitivity Chart
 #' 
-#' @param pal A palette function or a vector of colors.
+#' In a contrast sensitivity figure as drawn by this function, the 
+#' spatial frequency increases from left to right and the contrast decreases
+#' from bottom to top.  The bars in the figure appear taller in the middle 
+#' of the image than at the edges, creating an upside-down "U" shape, which 
+#' is the "contrast sensitivity function".  
+#' Your perception of this curve depends on the viewing distance.
+#' 
+#' What to look for:
+#' 
+#' 1. Are the vertical bands visible across the full vertical axis?
+#' 
+#' 2. Do the vertical bands blur together?
+#'  
+#' @param pal A continuous color palette function
 #' 
 #' @param n The number of colors to display for palette functions.
-#' 
-#' @param nx Number of 'pixels' horizontally (approximate).
-#' 
-#' @param ny Number of 'pixels' vertically
-#' 
-#' @param amp Amplitude of sine wave, default 12.5
-#' 
-#' @param wavelen Wavelength of sine wave, in pixels, default 8.
-#' 
-#' @param pow Power for dampening the sine wave. Default 2. For no dampening, use 0.
-#' For linear dampening, use 1.
-#' 
+#'
 #' @return None
-#' @author Concept by Peter Kovesi. R code by Kevin Wright.
-#' @examples 
-#' pal.sineramp(jet) # Very poor in green areas
-#' pal.sineramp(parula)
-#' pal.sineramp(brewer.greys(100))
+#'
+#' @examples
+#' pal.csf(brewer.greys) # Classic example from psychology
+#' pal.csf(parula)
 #' 
-#' # Show Kovesi's colormaps
-#' \dontrun{
-#' library(spatstat)
-#' data(Kovesi)
-#' for(i in 1:41) { pal.sineramp(Kovesi$values[[i]]); title(i) }
-#' pal.sineramp(gnuplot) ; title('gnuplot')
-#' pal.sineramp(Kovesi$values[[29]]); title('Kovesi 29')
-#' }
+#' @author Kevin Wright
+#' 
 #' @references 
-#' Peter Kovesi (2015). Good Colour Maps: How to Design Them.
-#' http://arxiv.org/abs/1509.03700.
-#'
-#' Peter Kovesi. A set of perceptually uniform color map files.
-#' http://peterkovesi.com/projects/colourmaps/index.html
-#'
-#' Peter Kovesi. CET Perceptually Uniform Colour Maps: The Test Image.
-#' http://peterkovesi.com/projects/colourmaps/colourmaptestimage.html
 #' 
-#' Original Julia version by Peter Kovesi from:
-#' https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/src/utilities.jl
-#' @export 
-pal.sineramp <- function(pal, n=150, nx=512, ny=256,
-                         amp=12.5, wavelen=8, pow=2) {
+#' Izumi Ohzawa. Make Your Own Campbell-Robson Contrast Sensitivity Chart.
+#' http://ohzawa-lab.bpe.es.osaka-u.ac.jp/ohzawa-lab/izumi/CSF/A_JG_RobsonCSFchart.html
+#' 
+#' Campbell, F. W. and Robson, J. G. (1968).
+#' Application of Fourier analysis to the visibility of gratings. 
+#' \emph{Journal of Physiology}, 197: 551-566.
+#' 
+#' @export
+pal.csf = function(pal, n=150){
+  if(is.function(pal)) pal = pal(n)
 
-  if(is.function(pal)) pal <- pal(n)
-  
-  
-  # Adjust width of image so there is an integer number of cycles of
-  # the sinewave.  Helps for cyclic color palette.
-  # May still be a slight discontinuity along the edge.
-  cycles = round(nx/wavelen)
-  nx = cycles*wavelen
-  
-  # Sine wave
-  xval = 0:(nx-1)
-  fx = amp*sin( 1.0/wavelen * 2*pi*xval)
-
-  # Vertical dampening of the wave
-  img = outer(fx, seq(0,1,length=ny), function(x,y) x*y^pow)
-
-  # Add ramp across entire image
-  img = img + outer(seq(0,1,length=nx), seq(1,1,length=ny), '*') * (255-2*amp)
-
-  # Normalise each row (offset and rescale into [0,1]). Important for cyclic
-  # color maps
-  img <- apply(img, 2, function(x){
-    x = x - min(x) # set smallest value to 0
-    x = x/max(x) # set largest value to 1
-    x
-  })
-
-  image(img, col=pal, axes=FALSE)
-  invisible()
+  x <- seq(0,5*pi,length=200)
+  y <- seq(0,2*pi,length=200)
+  z <- outer(x,y, function(x,y) cos(x^2)/exp(y))
+  image(z, col=pal, axes=FALSE)
 }
 
 # ----------------------------------------------------------------------------
+# pal.compress
 
 #' Compress a color palette function to fewer colors
 #'
@@ -591,6 +293,68 @@ pal.compress <- function(pal, n=5, thresh=2.5) {
 }
 
 # ----------------------------------------------------------------------------
+# pal.cube
+
+#' Show a palette of colors in three dimensional RGB or LUV space
+#'
+#' The supplied color palette is converted to red,green,blue values
+#' and plotted in a three-dimensional scatterplot.
+#' 
+#' What to look for:
+#' 
+#' Most good palettes have colors that are spread somewhat uniformly in 3D.
+#' 
+#' @param pal A palette function or a vector of colors.
+#' 
+#' @param n The number of colors to display for palette functions.
+#' 
+#' @param label If TRUE, show color name/value on plot
+#'
+#' @param type Either "RGB" (default) or "LUV".
+#' 
+#' @return None
+#' @import rgl
+#' @export 
+#' @examples
+#' \dontrun{
+#' pal.cube(cubehelix)
+#' pal.cube(glasbey, n=32) # blues are too close to each other
+#' pal.cube(glasbey, n=32, type="LUV")
+#' pal.cube(cols25(25), type="LUV", label=TRUE)
+#' # To open a second cube
+#' rgl.open() # Open a new RGL device
+#' rgl.bg(color = "white") # Setup the background color
+#' pal.cube(colors()[c(1:152, 254:260, 362:657)]) # All R non-grey colors
+#' }
+#' 
+#' @references
+#' None
+#'
+#' @importFrom methods as
+pal.cube <- function(pal, n=100, label=FALSE, type="RGB"){
+
+  if(is.function(pal)) pal <- pal(n)
+
+  if(type=="RGB") {
+    x <- t(col2rgb(pal))
+    xl="red"; yl="green"; zl="blue"
+  } else if (type=="LUV") {
+    luvmat <- methods::as(colorspace::hex2RGB(pal), "LUV")
+    x <- luvmat@coords
+    xl="L"; yl="U"; zl="V"
+  }
+
+  plot3d(x, col=pal,
+         xlab=xl, ylab=yl,zlab=zl,
+         lit=FALSE,
+         size=1.5, type='s')
+  if(label)
+    text3d(x, texts=pal, cex=0.8)
+
+}
+
+# ----------------------------------------------------------------------------
+# pal.dist
 
 #' Measure the pointwise distance between two palettes
 #'
@@ -637,6 +401,7 @@ pal.dist <- function(pal1, pal2, n=255){
 }
 
 # ----------------------------------------------------------------------------
+# pal.maxdist
 
 #' Measure the maximum distance between two palettes
 #'
@@ -667,290 +432,384 @@ pal.dist <- function(pal1, pal2, n=255){
 pal.maxdist <- function(pal1, pal2, n=255) max(pal.dist(pal1, pal2, n))
 
 # ----------------------------------------------------------------------------
+# pal.heatmap
 
-#' Discrete palettes
+#' Show a palette of colors with a heatmap
 #'
-#' Color palettes designed for discrete, categorical data with a small number of
-#' categories.
+#' A random heatmap is generated (with 5% missing values) and a key is added
+#' to the heatmap by appending a blank column and then a column with the
+#' palette colors.
 #'
-#' The \code{alphabet} palette has 26 distinguishable colors that have logical names
-#' starting with the letters A, B, ... Z.
-#' This palette is based on the work by Green-Armytage (2010), but uses the
-#' names 'orange' instead of 'orpiment', and 'magenta' instead of 'mallow'. 
-#'
-#' The \code{cols25} palette was created experimentally by Wright (unpublished)
-#' to create a set of colors that are distinct.
+#' What to look for:
 #' 
-#' The \code{glasbey} palette by Glasbey et al (2007) has 32 colors that are
-#' maximally distinct. Glasbey has 'white' as the second color, but in this
-#' version of the palette, the color 'white' is moved to the end, and is
-#' actually light-gray, #F2F3F4.
-#' There exists a 256-color palette palette of 'distinct' colors.
-#' We think this is absurd--even 32 colors are hard to distinguish.
-#'
-#' The \code{kelly} palette of 22 colors maximize the contrast
-#' between colors in a set if the colors are chosen in sequential order.
-#' Kelly paid attention to the needs of people with color blindness.  The
-#' first nine colors work well for such people and people with normal vision.
-#' Kelly did not provide RGB color values, and the paper was in black-and-white.
-#' A color image of the Kelly palette can be found in Green-Armytage (2010).
-#' The color values used here are from
-#' http://hackerspace.kinja.com/iscc-nbs-number-hex-r-g-b-263-f2f3f4-242-243-244-267-22-1665795040
-#' The color 'white' has been re-defined as light-gray, #F2F3F4.
-#' Commentary: We think the kelly palette has an over-abundance of orange-ish
-#' colors, the purples are not very distinct, etc.  See the pal.heatmap
-#' example.
-#'
-#' The \code{stepped} palette has 20 colors (5 hues, 4 levels within each hue)
-#' that is useful for showing varying levels within categories.
-#' In order to better separate these colors in RGB space, we
-#' moved red hue 0 to hue 350, green hue 80 to hue 90 
+#' 1. Can the value of each cell be correctly interpreted using the key on 
+#' the right side?
 #' 
-#' The \code{tol} palette has 12 colors by Paul Tol.
-#' Any printer that conforms to international standard ISO 12647-2 can
-#' reproduce all colours.
+#' 2. Can missing be identified?
 #' 
-#' @param n Number of colors to return.
-#' @return A vector of colors.
-#' @author Palette colors by various authors. R code by Kevin Wright.
+#' @param pal A palette function or a vector of colors.
+#' 
+#' @param n The number of colors to display for palette functions.
+#'
+#' @param miss Fraction of squares with missing values, default .05.
+#' 
+#' @return None.
+#' @author Kevin Wright
+#' @export 
 #' @examples
-#'
-#' # ----- alphabet -----
-#' alphabet()
-#' alphabet()["jade"]
-#' pal.cube(alphabet)
-#' pal.bands(alphabet,n=26)
-#' pal.map(alphabet)
-#' pal.heatmap(alphabet)
-#'
-#' # ----- cols25 -----
-#' pal.bands(cols25,n=25)
-#' pal.heatmap(cols25)
-#'
-#' # ------ glasbey ------
-#' pal.bands(glasbey,n=32)
-#' pal.cube(glasbey, n=32) # Blues are close together
-#' pal.heatmap(glasbey(32))
-#'
-#' # ----- kelly -----
-#' pal.bands(kelly,n=22)
-#' pal.heatmap(kelly(22))
-#'
-#' # ----- stepped -----
-#' pal.bands(stepped,n=20)
-#' pal.heatmap(stepped, n=20)
+#' pal.heatmap(brewer.paired(12), n=12)
+#' pal.heatmap(coolwarm(12), n=12)
+#' pal.heatmap(tol, n=12)
+#' pal.heatmap(glasbey)
+#' pal.heatmap(kelly, n=22)
 #' 
-#' # ----- tol -----
-#' pal.bands(tol,n=12)
-#' pal.heatmap(tol, 12)
-#' 
-#' # ----- watlington -----
-#' pal.bands(watlington,n=16)
-#' pal.heatmap(watlington(16))
-
 #' @references
+#' None
 #' 
-#' Robert M. Boynton. (1989)
-#' Eleven Colors That Are Almost Never Confused. 
-#' Proc. SPIE 1077, \emph{Human Vision, Visual Processing, and Digital Display}, 322-332.
-#' http://doi.org/10.1117/12.952730
-#' 
-#' Chris Glasbey, Gerie van der Heijden, Vivian F. K. Toh, Alision Gray (2007).
-#' Colour Displays for Categorical Images.
-#' \emph{Color Research and Application}, 32, 304-309.
-#' http://doi.org/10.1002/col.20327
+#' @importFrom stats runif
+pal.heatmap <- function(pal, n=25, miss=.05){
+
+  if(miss >  1)
+    warning("`miss` should be less than 1.")
+  
+  if(is.function(pal)) {
+    pal <- pal(n)
+  } else {
+    n <- length(pal)
+  }
+  
+  xdim <- 15
+  ydim <- n
+  cellvals <- sample(1:n, size=xdim*ydim, replace=TRUE)
+  # Introduce random missing values
+  cellvals[runif(xdim*ydim) < miss] <- NA
+  mat <- matrix(cellvals, ncol=xdim)
+  
+  # Add a column of NA and a column for the palette
+  mat <- cbind(mat, NA)
+  mat <- cbind(mat, 1:n)
+  image(t(mat), col=pal,axes=FALSE)
+  axis(side=4)
+}
+
+# ----------------------------------------------------------------------------
+# pal.safe
+
+#' Show a palette of colors for black/white and colorblind safety
 #'
-#' P. Green-Armytage (2010): A Colour Alphabet and the Limits of Colour Coding.
-#' \emph{Colour: Design & Creativity} (5) (2010): 10, 1-23.
-#' www.aic-color.org/journal/v5/jaic_v5_06.pdf
+#' A single palette/colormap is shown 
+#' (1) without any modifications 
+#' (2) in black-and-white as if photocopied 
+#' (3) as seen by deutan color-blind
+#' (4) as seen by protan color-blind
+#' (5) as seen by tritan color-blind
 #'
-#' K. Kelly (1965): Twenty-two colors of maximum contrast.
-#' \emph{Color Eng}., 3(6), 1965.
-#' http://www.iscc.org/pdf/PC54_1724_001.pdf
+#' Rates of colorblindness in women are low, but in men the rates are
+#' around 3 to 7 percent, depending on the race.
 #' 
-#' Paul Tol (2012). Color Schemes. SRON technical note, SRON/EPS/TN/09-002.
-#' https://personal.sron.nl/~pault/
+#' What to look for:
+#' 
+#' 1. Are colors still unique when viewed in less-than full color? 
+#' 
+#' 2. Is a sequential colormap still sequential?
 #'
-#' John Watlington.
-#' An Optimum 16 Color Palette.
-#' http://alumni.media.mit.edu/~wad/color/palette.html
+#' @param pal A palette function or a vector of colors.
 #' 
-#' Color Schemes Appropriate for Scientific Data Graphics
-#' http://geog.uoregon.edu/datagraphics/color_scales.htm
+#' @param n The number of colors to display for palette functions.
 #' 
-#' @name discrete
-NULL
-
-
+#' @param title Title to display at the top of the test image
+#' 
+#' @return
+#' None.
+#' @author Kevin Wright
+#' 
+#' @examples 
+#' pal.safe(glasbey)
+#' pal.safe(rainbow, title="rainbow") # Really, really bad
+#' pal.safe(cubicyf(100), title="cubicyf")
+#' pal.safe(parula, title="parula")
+#' 
+#' @references 
+#' None
 #' @export
-#' @rdname discrete
-alphabet <- function(n=26) {
-  
-  if(n > 26){
-    message("Only 26 colors are available with 'alphabet'")
-    n <- 26
-  }
-  
-  pal <- c(
-    rgb(255, 204, 153, maxColorValue=255, names="honeydew"),
-    rgb(148, 255, 181, maxColorValue=255, names="jade"),
-    rgb( 94, 241, 242, maxColorValue=255, names="sky"),
-    rgb(224, 255, 102, maxColorValue=255, names="uranium"),
-    rgb(255, 255, 128, maxColorValue=255, names="xanthin"),
-    rgb(240, 160, 255, maxColorValue=255, names="amethyst"),
-    rgb(255, 225,   0, maxColorValue=255, names="yellow"),
-    rgb(255, 168, 187, maxColorValue=255, names="pink"),
-    rgb(157, 204,   0, maxColorValue=255, names="lime"),
-    rgb(255, 164,   5, maxColorValue=255, names="orange"),
-    rgb( 43, 206,  72, maxColorValue=255, names="green"),
-    rgb(194,   0, 136, maxColorValue=255, names="magenta"),
-    rgb(255,   0,  16, maxColorValue=255, names="red"),
-    rgb(  0, 153, 143, maxColorValue=255, names="turquoise"),
-    rgb(116,  10, 255, maxColorValue=255, names="violet"),
-    rgb(255,  80,   5, maxColorValue=255, names="zinnia"),
-    rgb(  0, 117, 220, maxColorValue=255, names="blue"),
-    rgb(128, 128, 128, maxColorValue=255, names="iron"),
-    rgb(153,  63,   0, maxColorValue=255, names="caramel"),
-    rgb(143, 124,   0, maxColorValue=255, names="khaki"),
-    rgb( 66, 102,   0, maxColorValue=255, names="quagmire"),
-    rgb(153,   0,   0, maxColorValue=255, names="wine"),
-    rgb(  0,  92,  49, maxColorValue=255, names="forest"),
-    rgb(  0,  51, 128, maxColorValue=255, names="navy"),
-    rgb( 76,   0,  92, maxColorValue=255, names="damson"),
-    rgb( 25,  25,  25, maxColorValue=255, names="ebony"),
-    rgb(255, 255, 255, maxColorValue=255, names="white"))
-  
-  return(pal[1:n])
-}
+#' @importFrom colorspace desaturate
+#' @importFrom dichromat dichromat
+pal.safe <- function(pal, n=100, title=NULL){
 
-#' @export
-#' @rdname discrete
-watlington <- function(n=16) {
-  if(n > 16) {
-    message("Only 1 colors are available with 'watlington'.")
-    n <- 16
-  }
-  return(syspals$watlington[1:n])
-}
+  if(is.function(pal)) pal <- pal(n)
 
-#' @export
-#' @rdname discrete
-cols25 <- function(n=25) {
-  if(n > 25) {
-    message("Only 25 colors are available with 'cols25'.")
-    n <- 25
+  ncolor <- length(pal)
+
+  # pal is a single vector of colors, now make it a list
+  pal <- list(pal,
+              colorspace::desaturate(pal),
+              dichromat::dichromat(pal, type="deutan"),
+              dichromat::dichromat(pal, type="protan"),
+              dichromat::dichromat(pal, type="tritan"))
+  labs <- c("Original","Black/White","Deutan","Protan","Tritan")
+  npal <- 5
+  ylim <- c(0, npal)
+  oldpar <- par(mgp = c(2, 0.25, 0))
+  on.exit(par(oldpar))
+  plot(1, 1, xlim = c(0, ncolor), ylim = ylim,
+       type = "n", axes = FALSE, bty = "n", xlab = "", ylab = "")
+
+  for (i in 1:npal) {
+    shadi <- pal[[(npal+1) - i]] # Plot from bottom to top, reverse palette order
+    rect(xleft = 0:(ncolor - 1), ybottom = i - 1, xright = 1:ncolor, 
+         ytop = i - 0.2, col = shadi, border = NA)
   }
-  pal <- c(rgb(31,120,200,maxColorValue=255), # "#1f78b4",
-           "#ff0000", # red
-           "#33a02c",
-           rgb(106,51,194,maxColorValue=255), # "#6a3d9a", # mauve
-           "#ff7f00",
-           "#000000", # "black",
-           rgb(255,215,0,maxColorValue=255), # "gold1",
-           "#a6cee3",
-           rgb(251,100,150,maxColorValue=255), # "#FB9A99", # lt pink
-           "#b2df8a",
-           "#CAB2D6", # lt purple
-           "#FDBF6F", # lt orange
-           rgb(153, 153, 153, maxColorValue=255), # "gray60",
-           rgb(238, 230, 133, maxColorValue=255), # "khaki2",
-           rgb(200,48,140,maxColorValue=255), #"maroon",
-           rgb(255,131, 250, maxColorValue=255), # "orchid1",
-           rgb(200,20,250,maxColorValue=255), # "#ff0ac8", # deeppink1
-           rgb(0, 0, 255, maxColorValue=255), # "blue1",
-           rgb(54, 100, 139, maxColorValue=255), # "steelblue4",
-           rgb(0,226,229,maxColorValue=255), # "darkturquoise",
-           rgb(0, 255, 0, maxColorValue=255), # "green1",
-           rgb(119,139,0,maxColorValue=255), # "yellow4",
-           rgb(190,190,0,maxColorValue=255), #"yellow3",
-           rgb(139,59,0,maxColorValue=255), # "darkorange4",
-           rgb(165,42,60,maxColorValue=255) # "brown"
-           )
-  
-  return(pal[1:n])
+  text(rep(-0.1, npal), (1:npal) - 0.6,
+       labels = rev(labs),
+       cex=0.6, xpd = TRUE, adj = 1)
+
+  if(!is.null(title)) title(title)
 }
 
 
-#' @export
-#' @rdname discrete
-glasbey <- function(n=32) {
-  if(n > 32) {
-    message("Only 32 colors are available with 'glasbey'.")
-    n <- 32
-  }
+# ----------------------------------------------------------------------------
+# pal.scatter
 
-  return(syspals$glasbey[1:n])
-}
-
-#' @export
-#' @rdname discrete
-kelly <- function(n=22) {
-
-  if(n > 22) {
-    message("Only 22 colors are available with 'kelly'")
-    n <- 22
-  }
-
-  pal = c("#F2F3F4", # white
-          "#222222", # black
-          "#F3C300", # yellow/gold
-          "#875692", # purple
-          "#F38400", # orange
-          "#A1CAF1", # light blue
-          "#BE0032", # red
-          "#C2B280", # buff
-          "#848482", # grey
-          "#008856", # green
-          "#E68FAC", # purplish pink
-          "#0067A5", # blue
-          "#F99379", # yellowish pink
-          "#604E97", # violet
-          "#F6A600", # orange yellow
-          "#B3446C", # purplish red
-          "#DCD300", # greenish yellow
-          "#882D17", # reddish brown
-          "#8DB600", # yellow green
-          "#654522", # yellowish brown
-          "#E25822", # reddish orange
-          "#2B3D26"  # olive green
-          )
-
-  return(pal[1:n])
+#' Show a palette of colors with a scatterplot
+#'
+#' What to look for:
+#' 
+#' 1. Can the colors of each point be uniquely identified?
+#' 
+#' @param pal A palette function or a vector of colors.
+#' 
+#' @param n The number of colors to display for palette functions.
+#' 
+#' @return
+#' None.
+#' @author Kevin Wright
+#' @export 
+#' @examples
+#' pal.scatter(glasbey, n=31)
+#' 
+#' @references
+#' None.
+pal.scatter <- function(pal, n){
+  if(is.function(pal)) pal <- pal(n)
+  
+  plot(runif(100), runif(100), col=pal, pch=16,
+       xlab="", ylab="",
+       xlim=c(0,1), ylim=c(0,1))
+  # Need to add a key
 }
 
 # ----------------------------------------------------------------------------
+# pal.sineramp
 
-#' @export
-#' @rdname discrete
-stepped <- function(n=20) {
+#' Show a palette of colors with a sineramp
+#'
+#' The test image shows a sine wave superimposed on a ramp of the palette.  The
+#' amplitude of the sine wave is dampened/modulated from full at the top to 0
+#' at the bottom.
+#' 
+#' The ramp function that the sine wave is superimposed upon is adjusted slightly
+#' for each row so that each row of the image spans the full data range of 0 to 255.
+#' The wavelength is chosen to create a stimulus that is aligned with the
+#' capabilities of human vision.  For the default amplitude of 12.5, the trough
+#' to peak distance is 25, which is about 10 percent of the 256 levels of the ramp.
+#' Some color palettes (like 'jet') have perceptual flat areas that can hide
+#' fluctations/features of this magnitude.
+#' 
+#' What to look for:
+#' 
+#' 1. Is the sine wave equally visible across the entire image?
+#' 
+#' 2. At the bottom, is the ramp smooth, or are there features like vertical bands?
+#' 
+#' @param pal A palette function or a vector of colors.
+#' 
+#' @param n The number of colors to display for palette functions.
+#' 
+#' @param nx Number of 'pixels' horizontally (approximate).
+#' 
+#' @param ny Number of 'pixels' vertically
+#' 
+#' @param amp Amplitude of sine wave, default 12.5
+#' 
+#' @param wavelen Wavelength of sine wave, in pixels, default 8.
+#' 
+#' @param pow Power for dampening the sine wave. Default 2. For no dampening, use 0.
+#' For linear dampening, use 1.
+#' 
+#' @return None
+#' @author Concept by Peter Kovesi. R code by Kevin Wright.
+#' @examples 
+#' pal.sineramp(parula)
+#' pal.sineramp(jet) # Bad: Indistinct wave in green at top. Mach bands at bottom.
+#' pal.sineramp(brewer.greys(100))
+#' 
+#' # Show Kovesi's colormaps
+#' \dontrun{
+#' library(spatstat)
+#' data(Kovesi)
+#' for(i in 1:41) { pal.sineramp(Kovesi$values[[i]]); title(i) }
+#' pal.sineramp(gnuplot) ; title('gnuplot')
+#' pal.sineramp(Kovesi$values[[29]]); title('Kovesi 29')
+#' }
+#' 
+#' @references 
+#' Peter Kovesi (2015). Good Colour Maps: How to Design Them.
+#' http://arxiv.org/abs/1509.03700.
+#'
+#' Peter Kovesi. A set of perceptually uniform color map files.
+#' http://peterkovesi.com/projects/colourmaps/index.html
+#'
+#' Peter Kovesi. CET Perceptually Uniform Colour Maps: The Test Image.
+#' http://peterkovesi.com/projects/colourmaps/colourmaptestimage.html
+#' 
+#' Original Julia version by Peter Kovesi from:
+#' https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/src/utilities.jl
+#' @export 
+pal.sineramp <- function(pal, n=150, nx=512, ny=256,
+                         amp=12.5, wavelen=8, pow=2) {
+
+  if(is.function(pal)) pal <- pal(n)
   
-  if(n > 20) {
-    message("Only 20 colors are available with 'stepped'")
-    n <- 20
-  }
+  
+  # Adjust width of image so there is an integer number of cycles of
+  # the sinewave.  Helps for cyclic color palette.
+  # May still be a slight discontinuity along the edge.
+  cycles = round(nx/wavelen)
+  nx = cycles*wavelen
+  
+  # Sine wave
+  xval = 0:(nx-1)
+  fx = amp*sin( 1.0/wavelen * 2*pi*xval)
 
-  return(syspals$stepped[1:n])
+  # Vertical dampening of the wave
+  img = outer(fx, seq(0,1,length=ny), function(x,y) x*y^pow)
+
+  # Add ramp across entire image
+  img = img + outer(seq(0,1,length=nx), seq(1,1,length=ny), '*') * (255-2*amp)
+
+  # Normalise each row (offset and rescale into [0,1]). Important for cyclic
+  # color maps
+  img <- apply(img, 2, function(x){
+    x = x - min(x) # set smallest value to 0
+    x = x/max(x) # set largest value to 1
+    x
+  })
+
+  image(img, col=pal, axes=FALSE)
+  invisible()
 }
 
 # ----------------------------------------------------------------------------
+# pal.test
 
+#' Show a palette of colors with multiple images
+#'
+#' 1. Z-curve
+#' 
+#' 2. Contrast Sensitivity Function.
+#'
+#' 3. Frequency ramp. See: http://inversed.ru/Blog_2.htm
+#' Are the vertical bands visible across the full vertical axis?
+#'
+#' 4. 5. Two images of the 'volcano' elevation data in R using forward/reverse
+#' colors. Try to find the highest point on the volcano peak.  Many palettes
+#' with dark colors at one end of the palette hide the peak (e.g. viridis).
+#' Also try to decide if the upperleft and upperright corners are the same color.
+#'
+#' 6. Luminosity in red, green, blue, and grey.
+#' 
+#' @param pal A palette function or a vector of colors.
+#'
+#' @param title Title to display at the top of the test image
+#' 
+#' @return None.
+#' 
+#' @export 
+#' @examples
+#' pal.test(parula)
+#' pal.test(viridis)
+#' pal.test(coolwarm)
+#' 
+#' @author Kevin Wright
+#' 
+#' @references
+#' # See links above.
+#' 
+pal.test <- function(pal, title=substitute(pal)){
+
+  op <- par(mfrow=c(2,3),
+            oma=c(0,0,2,0), # save space for title
+            mar=c(2,2,1,1), bg="gray80")
+
+  if(is.function(pal)) {
+    # pal is a function
+    n <- 150
+    cols64 <- pal(64)
+    cols <- pal(n)
+  } else {
+    n <- length(pal)
+    cols <- pal
+    cols64 <- colorRampPalette(pal)(64)
+  }
+
+  # Space-filling z-curve
+  pal.zcurve(pal=cols64, n=64)  
+  
+  # Campbell-Robson Contrast Sensitivity Chart
+  pal.csf(pal=cols)
+
+  # Frequency ramp
+  pal.sineramp(pal=cols, nx=400, wavelen=10)
+
+  # Volcano
+  pal.volcano(cols)
+  pal.volcano(rev(cols))
+  
+  # RGB curves
+  pal.channels(cols)
+    
+  # Title. What to do if it is a vector instead???
+  # browser()
+  if(!is.null(title)) {
+    title(title, outer=TRUE)
+  }
+  
+  on.exit(op)
+  par(op)
+}
+
+# ----------------------------------------------------------------------------
+# pal.volcano
+
+#' Show a palette of colors with a surface of volcano elevation
+#'
+#' Some palettes with dark colors at one end of the palette hide the 
+#' shape of the volcano in the dark colors. Viridis is bad.
+#' 
+#' What to look for:
+#' 
+#' 1. Can you locate the highest point on the volcano?
+#' 
+#' 2. Are the upper-right and lower-right corners the same elevation?
+#' 
+#' 3. Do any Mach bands circle the peak?
+#' 
+#' @param pal A palette function or a vector of colors.
+#' 
+#' @param n The number of colors to display for palette functions.
+#'
+#' @return None.
+#' 
 #' @export
-#' @rdname discrete
-tol <- function(n=12) {
-  if(n > 12){
-    message("Only 12 colors are available with 'tol'")
-    n <- 12
-  }
-
-  return(syspals$tol[[n]])
-}
-
-# ----------------------------------------------------------------------------
-# ----------------------------------------------------------------------------
-# ----------------------------------------------------------------------------
-
-paltest.volcano <- function(pal, n=100){
-
+#'
+#' @examples
+#' pal.volcano(parula)
+#' pal.volcano(brewer.rdbu) # Bad: white Mach band
+#' pal.volcano(warmcool) # Better: no Mach band
+#' pal.volcano(rev(viridis(100))) # Bad: peak position is hidden
+#' 
+pal.volcano <- function(pal, n=100){
+  
   # need to fix...
   # wonky things can happen with filled.contour because it uses 'pretty'
   # for the 'approximate' number of levels
@@ -964,5 +823,69 @@ paltest.volcano <- function(pal, n=100){
   #filled.contour(volcano, col=pal, color.palette = pal, n=n+1, asp = 1, axes=0)
   image(datasets::volcano, col=pal, axes=FALSE, asp=1)
   
+}
+
+
+# ----------------------------------------------------------------------------
+# pal.zcurve
+
+#' Show a palette of colors with a space-filling z-curve
+#'
+#' Construct a Z-order curve, coloring cells with a palette. 
+#' The difference in color between squares side-by-side is 1/48 of the full range.
+#' The difference in color between one square atop another is 1/96 the full range.
+#' 
+#' What to look for:
+#'  
+#' 1. A good color palette of 64 colors should be able to resolve 4 sub-squares 
+#' within each of the 16 squares. 
+#' 
+#' @param pal A continuous color palette function
+#' 
+#' @param n Number of squares for the z-curve 
+#'
+#' @return None
+#' 
+#' @author Kevin Wright.
+#' 
+#' @examples
+#' pal.zcurve(parula,n=4)
+#' pal.zcurve(parula,n=16)
+#' pal.zcurve(parula,n=64)
+#' pal.zcurve(parula,n=256)
+#' 
+#' @references 
+#' 
+#' Peter Karpov. 2016.
+#' In Search Of A Perfect Colormap. https://twitter.com/inversed_ru
+#' 
+#' Z-order curve. https://en.wikipedia.org/wiki/Z-order_curve
+#' @export
+pal.zcurve <- function(pal, n=64){
+  
+  if(!(n %in% c(4,16,64,256))) stop("Value of n can only be one of 4,16,64,256.")
+  if(is.function(pal)) pal=pal(n)
+  nr <- sqrt(n)
+  
+  # Probably a fancier way with recursion...but this is simpler
+  if(n > 0){
+    zval <- matrix(c(0,1,2,3), byrow=TRUE, ncol=2)
+  }
+  if(n > 4){
+    zval <- cbind(zval, 4+zval)
+    zval <- rbind(zval, 8+zval)
+  }
+  if(n > 16){
+    zval <- cbind(zval, 16+zval)
+    zval <- rbind(zval, 32+zval)
+  }
+  if(n > 64){
+    zval <- cbind(zval, 64+zval)
+    zval <- rbind(zval, 128+zval)
+  }
+  zval <- zval+1
+
+  # Use t() and nr:1 to match Karpov's arrangement.
+  image(t(zval[nr:1,]), col=pal, axes=FALSE)
 }
 

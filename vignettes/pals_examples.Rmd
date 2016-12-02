@@ -51,6 +51,19 @@ mtext("tol.rainbow",line=0)
 par(op)
 
 ```
-# Ocean
+# Colormap compression
+
+
+
 ```{r}
+
+```
+# Using palettes with ggplot2
+```{r}
+require(ggplot2)
+require(pals)
+require(reshape2)
+ggplot(melt(volcano), aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile() + 
+  scale_fill_gradientn(colours=coolwarm(100), guide = "colourbar")
 ```

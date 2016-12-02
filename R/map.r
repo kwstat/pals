@@ -1,9 +1,15 @@
 # map.R
-# Time-stamp: <16 Nov 2016 21:21:27 c:/x/rpack/pals/R/map.R>
+# Time-stamp: <29 Nov 2016 12:34:35 c:/x/rpack/pals/R/map.R>
 # Copyright: Kevin Wright, 2016. License: GPL-3.
 
-#' Test palette with a ColorBrewer map.
+#' Show a palette using a map of U.S. counties
 #'
+#' What to look for:
+#' 
+#' 1. Are regions distinct?
+#' 
+#' 2. Are outliers within each region distinct?
+#' 
 #' Display a palette on a choropleth map similar to ColorBrewer.
 #' 
 #' Broad bands of color are easy to distinguish.

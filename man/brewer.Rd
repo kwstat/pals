@@ -125,9 +125,11 @@ pal.bands(brewer.blues, brewer.bugn, brewer.bupu, brewer.gnbu, brewer.greens,
           brewer.greys, brewer.oranges, brewer.orrd, brewer.pubu, brewer.pubugn,
           brewer.purd, brewer.purples, brewer.rdpu, brewer.reds, brewer.ylgn,
           brewer.ylgnbu, brewer.ylorbr, brewer.ylorrd)
+
 # Diverging
 pal.bands(brewer.brbg, brewer.piyg, brewer.prgn, brewer.puor, brewer.rdbu,
           brewer.rdgy, brewer.rdylbu, brewer.rdylgn, brewer.spectral)
+
 # Qualtitative
 pal.bands(brewer.accent(8), brewer.dark2(8), brewer.paired(12), brewer.pastel1(9),
           brewer.pastel2(8), brewer.set1(9), brewer.set2(8), brewer.set3(10),

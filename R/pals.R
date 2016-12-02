@@ -1,8 +1,6 @@
 # pals.R
-# Time-stamp: <16 Nov 2016 20:30:53 c:/x/rpack/pals/R/pals.R>
+# Time-stamp: <29 Nov 2016 12:34:57 c:/x/rpack/pals/R/pals.R>
 # Copyright: Kevin Wright, 2016. License: GPL-2.
-
-
 
 #' pals: A package for comprehensive palettes and palette evaluation tools
 #'

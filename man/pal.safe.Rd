@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{pal.safe}
 \alias{pal.safe}
-\title{Test a palette of colors for black/white and colorblind safety}
+\title{Show a palette of colors for black/white and colorblind safety}
 \usage{
 pal.safe(pal, n = 100, title = NULL)
 }
@@ -17,14 +17,23 @@ pal.safe(pal, n = 100, title = NULL)
 None.
 }
 \description{
-.desc
+A single palette/colormap is shown 
+(1) without any modifications 
+(2) in black-and-white as if photocopied 
+(3) as seen by deutan color-blind
+(4) as seen by protan color-blind
+(5) as seen by tritan color-blind
 }
 \details{
-.details
+What to look for:
+
+1. Are colors still unique when viewed in less-than full color?
+
+2. Is a sequential colormap still sequential?
 }
 \examples{
-pal.safe(glasbey(31))
-pal.safe(rainbow(100), title="rainbow")
+pal.safe(glasbey)
+pal.safe(rainbow, title="rainbow") # Really, really bad
 pal.safe(cubicyf(100), title="cubicyf")
 pal.safe(parula, title="parula")
 

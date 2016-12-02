@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{pal.heatmap}
 \alias{pal.heatmap}
-\title{Test a palette of colors with a heatmap}
+\title{Show a palette of colors with a heatmap}
 \usage{
 pal.heatmap(pal, n = 25, miss = 0.05)
 }
@@ -22,9 +22,12 @@ to the heatmap by appending a blank column and then a column with the
 palette colors.
 }
 \details{
-In an effective palette, the value of each cell can be correctly
-interpreted using the key on the right side, and missing values
-are identified.
+What to look for:
+
+1. Can the value of each cell be correctly interpreted using the key on 
+the right side?
+
+2. Can missing be identified?
 }
 \examples{
 pal.heatmap(brewer.paired(12), n=12)
@@ -32,6 +35,7 @@ pal.heatmap(coolwarm(12), n=12)
 pal.heatmap(tol, n=12)
 pal.heatmap(glasbey)
 pal.heatmap(kelly, n=22)
+
 }
 \author{
 Kevin Wright

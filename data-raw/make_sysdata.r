@@ -1,19 +1,8 @@
 # sysdata.R
-# Time-stamp: <24 Nov 2016 12:17:57 c:/x/rpack/pals/data-raw/make_sysdata.r>
+# Time-stamp: <29 Nov 2016 13:48:15 c:/x/rpack/pals/data-raw/make_sysdata.r>
 
 lib(dplyr)
 lib(readr)
-
-# ----------------------------------------------------------------------------
-
-# Matplotlib colormaps by Nathaniel J. Smith, Stefan van der Walt,
-# and (in the case of viridis) Eric Firing.
-# https://github.com/BIDS/colormap/blob/master/colormaps.py
-# Released under CC0 license / public domain
-
-# The file was edited in emacs to change from python to csv
-
-# ----------------------------------------------------------------------------
 
 pal.compress <- function(pal, n=5, thresh=2.5) {
   # pal is a function
@@ -33,10 +22,7 @@ pal.compress <- function(pal, n=5, thresh=2.5) {
 setwd("c:/x/rpack/pals/data-raw")
 colrs <- read.csv("colrs.csv")
 
-# ----------------------------------------------------------------------------
-
 # Initialize list to hold palettes in sysdata
-
 syspals <- list()
 
 # ----------------------------------------------------------------------------
@@ -61,6 +47,26 @@ colrs %>% filter(palette=="glasbey") %>% select(red,green,blue) %>% rgb(., max=2
 
 syspals$jet <- c("#00007F", "blue", "#007FFF", "cyan",
                  "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000")
+
+# ----------------------------------------------------------------------------
+
+# kelly
+#' The color values used here are from
+#' http://hackerspace.kinja.com/iscc-nbs-number-hex-r-g-b-263-f2f3f4-242-243-244-267-22-1665795040
+
+colrs %>% filter(palette=="kelly") %>% select(red,green,blue) %>% rgb(., max=255) -> syspals$kelly
+
+# ----------------------------------------------------------------------------
+
+# parula
+# mpl-colormaps have CC0 license.
+# https://github.com/BIDS/colormap/blob/master/parula.py
+
+colrs %>% filter(palette=="parula") %>% select(red,green,blue) %>% rgb %>% colorRampPalette %>% pal.compress -> syspals$parula
+
+# Here is an almost identical map, rounded to 4 decimals
+# http://www.gnuplotting.org/data/parula.pal
+# But, gnuplotting license is not free
 
 # ----------------------------------------------------------------------------
 
@@ -97,6 +103,12 @@ colrs %>% filter(palette=="watlington") %>% select(red,green,blue) %>% rgb(., ma
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
+
+# Matplotlib colormaps by Nathaniel J. Smith, Stefan van der Walt,
+# and (in the case of viridis) Eric Firing.
+# https://github.com/BIDS/colormap/blob/master/colormaps.py
+# The file was edited in emacs to change from python to csv
+# Released under CC0 license / public domain
 
 # Matplotlib, viridis
 
@@ -1067,18 +1079,6 @@ syspals$brewer.ylorbr <- split(ylorbr, ylorbr$ncolors) %>% lapply(., myrgb)
 
 colrs %>% filter(palette=="ylorrd") -> ylorrd
 syspals$brewer.ylorrd <- split(ylorrd, ylorrd$ncolors) %>% lapply(., myrgb)
-
-# ----------------------------------------------------------------------------
-
-# parula
-# mpl-colormaps have CC0 license.
-# https://github.com/BIDS/colormap/blob/master/parula.py
-
-colrs %>% filter(palette=="parula") %>% select(red,green,blue) %>% rgb %>% colorRampPalette %>% pal.compress -> syspals$parula
-
-# This is an almost identical map, rounded to 4 decimals
-# http://www.gnuplotting.org/data/parula.pal
-# But, gnuplotting license is not free
 
 # ----------------------------------------------------------------------------
 

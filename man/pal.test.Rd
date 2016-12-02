@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{pal.test}
 \alias{pal.test}
-\title{Test a palette of colors with multiple images}
+\title{Show a palette of colors with multiple images}
 \usage{
 pal.test(pal, title = substitute(pal))
 }
@@ -15,17 +15,10 @@ pal.test(pal, title = substitute(pal))
 None.
 }
 \description{
-1. Z-order curve.  See: https://en.wikipedia.org/wiki/Z-order_curve
-A good color palette should be able to resolve 4 sub-squares within
-each of the 16 squares.
+1. Z-curve
 }
 \details{
-2. Contrast Sensitivity Function. Also called a contrast-resolution grating.
-Frequency increases from left to right, contrast decreases from bottom
-to top.  You can also think of this as a sine wave with periodicity becoming
-shorter at the right side and the amplitude decreasing to 0 at the top.
-Poor colormaps hide variation at the top.
-See: http://blog.kasson.com/?m=201404.
+2. Contrast Sensitivity Function.
 
 3. Frequency ramp. See: http://inversed.ru/Blog_2.htm
 Are the vertical bands visible across the full vertical axis?
@@ -34,12 +27,17 @@ Are the vertical bands visible across the full vertical axis?
 colors. Try to find the highest point on the volcano peak.  Many palettes
 with dark colors at one end of the palette hide the peak (e.g. viridis).
 Also try to decide if the upperleft and upperright corners are the same color.
+
+6. Luminosity in red, green, blue, and grey.
 }
 \examples{
-pal.test(parula) # fails contrast 1
+pal.test(parula)
 pal.test(viridis)
 pal.test(coolwarm)
 
+}
+\author{
+Kevin Wright
 }
 \references{
 # See links above.

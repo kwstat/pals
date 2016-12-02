@@ -1,5 +1,5 @@
 # cmocean.r
-# Time-stamp: <10 Oct 2016 22:48:45 c:/x/rpack/pals/data-raw/ocean/cmocean.r>
+# Time-stamp: <29 Nov 2016 12:22:00 c:/x/rpack/pals/data-raw/ocean/0 - cmocean.r>
 
 # Color definitions downloaded 10.10.16 from
 https://github.com/matplotlib/cmocean/tree/master/cmocean/rgb
@@ -57,6 +57,8 @@ for(ff in fil){
 
 
 # ----------------------------------------------------------------------------
+
+# Not a particularly effective visualization test
 
 # hist2d from here:
 # https://github.com/matplotlib/viscm/blob/master/viscm/examples/hist2d.txt
