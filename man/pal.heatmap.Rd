@@ -2,38 +2,30 @@
 % Please edit documentation in R/tools.R
 \name{pal.heatmap}
 \alias{pal.heatmap}
-\title{Show a palette of colors with a heatmap}
+\title{Show a palette/colormap with a heatmap}
 \usage{
-pal.heatmap(pal, n = 25, miss = 0.05)
+pal.heatmap(pal, n = 25, miss = 0.05, main = "")
 }
 \arguments{
 \item{pal}{A palette function or a vector of colors.}
 
-\item{n}{The number of colors to display for palette functions.}
+\item{n}{The number of squares vertically in the heatmap.}
 
 \item{miss}{Fraction of squares with missing values, default .05.}
+
+\item{main}{Main title}
 }
 \value{
 None.
 }
 \description{
-A random heatmap is generated (with 5% missing values) and a key is added
-to the heatmap by appending a blank column and then a column with the
-palette colors.
-}
-\details{
-What to look for:
-
-1. Can the value of each cell be correctly interpreted using the key on 
-the right side?
-
-2. Can missing be identified?
+Show a palette/colormap with a heatmap
 }
 \examples{
-pal.heatmap(brewer.paired(12), n=12)
-pal.heatmap(coolwarm(12), n=12)
+pal.heatmap(brewer.paired, n=12)
+pal.heatmap(coolwarm, n=12)
 pal.heatmap(tol, n=12)
-pal.heatmap(glasbey)
+pal.heatmap(glasbey, n=32)
 pal.heatmap(kelly, n=22)
 
 }

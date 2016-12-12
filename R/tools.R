@@ -1,11 +1,11 @@
 # tools.R
-# Time-stamp: <30 Nov 2016 22:17:17 c:/x/rpack/pals/R/tools.R>
+# Time-stamp: <11 Dec 2016 22:48:14 c:/x/rpack/pals/R/tools.R>
 # Copyright: Kevin Wright, 2016. License: GPL-3.
 
 # ----------------------------------------------------------------------------
 # pal.bands
 
-#' Show palettes as colored bands
+#' Show palettes and colormaps as colored bands
 #'
 #' Show palettes as colored bands.
 #' 
@@ -14,27 +14,53 @@
 #' 1. A good discrete palette has distinct colors.
 #' 
 #' 2. A good continuous colormap does not show boundaries between colors.
-#' The rainbow() palette is poor, showing bright lines at yellow, cyan, pink.
+#' The \code{rainbow()} palette is poor, showing bright lines at yellow, cyan, pink.
 #' 
-#' @param ... Palettes, either functions or vectors of colors.
+#' @param ... Palettes/colormaps, each of which is either
+#' (1) a vectors of colors or
+#' (2) functions returning a vector of colors.
 #' 
 #' @param n The number of colors to display for palette functions.
 #' 
 #' @param labels Labels for palettes
 #'
-#' @param title Title at top of page.
+#' @param main Title at top of page.
 #'
 #' @param gap Vertical gap between bars, default is 0.1
+#'
+#' @param sort Only affects a palette vector, not functions.
+#' If sort="none", palettes are not sorted.
+#' If sort="hue", palettes are sorted by hue.
+#' If sort="luminance", palettes are sorted by luminance.
+#' 
+#' @param show.names If TRUE, show color names
 #' 
 #' @examples
-#' pal.bands(cubehelix, gnuplot, jet, tol.rainbow, inferno, magma, plasma, viridis, parula, gap=.05)
 #' pal.bands(c('red','white','blue'), rainbow)
-#'
+#' 
+#' op=par(mar=c(0,5,3,1))
+#' pal.bands(cubehelix, gnuplot, jet, tol.rainbow, inferno,
+#'   magma, plasma, viridis, parula, n=200, gap=.05)
+#' par(op)
+#' 
+#' # Be sure to provide vectors, not functions, when sorting
+#' labs=c('alphabet','alphabet2', 'glasbey','kelly','pal36', 'watlington')
+#' op=par(mar=c(0,5,3,1))
+#' pal.bands(alphabet(), alphabet2(), glasbey(), kelly(),
+#'   pal36(), watlington(), sort="hue",
+#'   labels=labs, main="sorted by hue")
+#' par(op)
+#' pal.bands(alphabet(), alphabet2(), glasbey(), kelly(),
+#'   pal36(), watlington(), sort="luminance",
+#'   labels=labs, main="sorted by luminance")
+#' 
 #' @export
-pal.bands <- function(..., n=100, labels=NULL, title=NULL, gap=0.1){
+pal.bands <- function(..., n=100, labels=NULL, main=NULL, gap=0.1, sort="none", show.names=TRUE){
 
   if(n < 3) warning("Using n=3")
-  
+  if(!is.element(sort, c("none","hue","luminance")))
+    warning("'sort' must be one of 'none','hue','luminance'")
+    
   # Each argument in '...' is a palette function or palette vector.
   # if a function, use n colors
   # if a vector, use all colors in the palette
@@ -56,8 +82,27 @@ pal.bands <- function(..., n=100, labels=NULL, title=NULL, gap=0.1){
     labels <- labels[1:npal] # other arguments n, labels
     labels <- ifelse(isfun, labels, "")
   }
+
+  # Sort palette vectors (not functions) if needed
+  if(sort=="hue"){
+    for(i in 1:npal){
+      if(!isfun[i]) {
+        hsvcol <- methods::as(colorspace::hex2RGB(pals[[i]]), "HSV")@coords
+        pals[[i]] <- pals[[i]][order(hsvcol[,1],hsvcol[,2])]
+      }
+    }
+  }
+  if(sort=="luminance"){
+    for(i in 1:npal){
+      if(!isfun[i]) {
+        cols <- methods::as(colorspace::hex2RGB(pals[[i]]), "LUV")@coords
+        pals[[i]] <- pals[[i]][order(cols[,1],cols[,2])]
+      }
+    }
+  }
   
-  # Now convert the palette functions to palette vectors
+  
+  # Now convert the colormap functions to palette vectors
   for(i in 1:npal) {
     if(isfun[i]) pals[[i]] <- pals[[i]](n)
   }
@@ -66,6 +111,7 @@ pal.bands <- function(..., n=100, labels=NULL, title=NULL, gap=0.1){
   
   maxn <- max(nc)
   ylim <- c(0, npal)
+  # mgp: The margin line (in mex units) for the axis title, axis labels and axis line.
   oldpar <- par(mgp = c(2, 0.25, 0))
   on.exit(par(oldpar))
   plot(1, 1, xlim = c(0, maxn), ylim = ylim,
@@ -82,7 +128,7 @@ pal.bands <- function(..., n=100, labels=NULL, title=NULL, gap=0.1){
     
     # If inidividual colors in a palette have names, add them
     nms <- names(shadi)
-    if(!is.null(nms)) {
+    if(show.names & !is.null(nms)) {
       text(brks[1:nj] + 0.5, i-.6, nms, srt=90, cex=.75)
     }
   }
@@ -96,23 +142,22 @@ pal.bands <- function(..., n=100, labels=NULL, title=NULL, gap=0.1){
   # http://stackoverflow.com/questions/29303480/text-labels-with-outline-in-r
   # http://blog.revolutionanalytics.com/2009/05/make-text-stand-out-with-outlines.html
   
-  if(!is.null(title)) title(title)
-  
-}
-if(FALSE){
-pal.bands(c('red','white','blue'),c('blue','yellow'), c('black','red','gold'), labels=c('USA','Sweden','Germany'))
-pal.bands(cm.colors, rainbow, topo.colors, heat.colors, c('red','blue'), n=31)
-pal.bands(alphabet)
-pal.bands(alphabet,n=25) # omit black
-pal.bands(alphabet,n=26)
-pal.bands(alphabet,n=27)
-pal.bands(cubehelix)
-pal.bands(alphabet,cubehelix)
-pal.bands(cubehelix,alphabet)
-pal.bands(warmcool, c('red','orange','yellow','green','blue','purple'), coolwarm, n=11)
-pal.bands(alphabet,cols25,glasbey,kelly,stepped,tol,watlington)
+  if(!is.null(main)) title(main)
 
+  invisible()
 }
+## if(FALSE){
+## pal.bands(c('red','white','blue'),c('blue','yellow'), c('black','red','gold'), labels=c('USA','Sweden','Germany'))
+## pal.bands(cm.colors, rainbow, topo.colors, heat.colors, c('red','blue'), n=31)
+## pal.bands(alphabet)
+## # pal.bands(alphabet,n=25) # omit black
+## # pal.bands(alphabet,n=26)
+## # pal.bands(alphabet,n=27)
+## pal.bands(cubehelix, parula)
+## pal.bands(alphabet,cols25,glasbey,kelly,stepped,tol,watlington)
+
+## invisible()
+## }
 
 # ----------------------------------------------------------------------------
 # pal.channels
@@ -130,22 +175,27 @@ pal.bands(alphabet,cols25,glasbey,kelly,stepped,tol,watlington)
 #' 
 #' @param n The number of colors to display for palette functions.
 #' 
+#' @param main Main title.
+#' 
 #' @return None
 #' 
-#' @author Kevin Wright
-#' 
 #' @examples
-#' pal.channels(viridis(10))
-#' pal.channels(viridis)
+#' pal.channels(parula)
+#' pal.channels(coolwarm)
+#' # pal.channels(glasbey) # Nonsensical.
+#' 
+#' @author Kevin Wright
 #' 
 #' @references 
 #' None
 #' 
 #' @export 
-pal.channels <- function(pal,n=150){
+pal.channels <- function(pal,n=150,main=""){
+  
   if(is.function(pal)) {
     # pal is a function
     pal <- pal(n)
+    n <- length(pal)
   } else {
     n <- length(pal)
   }
@@ -166,15 +216,82 @@ pal.channels <- function(pal,n=150){
   # Also, viridis() returns colors with alpha levels "#FDE725FF"
   # which failed in hex2RGB (doesn't like alpha level)
   # LUV scale is 0-100, so multiply by 2.55
-  # luv <- as(colorspace::hex2RGB(pal), "LUV")
+  # luv <- methods::as(colorspace::hex2RGB(pal), "LUV")
   # lines(x,luv@coords[,1] * 2.5 , col="white") 
 
+  if(!is.null(main)) title(main)
+  
+  invisible()
 }
+
+
+# ----------------------------------------------------------------------------
+# pal.cluster
+
+#' Show a palette with heirarchical clustering
+#'
+#' The palette colors are converted to LUV coordinates before clustering.
+#' (RGB coordinates are available, but not recommended.)
+#' 
+#' What to look for:
+#'
+#' Colors that are visually similar tend to be clustered together.
+#'
+#' @param pal A palette function or a vector of colors.
+#' 
+#' @param n The number of colors to display for palette functions.
+#' 
+#' @param type Either "LUV" (default) or "RGB".
+#' 
+#' @param main Title to display at the top of the test image
+#' 
+#' @return None
+#' 
+#' @examples
+#' pal.cluster(alphabet())
+#' pal.cluster(cols25)
+#' pal.cluster(glasbey) # two royal blues are very similar
+#' pal.cluster(kelly) # two black-ish colors are very similar
+#' pal.cluster(watlington)
+#' pal.cluster(coolwarm(15)) # curiously, grey clusters with blue
+#' 
+#' @author Kevin Wright
+#'
+#' @references 
+#' None
+#' @importFrom stats dist hclust
+#' @export 
+pal.cluster <- function(pal, n=50, type="LUV", main=""){
+  
+  if(is.function(pal)) pal <- pal(n)
+  
+  if(type=="RGB") {
+    x <- t(col2rgb(pal))
+  } else if (type=="LUV") {
+    luvmat <- methods::as(colorspace::hex2RGB(pal), "LUV")
+    x <- luvmat@coords
+  }
+  
+  hd <- hclust(dist(x, "euclidean"))
+  plot(hd, hang = 0, labels = rep("", length(pal)), xlab="", main = main)
+  if(is.null(names(pal))){
+    # use hex color
+    #labs <- paste0(pal, " [", 1:length(pal), "]")
+    labs <- paste0(" [", 1:length(pal), "]")
+  } else {
+    labs <- names(pal)
+  }
+  
+  mtext(labs, side = 1, line = 0, at = order(hd$order), col = pal, las = 2)
+  
+  invisible()
+}
+
 
 # ----------------------------------------------------------------------------
 # pal.csf
 
-#' Show a palette with a Campbell-Robson Contrast Sensitivity Chart
+#' Show a colormap with a Campbell-Robson Contrast Sensitivity Chart
 #' 
 #' In a contrast sensitivity figure as drawn by this function, the 
 #' spatial frequency increases from left to right and the contrast decreases
@@ -189,9 +306,11 @@ pal.channels <- function(pal,n=150){
 #' 
 #' 2. Do the vertical bands blur together?
 #'  
-#' @param pal A continuous color palette function
+#' @param pal A continuous colormap function
 #' 
 #' @param n The number of colors to display for palette functions.
+#' 
+#' @param main Main title.
 #'
 #' @return None
 #'
@@ -211,71 +330,71 @@ pal.channels <- function(pal,n=150){
 #' \emph{Journal of Physiology}, 197: 551-566.
 #' 
 #' @export
-pal.csf = function(pal, n=150){
+pal.csf = function(pal, n=150, main=""){
   if(is.function(pal)) pal = pal(n)
 
-  x <- seq(0,5*pi,length=200)
-  y <- seq(0,2*pi,length=200)
+  x <- seq(0,5*pi,length=400)
+  y <- seq(0,2*pi,length=400)
   z <- outer(x,y, function(x,y) cos(x^2)/exp(y))
   image(z, col=pal, axes=FALSE)
+
+  if(!is.null(main)) title(main)
+  
+  invisible()
 }
 
 # ----------------------------------------------------------------------------
 # pal.compress
 
-#' Compress a color palette function to fewer colors
+#' Compress a colormap function to fewer colors
 #'
-#' Compress a color palette function to fewer colors
+#' Compress a colormap function to fewer colors
 #'
-#' Many color palette functions are defined with more colors than needed.
-#' This function compresses a color palette function down to a sample
+#' Many colormap functions are defined with more colors than needed.
+#' This function compresses a colormap function down to a sample
 #' of colors that can be passed into 'colorRampPalette' and re-create the
 #' original palette with a just-noticeable-difference.
 #'
-#' Color palettes that are defined as a smoothly varying ramp between a set of
+#' Colormaps that are defined as a smoothly varying ramp between a set of
 #' colors often compress quite well.
-#' Color palettes that are defined by functions may not compress well.
-#' See the examples.
+#' Colormaps that are defined by functions may not compress well.
 #'
-#' @param pal A palette function or a vector of colors.
+#' @param pal A colormap function or a vector of colors.
 #' 
 #' @param n Initial number of colors to use.
 #' 
 #' @param thresh Maximum allowable Lab distance from original palette
 #' 
 #' @return A vector of colors
-#' @author Kevin Wright
+#'
 #' @examples
-#' # The 'cm.colors' palette compresses to only 3 colors
+#' # The 'cm.colors' palette in R compresses to only 3 colors
 #' cm2 <- pal.compress(cm.colors, n=3)
-#' pal.bands(cm.colors(255), colorRampPalette(cm2)(255), cm2)
-#' title("cm.colors")
+#' pal.bands(cm.colors(255), colorRampPalette(cm2)(255), cm2,
+#' labels=c('original','compressed','basis'), main="cm.colors")
 #' 
 #' # The 'heat.colors' palette needs 84 colors
 #' heat2 <- pal.compress(heat.colors, n=3)
-#' pal.bands(heat.colors(255), colorRampPalette(heat2)(255), heat2)
-#' title("heat.colors")
+#' pal.bands(heat.colors(255), colorRampPalette(heat2)(255), heat2,
+#' labels=c('original','compressed','basis'), main="heat.colors")
 #' 
 #' # The 'topo.colors' palette needs 249 colors because of the discontinuity
 #' # topo2 <- pal.compress(topo.colors, n=3)
-#' # pal.bands(list(topo.colors(255), colorRampPalette(topo2)(255), topo2))
-#' # title("topo.colors")
+#' # pal.bands(topo.colors(255), colorRampPalette(topo2)(255), topo2,
+#' # labels=c('original','compressed','basis'), main="topo.colors")
 #' 
-#' # palettes that are defined by functions are sometimes difficult to compress
-#' # into a colorRampPalette with a small number of colors
-#' pal.bands(terrain.colors(11), terrain.colors(21), terrain.colors(31),
-#'           terrain.colors(41), terrain.colors(51),
-#'           cm.colors(11), cm.colors(21), cm.colors(31), cm.colors(41), cm.colors(51),
-#'           labels=c("11","21","31","41","51","11","21","31","41","51"))
-#'
-#' # smooth palettes are easier to compress
+#' # smooth palettes usually easy to compress
 #' p1 <- coolwarm(255)
-#' p2 <- colorRampPalette( coolwarm(15) )(255)
-#' pal.bands(p1,p2,coolwarm(15), labels=c("coolwarm","colorRampPalette 15","15"))
+#' cool2 <- pal.compress(coolwarm)
+#' p2 <- colorRampPalette(cool2)(255)
+#' pal.bands(p1, p2, cool2,
+#' labels=c('original','compressed', 'basis'), main="coolwarm")
 #' pal.maxdist(p1,p2) # 2.33
 #'  
+#' @author Kevin Wright
+#'
 #' @references 
-#' None
+#' None. 
 #' @export 
 pal.compress <- function(pal, n=5, thresh=2.5) {
   # pal is a function
@@ -295,16 +414,18 @@ pal.compress <- function(pal, n=5, thresh=2.5) {
 # ----------------------------------------------------------------------------
 # pal.cube
 
-#' Show a palette of colors in three dimensional RGB or LUV space
+#' Show one palette/colormap in three dimensional RGB or LUV space
 #'
-#' The supplied color palette is converted to red,green,blue values
+#' The palette is converted to RGB or LUV coordinates
 #' and plotted in a three-dimensional scatterplot.
+#' The LUV space is probably better, but it is easier to tweak colors by
+#' hand in RGB space.
 #' 
 #' What to look for:
 #' 
-#' Most good palettes have colors that are spread somewhat uniformly in 3D.
+#' A good palette has colors that are spread somewhat uniformly in 3D.
 #' 
-#' @param pal A palette function or a vector of colors.
+#' @param pal A palette/colormap function or a vector of colors.
 #' 
 #' @param n The number of colors to display for palette functions.
 #' 
@@ -351,6 +472,7 @@ pal.cube <- function(pal, n=100, label=FALSE, type="RGB"){
   if(label)
     text3d(x, texts=pal, cex=0.8)
 
+  invisible()
 }
 
 # ----------------------------------------------------------------------------
@@ -370,7 +492,7 @@ pal.cube <- function(pal, n=100, label=FALSE, type="RGB"){
 #' @param n Number of colors to use, default 255
 #' 
 #' @return A vector of n distances.
-#' @author Kevin Wright
+#' 
 #' @examples 
 #' pa0 <- c("#ff0000","#00ff00","#0000ff")
 #' pa1 <- c("#fa0000","#00fa00","#0000fa") # 2.4
@@ -379,8 +501,12 @@ pal.cube <- function(pal, n=100, label=FALSE, type="RGB"){
 #' pal.dist(pa0,pa2) # 4.12 5.20 4.68
 #' pal.bands(pa1,pa0,pa2, labels=c("1.87  2.36  2.11","0","4.12  5.20  4.68"))
 #' title("Lab distances from middle palette")
+#' 
+#' @author Kevin Wright
+#' 
 #' @references
 #' https://en.wikipedia.org/wiki/Color_difference
+#' 
 #' @export 
 pal.dist <- function(pal1, pal2, n=255){
   
@@ -398,6 +524,8 @@ pal.dist <- function(pal1, pal2, n=255){
   p2 <- convertColor(t(col2rgb(pal2)), from="sRGB",to="Lab",scale.in=255)
   delta <- apply((p1-p2), 1, function(x) sqrt(sum(x^2)))
   return(delta)
+
+  invisible()
 }
 
 # ----------------------------------------------------------------------------
@@ -417,7 +545,7 @@ pal.dist <- function(pal1, pal2, n=255){
 #' @param n Number of colors to use, default 255
 #' 
 #' @return Numeric value of the maximum distance.
-#' @author Kevin Wright
+#' 
 #' @examples 
 #' pa0 <- c("#ff0000","#00ff00","#0000ff")
 #' pa1 <- c("#fa0000","#00fa00","#0000fa") # 2.4
@@ -426,6 +554,9 @@ pal.dist <- function(pal1, pal2, n=255){
 #' pal.maxdist(pa0,pa2) # 5.20
 #' pal.bands(pa1,pa0,pa2, labels=c("2.36","0","5.20"))
 #' title("Maximum Lab distance from middle palette")
+#' 
+#' @author Kevin Wright
+#' 
 #' @references
 #' https://en.wikipedia.org/wiki/Color_difference
 #' @export 
@@ -434,40 +565,33 @@ pal.maxdist <- function(pal1, pal2, n=255) max(pal.dist(pal1, pal2, n))
 # ----------------------------------------------------------------------------
 # pal.heatmap
 
-#' Show a palette of colors with a heatmap
+#' Show a palette/colormap with a heatmap
 #'
-#' A random heatmap is generated (with 5% missing values) and a key is added
-#' to the heatmap by appending a blank column and then a column with the
-#' palette colors.
-#'
-#' What to look for:
-#' 
-#' 1. Can the value of each cell be correctly interpreted using the key on 
-#' the right side?
-#' 
-#' 2. Can missing be identified?
 #' 
 #' @param pal A palette function or a vector of colors.
 #' 
-#' @param n The number of colors to display for palette functions.
+#' @param n The number of squares vertically in the heatmap.
 #'
 #' @param miss Fraction of squares with missing values, default .05.
+#'
+#' @param main Main title
 #' 
 #' @return None.
-#' @author Kevin Wright
 #' @export 
 #' @examples
-#' pal.heatmap(brewer.paired(12), n=12)
-#' pal.heatmap(coolwarm(12), n=12)
+#' pal.heatmap(brewer.paired, n=12)
+#' pal.heatmap(coolwarm, n=12)
 #' pal.heatmap(tol, n=12)
-#' pal.heatmap(glasbey)
+#' pal.heatmap(glasbey, n=32)
 #' pal.heatmap(kelly, n=22)
 #' 
+#' @author Kevin Wright
+#'
 #' @references
 #' None
 #' 
 #' @importFrom stats runif
-pal.heatmap <- function(pal, n=25, miss=.05){
+pal.heatmap <- function(pal, n=25, miss=.05, main=""){
 
   if(miss >  1)
     warning("`miss` should be less than 1.")
@@ -490,12 +614,14 @@ pal.heatmap <- function(pal, n=25, miss=.05){
   mat <- cbind(mat, 1:n)
   image(t(mat), col=pal,axes=FALSE)
   axis(side=4)
+  if(main != "") mtext(main)
+  invisible()
 }
 
 # ----------------------------------------------------------------------------
 # pal.safe
 
-#' Show a palette of colors for black/white and colorblind safety
+#' Show a palette/colormap for black/white and colorblind safety
 #'
 #' A single palette/colormap is shown 
 #' (1) without any modifications 
@@ -517,24 +643,25 @@ pal.heatmap <- function(pal, n=25, miss=.05){
 #' 
 #' @param n The number of colors to display for palette functions.
 #' 
-#' @param title Title to display at the top of the test image
+#' @param main Title to display at the top of the test image
 #' 
 #' @return
 #' None.
-#' @author Kevin Wright
 #' 
 #' @examples 
 #' pal.safe(glasbey)
-#' pal.safe(rainbow, title="rainbow") # Really, really bad
-#' pal.safe(cubicyf(100), title="cubicyf")
-#' pal.safe(parula, title="parula")
+#' pal.safe(rainbow, main="rainbow") # Really, really bad
+#' pal.safe(cubicyf(100), main="cubicyf")
+#' pal.safe(parula, main="parula")
 #' 
+#' @author Kevin Wright
+#'
 #' @references 
 #' None
 #' @export
 #' @importFrom colorspace desaturate
 #' @importFrom dichromat dichromat
-pal.safe <- function(pal, n=100, title=NULL){
+pal.safe <- function(pal, n=100, main=NULL){
 
   if(is.function(pal)) pal <- pal(n)
 
@@ -563,14 +690,16 @@ pal.safe <- function(pal, n=100, title=NULL){
        labels = rev(labs),
        cex=0.6, xpd = TRUE, adj = 1)
 
-  if(!is.null(title)) title(title)
+  if(!is.null(main)) title(main)
+
+  invisible()
 }
 
 
 # ----------------------------------------------------------------------------
 # pal.scatter
 
-#' Show a palette of colors with a scatterplot
+#' Show a colormap with a scatterplot
 #'
 #' What to look for:
 #' 
@@ -579,33 +708,40 @@ pal.safe <- function(pal, n=100, title=NULL){
 #' @param pal A palette function or a vector of colors.
 #' 
 #' @param n The number of colors to display for palette functions.
+#'
+#' @param main Main title
 #' 
 #' @return
 #' None.
-#' @author Kevin Wright
-#' @export 
 #' @examples
-#' pal.scatter(glasbey, n=31)
+#' pal.scatter(glasbey, n=31) # FIXME add legend
+#' 
+#' @author Kevin Wright
 #' 
 #' @references
 #' None.
-pal.scatter <- function(pal, n){
+#' @export 
+pal.scatter <- function(pal, n=50, main=""){
   if(is.function(pal)) pal <- pal(n)
   
   plot(runif(100), runif(100), col=pal, pch=16,
        xlab="", ylab="",
        xlim=c(0,1), ylim=c(0,1))
   # Need to add a key
+
+  if(main!="") mtext(main)
+  
+  invisible()
 }
 
 # ----------------------------------------------------------------------------
 # pal.sineramp
 
-#' Show a palette of colors with a sineramp
+#' Show a colormap with a sineramp
 #'
 #' The test image shows a sine wave superimposed on a ramp of the palette.  The
-#' amplitude of the sine wave is dampened/modulated from full at the top to 0
-#' at the bottom.
+#' amplitude of the sine wave is dampened/modulated from full at the top
+#' of the image to 0 at the bottom.
 #' 
 #' The ramp function that the sine wave is superimposed upon is adjusted slightly
 #' for each row so that each row of the image spans the full data range of 0 to 255.
@@ -617,7 +753,7 @@ pal.scatter <- function(pal, n){
 #' 
 #' What to look for:
 #' 
-#' 1. Is the sine wave equally visible across the entire image?
+#' 1. Is the sine wave equally visible horizontally across the entire image?
 #' 
 #' 2. At the bottom, is the ramp smooth, or are there features like vertical bands?
 #' 
@@ -635,22 +771,17 @@ pal.scatter <- function(pal, n){
 #' 
 #' @param pow Power for dampening the sine wave. Default 2. For no dampening, use 0.
 #' For linear dampening, use 1.
+#'
+#' @param main Main title
 #' 
 #' @return None
-#' @author Concept by Peter Kovesi. R code by Kevin Wright.
+#' 
 #' @examples 
 #' pal.sineramp(parula)
 #' pal.sineramp(jet) # Bad: Indistinct wave in green at top. Mach bands at bottom.
 #' pal.sineramp(brewer.greys(100))
 #' 
-#' # Show Kovesi's colormaps
-#' \dontrun{
-#' library(spatstat)
-#' data(Kovesi)
-#' for(i in 1:41) { pal.sineramp(Kovesi$values[[i]]); title(i) }
-#' pal.sineramp(gnuplot) ; title('gnuplot')
-#' pal.sineramp(Kovesi$values[[29]]); title('Kovesi 29')
-#' }
+#' @author Concept by Peter Kovesi. R code by Kevin Wright.
 #' 
 #' @references 
 #' Peter Kovesi (2015). Good Colour Maps: How to Design Them.
@@ -664,9 +795,10 @@ pal.scatter <- function(pal, n){
 #' 
 #' Original Julia version by Peter Kovesi from:
 #' https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/src/utilities.jl
+#' 
 #' @export 
 pal.sineramp <- function(pal, n=150, nx=512, ny=256,
-                         amp=12.5, wavelen=8, pow=2) {
+                         amp=12.5, wavelen=8, pow=2, main="") {
 
   if(is.function(pal)) pal <- pal(n)
   
@@ -696,13 +828,16 @@ pal.sineramp <- function(pal, n=150, nx=512, ny=256,
   })
 
   image(img, col=pal, axes=FALSE)
+
+  if(main!="") mtext(main)
+  
   invisible()
 }
 
 # ----------------------------------------------------------------------------
 # pal.test
 
-#' Show a palette of colors with multiple images
+#' Show a colormap with multiple images
 #'
 #' 1. Z-curve
 #' 
@@ -720,14 +855,14 @@ pal.sineramp <- function(pal, n=150, nx=512, ny=256,
 #' 
 #' @param pal A palette function or a vector of colors.
 #'
-#' @param title Title to display at the top of the test image
+#' @param main Title to display at the top of the test image
 #' 
 #' @return None.
 #' 
 #' @export 
 #' @examples
 #' pal.test(parula)
-#' pal.test(viridis)
+#' pal.test(viridis) # dark colors are poor
 #' pal.test(coolwarm)
 #' 
 #' @author Kevin Wright
@@ -735,7 +870,7 @@ pal.sineramp <- function(pal, n=150, nx=512, ny=256,
 #' @references
 #' # See links above.
 #' 
-pal.test <- function(pal, title=substitute(pal)){
+pal.test <- function(pal, main=substitute(pal)){
 
   op <- par(mfrow=c(2,3),
             oma=c(0,0,2,0), # save space for title
@@ -770,18 +905,20 @@ pal.test <- function(pal, title=substitute(pal)){
     
   # Title. What to do if it is a vector instead???
   # browser()
-  if(!is.null(title)) {
-    title(title, outer=TRUE)
+  if(!is.null(main)) {
+    title(main, outer=TRUE)
   }
   
   on.exit(op)
   par(op)
+
+  invisible()
 }
 
 # ----------------------------------------------------------------------------
 # pal.volcano
 
-#' Show a palette of colors with a surface of volcano elevation
+#' Show a colormap with a surface of volcano elevation
 #'
 #' Some palettes with dark colors at one end of the palette hide the 
 #' shape of the volcano in the dark colors. Viridis is bad.
@@ -798,17 +935,19 @@ pal.test <- function(pal, title=substitute(pal)){
 #' 
 #' @param n The number of colors to display for palette functions.
 #'
+#' @param main Main title
+#'
 #' @return None.
 #' 
 #' @export
 #'
 #' @examples
 #' pal.volcano(parula)
-#' pal.volcano(brewer.rdbu) # Bad: white Mach band
-#' pal.volcano(warmcool) # Better: no Mach band
+#' pal.volcano(brewer.rdbu) # Mach banding is bad
+#' pal.volcano(warmcool) # No Mach band 
 #' pal.volcano(rev(viridis(100))) # Bad: peak position is hidden
 #' 
-pal.volcano <- function(pal, n=100){
+pal.volcano <- function(pal, n=100, main=""){
   
   # need to fix...
   # wonky things can happen with filled.contour because it uses 'pretty'
@@ -822,16 +961,19 @@ pal.volcano <- function(pal, n=100){
   
   #filled.contour(volcano, col=pal, color.palette = pal, n=n+1, asp = 1, axes=0)
   image(datasets::volcano, col=pal, axes=FALSE, asp=1)
+
+  if(main!="") mtext(main)
   
+  invisible()
 }
 
 
 # ----------------------------------------------------------------------------
 # pal.zcurve
 
-#' Show a palette of colors with a space-filling z-curve
+#' Show a colormap with a space-filling z-curve
 #'
-#' Construct a Z-order curve, coloring cells with a palette. 
+#' Construct a Z-order curve, coloring cells with a colormap.
 #' The difference in color between squares side-by-side is 1/48 of the full range.
 #' The difference in color between one square atop another is 1/96 the full range.
 #' 
@@ -842,17 +984,19 @@ pal.volcano <- function(pal, n=100){
 #' 
 #' @param pal A continuous color palette function
 #' 
-#' @param n Number of squares for the z-curve 
+#' @param n Number of squares for the z-curve
+#'
+#' @param main Main title
 #'
 #' @return None
-#' 
-#' @author Kevin Wright.
 #' 
 #' @examples
 #' pal.zcurve(parula,n=4)
 #' pal.zcurve(parula,n=16)
 #' pal.zcurve(parula,n=64)
 #' pal.zcurve(parula,n=256)
+#' 
+#' @author Kevin Wright.
 #' 
 #' @references 
 #' 
@@ -861,7 +1005,7 @@ pal.volcano <- function(pal, n=100){
 #' 
 #' Z-order curve. https://en.wikipedia.org/wiki/Z-order_curve
 #' @export
-pal.zcurve <- function(pal, n=64){
+pal.zcurve <- function(pal, n=64, main=""){
   
   if(!(n %in% c(4,16,64,256))) stop("Value of n can only be one of 4,16,64,256.")
   if(is.function(pal)) pal=pal(n)
@@ -887,5 +1031,9 @@ pal.zcurve <- function(pal, n=64){
 
   # Use t() and nr:1 to match Karpov's arrangement.
   image(t(zval[nr:1,]), col=pal, axes=FALSE)
+
+  if(main!="") mtext(main)
+  
+  invisible()
 }
 

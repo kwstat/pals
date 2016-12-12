@@ -2,20 +2,22 @@
 % Please edit documentation in R/tools.R
 \name{pal.zcurve}
 \alias{pal.zcurve}
-\title{Show a palette of colors with a space-filling z-curve}
+\title{Show a colormap with a space-filling z-curve}
 \usage{
-pal.zcurve(pal, n = 64)
+pal.zcurve(pal, n = 64, main = "")
 }
 \arguments{
 \item{pal}{A continuous color palette function}
 
 \item{n}{Number of squares for the z-curve}
+
+\item{main}{Main title}
 }
 \value{
 None
 }
 \description{
-Construct a Z-order curve, coloring cells with a palette. 
+Construct a Z-order curve, coloring cells with a colormap.
 The difference in color between squares side-by-side is 1/48 of the full range.
 The difference in color between one square atop another is 1/96 the full range.
 }

@@ -9,16 +9,7 @@ https://github.com/matplotlib/viscm/tree/master/viscm/examples
 Good test image? Galaxy.
 http://yt-project.org/doc/visualizing/colormaps/index.html
 
-Need an option to reverse any palette
-
-See scales, ggthemes, viridis::scale_fill_viridis
-
 In pal.test, add discrete=TRUE to prevent interpolation
-
-Note, we could define functions like:
-cubicyf <- colorRampPalette(rgb(colormatrix))
-But then the actual colors get hidden deep inside an environment
-
 
 TODO: gist_earth
 
@@ -79,9 +70,6 @@ palr provides colour palettes for data, based on some well known remotely sensed
 
 
 
-Polychrome
-install.packages("Polychrome", repos="http://R-Forge.R-project.org")
-https://rdrr.io/rforge/Polychrome/man/viewers.html
 
 
 * StackExchange
@@ -93,16 +81,20 @@ http://stackoverflow.com/questions/7251872/is-there-a-better-color-scale-than-th
 
 http://stackoverflow.com/questions/13968520/color-selection-for-matplotlib-that-prints-well
 
+Promote pals here:
 http://stackoverflow.com/questions/15282580/how-to-generate-a-number-of-most-distinctive-colors-in-r
 
 
 
-Color Schemes Appropriate for Scientific Data Graphics
-http://geog.uoregon.edu/datagraphics/color_scales.htm
 
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
+
+* Misc
+
+Color Schemes Appropriate for Scientific Data Graphics
+http://geog.uoregon.edu/datagraphics/color_scales.htm
 
 
 * People
@@ -135,9 +127,14 @@ Colors from various sources that are suitable for displaying categorical (qualit
 https://github.com/timcdlucas/palettetown
 An R package providing pokemon colour palettes.
 
+** Polychrome
+https://rdrr.io/rforge/Polychrome/man/viewers.html
+install.packages("Polychrome", repos="http://R-Forge.R-project.org")
+
 ** qualpalr
 qualpalr generates distinct qualitative color palettes
 https://cran.r-project.org/web/packages/qualpalr/vignettes/introduction.html
+https://github.com/jolars/qualpalr
 
 ** randomcoloR
 https://github.com/ronammar/randomcoloR
@@ -150,7 +147,13 @@ Has one main function brewer.pal to access ColorBrewer palettes.
 https://github.com/alyssafrazee/RSkittleBrewer
 Candy-themed palettes.
 
+** spatstat
+Contains Kovesi's colormaps.  For example:
+
+library(spatstat)
+data(Kovesi)
+for(i in 1:41) { pal.sineramp(Kovesi$values[[i]]); title(i) }
+
 ** wesanderson
 https://github.com/karthik/wesanderson
 Wes Anderson palettes.
-

@@ -2,20 +2,30 @@
 % Please edit documentation in R/tools.R
 \name{pal.bands}
 \alias{pal.bands}
-\title{Show palettes as colored bands}
+\title{Show palettes and colormaps as colored bands}
 \usage{
-pal.bands(..., n = 100, labels = NULL, title = NULL, gap = 0.1)
+pal.bands(..., n = 100, labels = NULL, main = NULL, gap = 0.1,
+  sort = "none", show.names = TRUE)
 }
 \arguments{
-\item{...}{Palettes, either functions or vectors of colors.}
+\item{...}{Palettes/colormaps, each of which is either
+(1) a vectors of colors or
+(2) functions returning a vector of colors.}
 
 \item{n}{The number of colors to display for palette functions.}
 
 \item{labels}{Labels for palettes}
 
-\item{title}{Title at top of page.}
+\item{main}{Title at top of page.}
 
 \item{gap}{Vertical gap between bars, default is 0.1}
+
+\item{sort}{Only affects a palette vector, not functions.
+If sort="none", palettes are not sorted.
+If sort="hue", palettes are sorted by hue.
+If sort="luminance", palettes are sorted by luminance.}
+
+\item{show.names}{If TRUE, show color names}
 }
 \description{
 Show palettes as colored bands.
@@ -26,11 +36,26 @@ What to look for:
 1. A good discrete palette has distinct colors.
 
 2. A good continuous colormap does not show boundaries between colors.
-The rainbow() palette is poor, showing bright lines at yellow, cyan, pink.
+The \code{rainbow()} palette is poor, showing bright lines at yellow, cyan, pink.
 }
 \examples{
-pal.bands(cubehelix, gnuplot, jet, tol.rainbow, inferno, magma, plasma, viridis, parula, gap=.05)
 pal.bands(c('red','white','blue'), rainbow)
+
+op=par(mar=c(0,5,3,1))
+pal.bands(cubehelix, gnuplot, jet, tol.rainbow, inferno,
+  magma, plasma, viridis, parula, n=200, gap=.05)
+par(op)
+
+# Be sure to provide vectors, not functions, when sorting
+labs=c('alphabet','alphabet2', 'glasbey','kelly','pal36', 'watlington')
+op=par(mar=c(0,5,3,1))
+pal.bands(alphabet(), alphabet2(), glasbey(), kelly(),
+  pal36(), watlington(), sort="hue",
+  labels=labs, main="sorted by hue")
+par(op)
+pal.bands(alphabet(), alphabet2(), glasbey(), kelly(),
+  pal36(), watlington(), sort="luminance",
+  labels=labs, main="sorted by luminance")
 
 }
 

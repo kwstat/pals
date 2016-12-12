@@ -2,10 +2,10 @@
 % Please edit documentation in R/tools.R
 \name{pal.sineramp}
 \alias{pal.sineramp}
-\title{Show a palette of colors with a sineramp}
+\title{Show a colormap with a sineramp}
 \usage{
 pal.sineramp(pal, n = 150, nx = 512, ny = 256, amp = 12.5,
-  wavelen = 8, pow = 2)
+  wavelen = 8, pow = 2, main = "")
 }
 \arguments{
 \item{pal}{A palette function or a vector of colors.}
@@ -22,14 +22,16 @@ pal.sineramp(pal, n = 150, nx = 512, ny = 256, amp = 12.5,
 
 \item{pow}{Power for dampening the sine wave. Default 2. For no dampening, use 0.
 For linear dampening, use 1.}
+
+\item{main}{Main title}
 }
 \value{
 None
 }
 \description{
 The test image shows a sine wave superimposed on a ramp of the palette.  The
-amplitude of the sine wave is dampened/modulated from full at the top to 0
-at the bottom.
+amplitude of the sine wave is dampened/modulated from full at the top
+of the image to 0 at the bottom.
 }
 \details{
 The ramp function that the sine wave is superimposed upon is adjusted slightly
@@ -42,7 +44,7 @@ fluctations/features of this magnitude.
 
 What to look for:
 
-1. Is the sine wave equally visible across the entire image?
+1. Is the sine wave equally visible horizontally across the entire image?
 
 2. At the bottom, is the ramp smooth, or are there features like vertical bands?
 }
@@ -50,15 +52,6 @@ What to look for:
 pal.sineramp(parula)
 pal.sineramp(jet) # Bad: Indistinct wave in green at top. Mach bands at bottom.
 pal.sineramp(brewer.greys(100))
-
-# Show Kovesi's colormaps
-\dontrun{
-library(spatstat)
-data(Kovesi)
-for(i in 1:41) { pal.sineramp(Kovesi$values[[i]]); title(i) }
-pal.sineramp(gnuplot) ; title('gnuplot')
-pal.sineramp(Kovesi$values[[29]]); title('Kovesi 29')
-}
 
 }
 \author{

@@ -2,14 +2,14 @@
 % Please edit documentation in R/tools.R
 \name{pal.test}
 \alias{pal.test}
-\title{Show a palette of colors with multiple images}
+\title{Show a colormap with multiple images}
 \usage{
-pal.test(pal, title = substitute(pal))
+pal.test(pal, main = substitute(pal))
 }
 \arguments{
 \item{pal}{A palette function or a vector of colors.}
 
-\item{title}{Title to display at the top of the test image}
+\item{main}{Title to display at the top of the test image}
 }
 \value{
 None.
@@ -32,7 +32,7 @@ Also try to decide if the upperleft and upperright corners are the same color.
 }
 \examples{
 pal.test(parula)
-pal.test(viridis)
+pal.test(viridis) # dark colors are poor
 pal.test(coolwarm)
 
 }

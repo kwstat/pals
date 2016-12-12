@@ -4,12 +4,14 @@
 \alias{pal.channels}
 \title{Show the red, green, blue, gray amount in colors of a palette}
 \usage{
-pal.channels(pal, n = 150)
+pal.channels(pal, n = 150, main = "")
 }
 \arguments{
 \item{pal}{A palette function or a vector of colors.}
 
 \item{n}{The number of colors to display for palette functions.}
+
+\item{main}{Main title.}
 }
 \value{
 None
@@ -24,8 +26,9 @@ What to look for:
 increasing in lightness, as shown by the gray line.
 }
 \examples{
-pal.channels(viridis(10))
-pal.channels(viridis)
+pal.channels(parula)
+pal.channels(coolwarm)
+# pal.channels(glasbey) # Nonsensical.
 
 }
 \author{

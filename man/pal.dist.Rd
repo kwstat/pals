@@ -31,6 +31,7 @@ pal.dist(pa0,pa1) # 1.87, 2.36, 2.11
 pal.dist(pa0,pa2) # 4.12 5.20 4.68
 pal.bands(pa1,pa0,pa2, labels=c("1.87  2.36  2.11","0","4.12  5.20  4.68"))
 title("Lab distances from middle palette")
+
 }
 \author{
 Kevin Wright

@@ -1,5 +1,5 @@
 # sysdata.R
-# Time-stamp: <29 Nov 2016 13:48:15 c:/x/rpack/pals/data-raw/make_sysdata.r>
+# Time-stamp: <02 Dec 2016 20:38:19 c:/x/rpack/pals/data-raw/make_sysdata.r>
 
 lib(dplyr)
 lib(readr)
@@ -1079,6 +1079,74 @@ syspals$brewer.ylorbr <- split(ylorbr, ylorbr$ncolors) %>% lapply(., myrgb)
 
 colrs %>% filter(palette=="ylorrd") -> ylorrd
 syspals$brewer.ylorrd <- split(ylorrd, ylorrd$ncolors) %>% lapply(., myrgb)
+
+# ----------------------------------------------------------------------------
+
+# kovesi
+# Downloaded 12.2.2016
+# http://peterkovesi.com/projects/colourmaps/CETperceptual_csv_0_1.zip
+
+# 7040 bytes = object.size(as.data.frame(matrix(runif(3*256), ncol=3)))
+# o1 <- read.csv("kovesi/cyclic_grey_15-85_c0_n256.csv", header=FALSE)
+# o2 is 504 bytes
+# o2 <- read.csv("kovesi/cyclic_grey_15-85_c0_n256.csv", header=FALSE) %>% rgb %>% colorRampPalette %>% pal.compress
+# range(lapply(sysdata, length)) # c(5,32) # median 11
+# compressing all kovesi palettes saves 87% memory, from 352000 to 46408 bytes
+
+make.kovesi <- function(file){
+  read.csv(paste0("kovesi/",file),header=FALSE) %>% rgb %>% colorRampPalette %>% pal.compress
+}
+
+syspals$kovesi.cyclic_grey_15_85_c0 <- make.kovesi("cyclic_grey_15-85_c0_n256.csv")
+syspals$kovesi.cyclic_grey_15_85_c0_s25 <- make.kovesi("cyclic_grey_15-85_c0_n256_s25.csv")
+syspals$kovesi.cyclic_mrybm_35_75_c68 <- make.kovesi("cyclic_mrybm_35-75_c68_n256.csv")
+syspals$kovesi.cyclic_mrybm_35_75_c68_s25 <- make.kovesi("cyclic_mrybm_35-75_c68_n256_s25.csv")
+syspals$kovesi.cyclic_mygbm_30_95_c78 <- make.kovesi("cyclic_mygbm_30-95_c78_n256.csv")
+syspals$kovesi.cyclic_mygbm_30_95_c78_s25 <- make.kovesi("cyclic_mygbm_30-95_c78_n256_s25.csv")
+syspals$kovesi.cyclic_wrwbw_40_90_c42 <- make.kovesi("cyclic_wrwbw_40-90_c42_n256.csv")
+syspals$kovesi.cyclic_wrwbw_40_90_c42_s25 <- make.kovesi("cyclic_wrwbw_40-90_c42_n256_s25.csv")
+syspals$kovesi.diverging_isoluminant_cjm_75_c23 <- make.kovesi("diverging-isoluminant_cjm_75_c23_n256.csv")
+syspals$kovesi.diverging_isoluminant_cjm_75_c24 <- make.kovesi("diverging-isoluminant_cjm_75_c24_n256.csv")
+syspals$kovesi.diverging_isoluminant_cjo_70_c25 <- make.kovesi("diverging-isoluminant_cjo_70_c25_n256.csv")
+syspals$kovesi.diverging_linear_bjr_30_55_c53 <- make.kovesi("diverging-linear_bjr_30-55_c53_n256.csv")
+syspals$kovesi.diverging_linear_bjy_30_90_c45 <- make.kovesi("diverging-linear_bjy_30-90_c45_n256.csv")
+syspals$kovesi.diverging_rainbow_bgymr_45_85_c67 <- make.kovesi("diverging-rainbow_bgymr_45-85_c67_n256.csv")
+syspals$kovesi.diverging_bkr_55_10_c35 <- make.kovesi("diverging_bkr_55-10_c35_n256.csv")
+syspals$kovesi.diverging_bky_60_10_c30 <- make.kovesi("diverging_bky_60-10_c30_n256.csv")
+syspals$kovesi.diverging_bwr_40_95_c42 <- make.kovesi("diverging_bwr_40-95_c42_n256.csv")
+syspals$kovesi.diverging_bwr_55_98_c37 <- make.kovesi("diverging_bwr_55-98_c37_n256.csv")
+syspals$kovesi.diverging_cwm_80_100_c22 <- make.kovesi("diverging_cwm_80-100_c22_n256.csv")
+syspals$kovesi.diverging_gkr_60_10_c40 <- make.kovesi("diverging_gkr_60-10_c40_n256.csv")
+syspals$kovesi.diverging_gwr_55_95_c38 <- make.kovesi("diverging_gwr_55-95_c38_n256.csv")
+syspals$kovesi.diverging_gwv_55_95_c39 <- make.kovesi("diverging_gwv_55-95_c39_n256.csv")
+syspals$kovesi.isoluminant_cgo_70_c39 <- make.kovesi("isoluminant_cgo_70_c39_n256.csv")
+syspals$kovesi.isoluminant_cgo_80_c38 <- make.kovesi("isoluminant_cgo_80_c38_n256.csv")
+syspals$kovesi.isoluminant_cm_70_c39 <- make.kovesi("isoluminant_cm_70_c39_n256.csv")
+syspals$kovesi.linear_bgy_10_95_c74 <- make.kovesi("linear_bgy_10-95_c74_n256.csv")
+syspals$kovesi.linear_bgyw_15_100_c67 <- make.kovesi("linear_bgyw_15-100_c67_n256.csv")
+syspals$kovesi.linear_bgyw_15_100_c68 <- make.kovesi("linear_bgyw_15-100_c68_n256.csv")
+syspals$kovesi.linear_blue_5_95_c73 <- make.kovesi("linear_blue_5-95_c73_n256.csv")
+syspals$kovesi.linear_blue_95_50_c20 <- make.kovesi("linear_blue_95-50_c20_n256.csv")
+syspals$kovesi.linear_bmw_5_95_c86 <- make.kovesi("linear_bmw_5-95_c86_n256.csv")
+syspals$kovesi.linear_bmw_5_95_c89 <- make.kovesi("linear_bmw_5-95_c89_n256.csv")
+syspals$kovesi.linear_bmy_10_95_c71 <- make.kovesi("linear_bmy_10-95_c71_n256.csv")
+syspals$kovesi.linear_bmy_10_95_c78 <- make.kovesi("linear_bmy_10-95_c78_n256.csv")
+syspals$kovesi.linear_gow_60_85_c27 <- make.kovesi("linear_gow_60-85_c27_n256.csv")
+syspals$kovesi.linear_gow_65_90_c35 <- make.kovesi("linear_gow_65-90_c35_n256.csv")
+syspals$kovesi.linear_green_5_95_c69 <- make.kovesi("linear_green_5-95_c69_n256.csv")
+syspals$kovesi.linear_grey_0_100_c0 <- make.kovesi("linear_grey_0-100_c0_n256.csv")
+syspals$kovesi.linear_grey_10_95_c0 <- make.kovesi("linear_grey_10-95_c0_n256.csv")
+syspals$kovesi.linear_kry_5_95_c72 <- make.kovesi("linear_kry_5-95_c72_n256.csv")
+syspals$kovesi.linear_kry_5_98_c75 <- make.kovesi("linear_kry_5-98_c75_n256.csv")
+syspals$kovesi.linear_kryw_5_100_c64 <- make.kovesi("linear_kryw_5-100_c64_n256.csv")
+syspals$kovesi.linear_kryw_5_100_c67 <- make.kovesi("linear_kryw_5-100_c67_n256.csv")
+syspals$kovesi.linear_ternary_blue_0_44_c57 <- make.kovesi("linear_ternary-blue_0-44_c57_n256.csv")
+syspals$kovesi.linear_ternary_green_0_46_c42 <- make.kovesi("linear_ternary-green_0-46_c42_n256.csv")
+syspals$kovesi.linear_ternary_red_0_50_c52 <- make.kovesi("linear_ternary-red_0-50_c52_n256.csv")
+syspals$kovesi.rainbow_bgyr_35_85_c72 <- make.kovesi("rainbow_bgyr_35-85_c72_n256.csv")
+syspals$kovesi.rainbow_bgyr_35_85_c73 <- make.kovesi("rainbow_bgyr_35-85_c73_n256.csv")
+syspals$kovesi.rainbow_bgyrm_35_85_c69 <- make.kovesi("rainbow_bgyrm_35-85_c69_n256.csv")
+syspals$kovesi.rainbow_bgyrm_35_85_c71 <- make.kovesi("rainbow_bgyrm_35-85_c71_n256.csv")
 
 # ----------------------------------------------------------------------------
 

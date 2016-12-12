@@ -31,6 +31,7 @@ pal.maxdist(pa0,pa1) # 2.36
 pal.maxdist(pa0,pa2) # 5.20
 pal.bands(pa1,pa0,pa2, labels=c("2.36","0","5.20"))
 title("Maximum Lab distance from middle palette")
+
 }
 \author{
 Kevin Wright

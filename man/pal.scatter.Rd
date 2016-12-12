@@ -2,14 +2,16 @@
 % Please edit documentation in R/tools.R
 \name{pal.scatter}
 \alias{pal.scatter}
-\title{Show a palette of colors with a scatterplot}
+\title{Show a colormap with a scatterplot}
 \usage{
-pal.scatter(pal, n)
+pal.scatter(pal, n = 50, main = "")
 }
 \arguments{
 \item{pal}{A palette function or a vector of colors.}
 
 \item{n}{The number of colors to display for palette functions.}
+
+\item{main}{Main title}
 }
 \value{
 None.
@@ -21,7 +23,7 @@ What to look for:
 1. Can the colors of each point be uniquely identified?
 }
 \examples{
-pal.scatter(glasbey, n=31)
+pal.scatter(glasbey, n=31) # FIXME add legend
 
 }
 \author{

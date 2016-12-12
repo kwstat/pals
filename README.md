@@ -7,8 +7,6 @@ Color Palettes, Colormaps, and Tools to Evaluate Them
 
 Key features:
 
-* Beta version. Mostly complete. Needs a vignette before release.
-
 * Extensive collection of colormaps and palettes.
 
 * Multiple tools to evaluate colormaps.
@@ -19,7 +17,7 @@ Key features:
 # Install the released version from CRAN:
 install.packages("pals")
 
-# Install the cutting edge development version from GitHub:
+# Install the development version from GitHub:
 # install.packages("devtools")
 devtools::install_github("kwstat/pals")
 ```
@@ -28,12 +26,18 @@ devtools::install_github("kwstat/pals")
 
 Vignettes:
 
-[Examples for the pals package](https://rawgit.com/kwstat/pals/master/vignettes/pals_examples.html)
+[Overview of the pals package](https://rawgit.com/kwstat/pals/master/vignettes/pals_examples.html)
 
 [A Color-Caused Optical Illusion](https://rawgit.com/kwstat/pals/master/vignettes/illusion.html)
 
-```R
-require(pals)
-pal.test(parula)
-```
-![pals](figure/parula.png)
+## Glimpse
+
+Tools for testing colormap and palette effectiveness.
+
+![parula](figure/test_colormap.png)
+
+![parula](figure/test_palette.png)
+
+Catalog of colormaps and palettes included in the package.
+
+![pals_catalog](figure/pals_catalog.png)

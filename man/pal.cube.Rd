@@ -2,12 +2,12 @@
 % Please edit documentation in R/tools.R
 \name{pal.cube}
 \alias{pal.cube}
-\title{Show a palette of colors in three dimensional RGB or LUV space}
+\title{Show one palette/colormap in three dimensional RGB or LUV space}
 \usage{
 pal.cube(pal, n = 100, label = FALSE, type = "RGB")
 }
 \arguments{
-\item{pal}{A palette function or a vector of colors.}
+\item{pal}{A palette/colormap function or a vector of colors.}
 
 \item{n}{The number of colors to display for palette functions.}
 
@@ -19,13 +19,15 @@ pal.cube(pal, n = 100, label = FALSE, type = "RGB")
 None
 }
 \description{
-The supplied color palette is converted to red,green,blue values
+The palette is converted to RGB or LUV coordinates
 and plotted in a three-dimensional scatterplot.
+The LUV space is probably better, but it is easier to tweak colors by
+hand in RGB space.
 }
 \details{
 What to look for:
 
-Most good palettes have colors that are spread somewhat uniformly in 3D.
+A good palette has colors that are spread somewhat uniformly in 3D.
 }
 \examples{
 \dontrun{

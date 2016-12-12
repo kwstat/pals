@@ -1,16 +1,34 @@
 # pals.R
-# Time-stamp: <29 Nov 2016 12:34:57 c:/x/rpack/pals/R/pals.R>
+# Time-stamp: <07 Dec 2016 15:10:05 c:/x/rpack/pals/R/pals.R>
 # Copyright: Kevin Wright, 2016. License: GPL-2.
 
 #' pals: A package for comprehensive palettes and palette evaluation tools
 #'
 #' pals: A package for comprehensive palettes and palette evaluation tools
 #'
+#' The terms 'palette' and 'colormap' are often interchanged. In this package
+#' (1) 'palette' is usually a discrete set of distinct colors and
+#' (2) 'colormap' is usually a smoothly varying set of many colors.
+#' 
+#' The best palette/colormap is determined by
+#' (1) the type of structure in the data,
+#' (2) the type of graphic to be constructed, and
+#' (3) the type of device used to show the graphic.
+#' The ColorBrewer website approaches this problem by suggesting different
+#' colors for qualitative, sequential, and divergining data, and also
+#' considers the display of the graphic on LCD and photocopies.
+#' One limitation with ColorBrewer is that it only uses maps, and does not
+#' consider other types of graphics.
+#' For example, yellow colors work well for polygons (on maps, barcharts, etc),
+#' but are poor for lines and scatter plots.
+#' 
+#' The 'pals' package provides a suite of tools to evaluate palettes/colormaps.
+#' 
 #' The design goals of the package are:
 #' \itemize{
 #'
 #' \item
-#' All palettes are functions that return a vector of 'n' colors.
+#' All palettes/colormaps are functions that return a vector of colors.
 #'
 #' \item
 #' The palette function names use only lowercase letters.
@@ -19,16 +37,13 @@
 #' The 'data' directory is not used.
 #'
 #' \item
-#' No dependencies/imports of palettes.
+#' Provide an extensive collection of palettes and colormaps.
 #'
 #' \item
-#' Extensive collection of palettes.
+#' Be memory efficient.  Colormaps are compressed.
 #'
 #' \item
-#' Be memory efficient.
-#'
-#' \item
-#' Multiple tools to evaluate palettes.
+#' Provide multiple tools to evaluate palettes.
 #' }
 #'
 #' To learn more, see the vignettes:

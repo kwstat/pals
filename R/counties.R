@@ -1,5 +1,5 @@
-# map.R
-# Time-stamp: <29 Nov 2016 12:34:35 c:/x/rpack/pals/R/map.R>
+# counties.R
+# Time-stamp: <11 Dec 2016 22:08:30 c:/x/rpack/pals/R/counties.R>
 # Copyright: Kevin Wright, 2016. License: GPL-3.
 
 #' Show a palette using a map of U.S. counties
@@ -34,15 +34,26 @@
 #' @param pal A palette function or a vector of colors.
 #' 
 #' @param n Number of colors to return.
+#'
+#' @param main Main title
 #' 
-#' @return None.
+#' @return None
 #' 
 #' @import maps
 #' @import mapproj
 #' @export
+#' 
 #' @examples
-#' pal.map()
-#' pal.map(viridis)
+#' 
+#' pal.map(brewer.paired, main="brewer.paired")
+
+#' pal.map(parula)
+#' 
+#' \dontrun{
+#' for(i in 3:12){
+#'   pal.map(n=i, main=i)
+#' }
+#' }
 #' 
 #' @author Kevin Wright
 #' 
@@ -50,19 +61,20 @@
 #' http://www.personal.psu.edu/cab38/Pub_scans/Brewer_pubs.html
 #' Map based on www.ColorBrewer.org, by Cynthia A. Brewer, Penn State.
 #' 
-pal.map <- function(pal=brewer.paired, n=12) {
+pal.map <- function(pal=brewer.paired, n=12, main="") {
 
   if(n > 12) {
     message("Re-setting n=12.")
     n = 12
   }
   
-  if(is.function(pal))
-    pal <- pal(n)
+  if(is.function(pal)) pal <- pal(n)
 
   requireNamespace("maps")
+  op <- par()
   co.names <- maps::map("county",
-                  xlim=c(-100,-79), ylim=c(29.5,42), mar=c(0,0,0,0), plot=FALSE)$names
+                        xlim=c(-100,-79), ylim=c(29.5,42),
+                        mar=c(0,0,0,0), plot=FALSE)$names
   co.fips <- maps::county.fips$fips[match(co.names, maps::county.fips$polyname)]
 
   # Each row is a region. Column number is the number of classes, 1..12
@@ -97,6 +109,7 @@ pal.map <- function(pal=brewer.paired, n=12) {
   # Read raw data. No class info included
   # co <- rsvg_raw("c:/x/colorbrewer-master/map/map.svg")
 
+  
   mapcols <- rep(c('white'), length=length(co.names))
 
   # The numbers below are FIPS codes for each county, classed into regions
@@ -142,6 +155,7 @@ pal.map <- function(pal=brewer.paired, n=12) {
             40111, 40113, 40117, 40119, 40125, 40133, 40137, 40143, 40147)
   mapcols[match(reg3,co.fips)] <- pal[regionclass[3,n]]
 
+  # dk green
   reg4 <- c(5007, 5009, 5015, 5033, 5047, 5071, 5087, 5089, 5101, 5131, 5143,
             20001, 20003, 20011, 20021, 20037, 20099, 20107, 20133, 29007,
             29009, 29011, 29013, 29015, 29019, 29027, 29029, 29037, 29039,
@@ -254,7 +268,7 @@ pal.map <- function(pal=brewer.paired, n=12) {
             54063)
   mapcols[match(reg9,co.fips)] <- pal[regionclass[9,n]]
 
-  # purple
+  # dk purple
   reg10 <- c(1009, 1019, 1043, 1049, 1055, 1057, 1063, 1071, 1073, 1079, 1083,
              1089, 1095, 1103, 1107, 1115, 1119, 1125, 1127, 1133, 13011,
              13015, 13047, 13055, 13057, 13067, 13083, 13085, 13111, 13115,
@@ -307,14 +321,12 @@ pal.map <- function(pal=brewer.paired, n=12) {
   mapcols[match(reg12,co.fips)] <- pal[regionclass[12,n]]
 
 
-if(1){
-
   # First vector is random outliers, second vector is the random region
 
   out1 <- c(c(1129L, 12005L, 13123L, 17091L, 17145L, 19115L, 28057L, 28135L, 
               29083L, 40011L, 54085L),
             c(5073, 22013L, 22021L, 22081L, 22097L, 48005L, 48183L, 48185L, 48207L, 
-48217L, 48319L, 48333L, 48467L))
+              48217L, 48319L, 48333L, 48467L))
   mapcols[match(out1,co.fips)] <- pal[regionclass[1,n]]
   
   out2 <- c(c(5149, 1001L, 12059L, 17073L, 21107, 28123L, 29019L, 31047L, 39009L, 
@@ -326,49 +338,49 @@ if(1){
   out3 <- c(c(1131L, 5065L, 13099L, 19001L, 20037L, 28099L, 31159L, 39117L, 
                47075L, 47181L, 54103L),
             c(22067L, 22085L, 22119, 48049L, 48099L, 48161L, 48379, 48401L, 48407L, 48417L, 
-48449L, 48457L, 48497L))
+              48449L, 48457L, 48497L))
   mapcols[match(out3,co.fips)] <- pal[regionclass[3,n]]
 
   out4 <- c(c(1017L, 1049L, 13071L, 18073L, 20165L, 29005L, 29197L, 39151L, 
               47079L, 47165L, 54077L),
             c(22019L, 22059L, 48119L, 48193L, 48257L, 48293L, 48403L, 48503L
-))
+              ))
   mapcols[match(out4,co.fips)] <- pal[regionclass[4,n]]
-
+  
   out5 <- c(c(5143L, 12079L, 13169L, 18071L, 19137L, 21027L, 21199L, 29069L, 
               31037L, 40071L, 47123L),
             c(22079L, 22111L, 48001L, 48083L, 48203L, 48241L, 48251L, 
-48441L, 48471L))
+              48441L, 48471L))
   mapcols[match(out5,co.fips)] <- pal[regionclass[5,n]]
-
+  
   out6 <- c(c(5109L, 12029L, 13033L, 17067L, 17193L, 20169L, 29029L, 31129L, 
               37099L, 51169L, 54019L),
             c(22039L, 22041L, 48067L, 48073L, 48085L, 48093L, 48395L, 48405L, 
-48453L))
+              48453L))
   mapcols[match(out6,co.fips)] <- pal[regionclass[6,n]]
 
   out7 <- c(c(5015L, 12003L, 17129L, 20061L, 21175L, 29211L, 31081L, 37161L, 
               45037L, 51173L),
             c(22025L, 22049L, 48027L, 48053L, 48231L, 48253L, 48313, 48349L, 48367L, 
-48419L, 48459L))
+              48419L, 48459L))
   mapcols[match(out7,co.fips)] <- pal[regionclass[7,n]]
 
   out8 <- c(c(1043L, 5041L, 13069L, 17061L, 20047L, 29025L, 29039L, 37171L, 
               40043L, 45029L),
             c(22003L, 22061L, 48059L, 48113L, 48213L, 48309L, 48315L, 48327L, 
-48365L, 48373L, 48447L))
+              48365L, 48373L, 48447L))
   mapcols[match(out8,co.fips)] <- pal[regionclass[8,n]]
-
+  
   out9 <- c(c(1087L, 5051L, 13025L, 18109L, 18179L, 20079L, 29119L, 31099L, 
               40125L, 45091L, 54099L),
             c(22015L, 22069L, 22083L, 48159L, 48221L, 48237L, 48281L, 48331L, 
-48399L, 48423L, 48455L))
+              48399L, 48423L, 48455L))
   mapcols[match(out9,co.fips)] <- pal[regionclass[9,n]]
-
+  
   out10 <- c(c(5023L, 13001L, 13317L, 18055L, 20163L, 21211L, 22117L, 39023L, 
                40021L, 40075L, 40119L),
              c(5091L, 22011L, 22027L, 22029L, 22073L, 22115L, 48121L, 48289L, 
-48299L, 48347L))
+               48299L, 48347L))
   mapcols[match(out10,co.fips)] <- pal[regionclass[10,n]]
 
   out11 <- c(c(5133, 12039, 17041, 18031, 19177, 20131, 20183, 21017, 22091, 40029, 47115),
@@ -378,29 +390,25 @@ if(1){
   out12 <- c(c(1089L, 5045L, 13293L, 19039L, 20049L, 29229L, 31077L, 39131L, 
                39159L, 51067L, 54005L),
              c(5139, 22009, 22031, 48063, 48139, 48307, 48339, 48397, 
-             48425, 48429, 48491))
+               48425, 48429, 48491))
   mapcols[match(out12,co.fips)] <- pal[regionclass[12,n]]
 
-
-  
-## ix=identify(map("county", fill=TRUE, col=mapcols,
-##                 xlim=c(-100,-79), ylim=c(29.5,42), mar=c(0,0,0,0)
-##                 ),
-##             n=1000, cex=.2)
-
-## dput(maps::county.fips$fips[match(ix, maps::county.fips$polyname)])
-}
+  # Uncomment this to identify counties with mouse clicks
+  ## ix=identify(map("county", fill=TRUE, col=mapcols,
+  ##                 xlim=c(-100,-79), ylim=c(29.5,42), mar=c(0,0,0,0)),
+  ##             n=1000, cex=.2)
+  ## dput(maps::county.fips$fips[match(ix, maps::county.fips$polyname)])
 
   # plot map
-  
+  op <- par()
   maps::map("county", fill=TRUE, col=mapcols,
-      xlim=c(-100,-79), ylim=c(29.5,42), mar=c(0,0,0,0)
-      )
+            xlim=c(-100,-79), ylim=c(29.5,42),
+            mar=c(0.5,0.5,0.5,0.5))
+
+  if(main!="") mtext(main)
+
+  par(mar=op$mar)
+  
+  invisible()
 }
 
-## pal.map(n=12)
-
-## for(i in 2:12){
-##   pal.map(n=i)
-##   title(i)
-## }

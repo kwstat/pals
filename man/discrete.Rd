@@ -2,16 +2,20 @@
 % Please edit documentation in R/discrete.R
 \name{discrete}
 \alias{alphabet}
+\alias{alphabet2}
 \alias{cols25}
 \alias{discrete}
 \alias{glasbey}
 \alias{kelly}
+\alias{pal36}
 \alias{stepped}
 \alias{tol}
 \alias{watlington}
 \title{Discrete palettes}
 \usage{
 alphabet(n = 26)
+
+alphabet2(n = 26)
 
 watlington(n = 16)
 
@@ -20,6 +24,8 @@ cols25(n = 25)
 glasbey(n = 32)
 
 kelly(n = 22)
+
+pal36(n = 36)
 
 stepped(n = 20)
 
@@ -41,6 +47,11 @@ starting with the English alphabet letters A, B, ... Z.
 This palette is based on the work by Green-Armytage (2010), but uses the
 names 'orange' instead of 'orpiment', and 'magenta' instead of 'mallow'.
 
+The \code{alphabet2} palette uses a similar idea with slightly different colors
+and slightly different names.  This palette comes from the Polychrome package,
+geenrated with the \code{createPalette} function and then manually
+arranged and named.
+
 The \code{cols25} palette was created experimentally by Wright (unpublished)
 to create a set of colors that are distinct.
 
@@ -57,7 +68,11 @@ Kelly did not provide RGB color values, and the paper was in black-and-white.
 A color image of the Kelly palette can be found in Green-Armytage (2010).
 The color 'white' has been re-defined as light-gray, #F2F3F4.
 Commentary: We think the kelly palette has an over-abundance of orange-ish
-colors, the purples are not very distinct, etc.
+colors, the purples are not very distinct, color 22 (olive green) is almost
+identical to color 2 (black), etc.
+
+The \code{pal36} palette is also from the Polychrome package.
+Colors were given a name from the ISCC-NBS standard.
 
 The \code{stepped} palette has 20 colors (5 hues, 4 levels within each hue)
 that is useful for showing varying levels within categories.
@@ -78,6 +93,11 @@ pal.bands(alphabet,n=26)
 pal.heatmap(alphabet)
 pal.cube(alphabet)
 
+# ----- alphabet2 -----
+#  require(Polychrome)
+#  ab2 <- createPalette(N=26,seedcolors=c("#E2E2E2","#474747","#F70000"))
+#  pal.bands(ab2, alphabet2(), sort="hue", labels=c("createPalette","alphabet2"))
+
 # ----- cols25 -----
 pal.bands(cols25,n=25)
 pal.heatmap(cols25)
@@ -91,6 +111,11 @@ pal.cube(glasbey, n=32) # Blues are close together
 pal.bands(kelly,n=22)
 pal.heatmap(kelly(22)) # too many orange/pink colors
 
+# ----- pal36 -----
+#  require(Polychrome)
+#  p36 <- createPalette(N=36,seedcolors=c("#474747", "#E2E2E2","#F70000"))
+#  pal.bands(p36, pal36(), sort="hue", labels=c("createPalette","pal36"))
+
 # ----- stepped -----
 pal.bands(stepped,n=20)
 pal.heatmap(stepped, n=20)
@@ -102,6 +127,9 @@ pal.heatmap(tol, 12)
 # ----- watlington -----
 pal.bands(watlington,n=16)
 pal.heatmap(watlington(16))
+
+pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, pal36, stepped, tol, watlington)
+
 }
 \author{
 Palette colors by various authors. R code by Kevin Wright.
@@ -111,6 +139,9 @@ Robert M. Boynton. (1989)
 Eleven Colors That Are Almost Never Confused. 
 Proc. SPIE 1077, \emph{Human Vision, Visual Processing, and Digital Display}, 322-332.
 http://doi.org/10.1117/12.952730
+
+Kevin R. Coombes (2016). Polychrome.
+https://rdrr.io/rforge/Polychrome/man/alphabet.html
 
 Chris Glasbey, Gerie van der Heijden, Vivian F. K. Toh, Alision Gray (2007).
 Colour Displays for Categorical Images.

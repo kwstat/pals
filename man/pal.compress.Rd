@@ -2,12 +2,12 @@
 % Please edit documentation in R/tools.R
 \name{pal.compress}
 \alias{pal.compress}
-\title{Compress a color palette function to fewer colors}
+\title{Compress a colormap function to fewer colors}
 \usage{
 pal.compress(pal, n = 5, thresh = 2.5)
 }
 \arguments{
-\item{pal}{A palette function or a vector of colors.}
+\item{pal}{A colormap function or a vector of colors.}
 
 \item{n}{Initial number of colors to use.}
 
@@ -17,46 +17,40 @@ pal.compress(pal, n = 5, thresh = 2.5)
 A vector of colors
 }
 \description{
-Compress a color palette function to fewer colors
+Compress a colormap function to fewer colors
 }
 \details{
-Many color palette functions are defined with more colors than needed.
-This function compresses a color palette function down to a sample
+Many colormap functions are defined with more colors than needed.
+This function compresses a colormap function down to a sample
 of colors that can be passed into 'colorRampPalette' and re-create the
 original palette with a just-noticeable-difference.
 
-Color palettes that are defined as a smoothly varying ramp between a set of
+Colormaps that are defined as a smoothly varying ramp between a set of
 colors often compress quite well.
-Color palettes that are defined by functions may not compress well.
-See the examples.
+Colormaps that are defined by functions may not compress well.
 }
 \examples{
-# The 'cm.colors' palette compresses to only 3 colors
+# The 'cm.colors' palette in R compresses to only 3 colors
 cm2 <- pal.compress(cm.colors, n=3)
-pal.bands(cm.colors(255), colorRampPalette(cm2)(255), cm2)
-title("cm.colors")
+pal.bands(cm.colors(255), colorRampPalette(cm2)(255), cm2,
+labels=c('original','compressed','basis'), main="cm.colors")
 
 # The 'heat.colors' palette needs 84 colors
 heat2 <- pal.compress(heat.colors, n=3)
-pal.bands(heat.colors(255), colorRampPalette(heat2)(255), heat2)
-title("heat.colors")
+pal.bands(heat.colors(255), colorRampPalette(heat2)(255), heat2,
+labels=c('original','compressed','basis'), main="heat.colors")
 
 # The 'topo.colors' palette needs 249 colors because of the discontinuity
 # topo2 <- pal.compress(topo.colors, n=3)
-# pal.bands(list(topo.colors(255), colorRampPalette(topo2)(255), topo2))
-# title("topo.colors")
+# pal.bands(topo.colors(255), colorRampPalette(topo2)(255), topo2,
+# labels=c('original','compressed','basis'), main="topo.colors")
 
-# palettes that are defined by functions are sometimes difficult to compress
-# into a colorRampPalette with a small number of colors
-pal.bands(terrain.colors(11), terrain.colors(21), terrain.colors(31),
-          terrain.colors(41), terrain.colors(51),
-          cm.colors(11), cm.colors(21), cm.colors(31), cm.colors(41), cm.colors(51),
-          labels=c("11","21","31","41","51","11","21","31","41","51"))
-
-# smooth palettes are easier to compress
+# smooth palettes usually easy to compress
 p1 <- coolwarm(255)
-p2 <- colorRampPalette( coolwarm(15) )(255)
-pal.bands(p1,p2,coolwarm(15), labels=c("coolwarm","colorRampPalette 15","15"))
+cool2 <- pal.compress(coolwarm)
+p2 <- colorRampPalette(cool2)(255)
+pal.bands(p1, p2, cool2,
+labels=c('original','compressed', 'basis'), main="coolwarm")
 pal.maxdist(p1,p2) # 2.33
  
 }
@@ -64,6 +58,6 @@ pal.maxdist(p1,p2) # 2.33
 Kevin Wright
 }
 \references{
-None
+None.
 }
 

@@ -2,14 +2,16 @@
 % Please edit documentation in R/tools.R
 \name{pal.csf}
 \alias{pal.csf}
-\title{Show a palette with a Campbell-Robson Contrast Sensitivity Chart}
+\title{Show a colormap with a Campbell-Robson Contrast Sensitivity Chart}
 \usage{
-pal.csf(pal, n = 150)
+pal.csf(pal, n = 150, main = "")
 }
 \arguments{
-\item{pal}{A continuous color palette function}
+\item{pal}{A continuous colormap function}
 
 \item{n}{The number of colors to display for palette functions.}
+
+\item{main}{Main title.}
 }
 \value{
 None

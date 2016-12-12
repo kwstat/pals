@@ -1,7 +1,7 @@
 Package: pals
-Version: 0.2
+Version: 1.0
 Authors@R: person("Kevin","Wright", email="kw.stat@gmail.com", role=c("aut","cre"))
-Date: 2016-11-14
+Date: 2016-12-12
 Title: Color Palettes, Colormaps, and Tools to Evaluate Them
 Description: A comprehensive collection of color palettes, colormaps, and tools to evaluate them.
 URL: https://github.com/kwstat/pals
@@ -16,7 +16,8 @@ Imports:
   grDevices,
   mapproj,
   methods,
-  rgl
+  rgl,
+  stats
 Suggests:
   ggplot2,
   knitr,

@@ -2,16 +2,16 @@
 % Please edit documentation in R/tools.R
 \name{pal.safe}
 \alias{pal.safe}
-\title{Show a palette of colors for black/white and colorblind safety}
+\title{Show a palette/colormap for black/white and colorblind safety}
 \usage{
-pal.safe(pal, n = 100, title = NULL)
+pal.safe(pal, n = 100, main = NULL)
 }
 \arguments{
 \item{pal}{A palette function or a vector of colors.}
 
 \item{n}{The number of colors to display for palette functions.}
 
-\item{title}{Title to display at the top of the test image}
+\item{main}{Title to display at the top of the test image}
 }
 \value{
 None.
@@ -36,9 +36,9 @@ What to look for:
 }
 \examples{
 pal.safe(glasbey)
-pal.safe(rainbow, title="rainbow") # Really, really bad
-pal.safe(cubicyf(100), title="cubicyf")
-pal.safe(parula, title="parula")
+pal.safe(rainbow, main="rainbow") # Really, really bad
+pal.safe(cubicyf(100), main="cubicyf")
+pal.safe(parula, main="parula")
 
 }
 \author{

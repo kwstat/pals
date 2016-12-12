@@ -2,14 +2,16 @@
 % Please edit documentation in R/tools.R
 \name{pal.volcano}
 \alias{pal.volcano}
-\title{Show a palette of colors with a surface of volcano elevation}
+\title{Show a colormap with a surface of volcano elevation}
 \usage{
-pal.volcano(pal, n = 100)
+pal.volcano(pal, n = 100, main = "")
 }
 \arguments{
 \item{pal}{A palette function or a vector of colors.}
 
 \item{n}{The number of colors to display for palette functions.}
+
+\item{main}{Main title}
 }
 \value{
 None.
@@ -29,8 +31,8 @@ What to look for:
 }
 \examples{
 pal.volcano(parula)
-pal.volcano(brewer.rdbu) # Bad: white Mach band
-pal.volcano(warmcool) # Better: no Mach band
+pal.volcano(brewer.rdbu) # Mach banding is bad
+pal.volcano(warmcool) # No Mach band 
 pal.volcano(rev(viridis(100))) # Bad: peak position is hidden
 
 }
