@@ -1,5 +1,5 @@
 # tools.R
-# Time-stamp: <11 Dec 2016 22:48:14 c:/x/rpack/pals/R/tools.R>
+# Time-stamp: <20 Dec 2016 13:55:41 c:/x/rpack/pals/R/tools.R>
 # Copyright: Kevin Wright, 2016. License: GPL-3.
 
 # ----------------------------------------------------------------------------
@@ -248,12 +248,11 @@ pal.channels <- function(pal,n=150,main=""){
 #' @return None
 #' 
 #' @examples
-#' pal.cluster(alphabet())
-#' pal.cluster(cols25)
-#' pal.cluster(glasbey) # two royal blues are very similar
-#' pal.cluster(kelly) # two black-ish colors are very similar
-#' pal.cluster(watlington)
-#' pal.cluster(coolwarm(15)) # curiously, grey clusters with blue
+#' pal.cluster(alphabet(), main="alphabet")
+#' pal.cluster(glasbey, main="glasbey") # two royal blues are very similar
+#' pal.cluster(kelly, main="kelly") # two black-ish colors are very similar
+#' # pal.cluster(watlington, main="watlington")
+#' # pal.cluster(coolwarm(15), main="coolwarm") # curiously, grey clusters with blue
 #' 
 #' @author Kevin Wright
 #'
@@ -656,7 +655,10 @@ pal.heatmap <- function(pal, n=25, miss=.05, main=""){
 #' 
 #' @author Kevin Wright
 #'
-#' @references 
+#' @references
+#'
+#' Vischeck. \url{http://www.vischeck.com/vischeck/}
+#' 
 #' None
 #' @export
 #' @importFrom colorspace desaturate

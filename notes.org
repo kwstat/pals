@@ -1,6 +1,4 @@
 
-Get kw.fillcols
-
 http://blogs.nature.com/methagora/2013/07/data-visualization-points-of-view.html
 
 Add St Helens image as used in plotly?
@@ -23,53 +21,10 @@ In Search Of A Perfect Colormap.https://twitter.com/inversed_ru
 
 http://mkweb.bcgsc.ca/
 
-Matteo Niccoli.  Free to re-use mode/media.
-Credit to Matteo Niccoli as the author and mycarta.wordpress.com
-https://mycarta.wordpress.com/2012/05/29/the-rainbow-is-dead-long-live-the-rainbow-series-outline/
-
-
-Niccoli
-Following has short cubicyf palette
-Trimmed, original code here
-https://www.mathworks.com/matlabcentral/fileexchange/28982-perceptually-improved-colormaps/content/pmkmp/pmkmp.m
-Non-trimmed version here
-https://github.com/rikrd/matlab/blob/master/output/pmkmp/pmkmp.m
-
 
 https://github.com/matplotlib/matplotlib/blob/master/lib/matplotlib/_cm.py
 
-cmocean, MIT license
-http://matplotlib.org/cmocean/
-https://github.com/kthyng/cmocean
-Actual color definitions are here:
-https://github.com/kthyng/cmocean/tree/master/cmocean/rgb
-R version of cmocean:
-https://github.com/dankelley/oce/
-
 ----------------------------------------------------------------------------
-
-
-* Peter Kovesi
-
-Palettes defined in csv format here:
-http://peterkovesi.com/projects/colourmaps/index.html
-
-Some interesting comments about the palettes
-https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/src/cmap.jl
-
-
-* R packages
-
-** ggsci
-https://github.com/road2stat/ggsci
-ggsci offers a collection of ggplot2 color palettes inspired by scientific journals, data visualization libraries, and science fiction TV shows.
-
-** palr
-https://github.com/AustralianAntarcticDivision/palr
-palr provides colour palettes for data, based on some well known remotely sensed data sets for sea ice concentration, sea surface temperature and chlorophyll-a.
-
-
-
 
 
 * StackExchange
@@ -99,9 +54,41 @@ http://geog.uoregon.edu/datagraphics/color_scales.htm
 
 * People
 
+** Peter Kovesi
+
+Palettes defined in csv format here:
+http://peterkovesi.com/projects/colourmaps/index.html
+
+Some interesting comments about the palettes
+https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/src/cmap.jl
+
+** Matteo Niccoli
+
+Credit to Matteo Niccoli as the author and mycarta.wordpress.com
+https://mycarta.wordpress.com/2012/05/29/the-rainbow-is-dead-long-live-the-rainbow-series-outline/
+Trimmed version of cubicyf palette
+https://www.mathworks.com/matlabcentral/fileexchange/28982-perceptually-improved-colormaps/content/pmkmp/pmkmp.m
+Non-trimmed version here
+https://github.com/rikrd/matlab/blob/master/output/pmkmp/pmkmp.m
+
+
+** Kristen Thyng
+
+cmocean, MIT license
+http://matplotlib.org/cmocean/
+https://github.com/kthyng/cmocean
+Actual color definitions are here:
+https://github.com/kthyng/cmocean/tree/master/cmocean/rgb
+
+PlotCon 2016 talk
+https://www.youtube.com/watch?v=o9KxYxROSgM
+
+
 ** Paul Tol
 
 https://personal.sron.nl/~pault
+
+
 
 * StackExchange
 
@@ -113,6 +100,11 @@ http://graphicdesign.stackexchange.com/questions/3682/where-can-i-find-a-large-p
 
 http://mathematica.stackexchange.com/questions/64513/is-there-an-easy-way-to-use-matteo-niccolis-perceptual-color-maps-for-2d-plots
 
+** StackExchange [r]
+
+Posted 'pals' image here:
+http://stackoverflow.com/questions/9563711/r-color-palettes-for-many-data-classes/41230685
+
 * R packages
 
 ** beyonce
@@ -123,9 +115,22 @@ An R package for beyoncepalettes.tumblr.com
 https://github.com/btupper/catecolors
 Colors from various sources that are suitable for displaying categorical (qualitative) colors.
 
+** ggsci
+https://github.com/road2stat/ggsci
+ggsci offers a collection of ggplot2 color palettes inspired by scientific journals, data visualization libraries, and science fiction TV shows.
+
+** oce
+https://github.com/dankelley/oce/
+Contains R version of cmocean colormaps
+
 ** palettetown
 https://github.com/timcdlucas/palettetown
 An R package providing pokemon colour palettes.
+
+** palr
+https://github.com/AustralianAntarcticDivision/palr
+palr provides color palettes for data, based on some well known remotely sensed data sets for sea ice concentration, sea surface temperature and chlorophyll-a.
+
 
 ** Polychrome
 https://rdrr.io/rforge/Polychrome/man/viewers.html
@@ -149,10 +154,6 @@ Candy-themed palettes.
 
 ** spatstat
 Contains Kovesi's colormaps.  For example:
-
-library(spatstat)
-data(Kovesi)
-for(i in 1:41) { pal.sineramp(Kovesi$values[[i]]); title(i) }
 
 ** wesanderson
 https://github.com/karthik/wesanderson

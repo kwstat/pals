@@ -9,7 +9,7 @@ dat <- read_excel("ColorBrewer_all_schemes_RGBonly3.xlsx")
 dat <- dat[1:1689,] # drop license info at bottom
 dat <- dat[,c(1,2,7:9)]
 names(dat) <- c('palette','ncolors','red','green','blue')
-# replace missing value of palette by previous
+# replace missing value of palette column by previous value
 pp <- dat$palette
 nn <- dat$ncol
 for(ii in 1:length(pp)){

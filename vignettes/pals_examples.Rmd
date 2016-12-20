@@ -127,6 +127,8 @@ Many colormap functions are defined with more colors than needed.
 This function compresses a colormap function down to a small-ish vector
 of colors that can be passed into `colorRampPalette` to re-create the original palette with a just-noticeable-difference.
 
+How effective is `pal.compress`? Compressing all 50 `kovesi.*` colormaps reduces memory from 352000 to 46000 bytes, a savings of 87%.
+
 In the figure below, the top band is the `coolwarm` colormap function with 255 colors. The `cool2` vector has 13 colors (shown at the bottom) which can be passed into the `colorRampPalette` function and expanded to 255 colors shown in the middle band.  The maximum squared LUV distance between the individual colors in the two bands is 2.08, which is smaller than the theoretical perceptual difference.
 ```{r}
 # smooth palettes usually easy to compress

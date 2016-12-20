@@ -1,31 +1,41 @@
 
-cmocean palettes by Kristen Thyng
-Released under MIT license
+This file lists licenses of the various colormaps and palettes used in the 'pals' package.
+
+cmocean colormaps by Kristen Thyng
+Released under: MIT license
 https://github.com/matplotlib/cmocean/blob/master/LICENSE.txt
 
 ColorBrewer palettes by Cindy Brewer
-Released under the Apache License, Version 2.0
-http://www.personal.psu.edu/cab38/ColorBrewer/ColorBrewer_RGB.html
+Released under: Apache License, Version 2.0
+http://www.personal.psu.edu/cab38/ColorBrewer/ColorBrewer_updates.html
 
 Matplotlib colormaps by Nathaniel J. Smith, Stefan van der Walt,
 and (in the case of viridis) Eric Firing.
-Released under CC0 license / public domain
+Released under: CC0 license / public domain
 https://github.com/BIDS/colormap/blob/master/colormaps.py
 
-Parula (not the Matlab version)
-Released under CC0 license.
-https://gist.github.com/justiceamoh/0aca7df49c35fc0a38d2
-https://github.com/BIDS/colormap/blob/master/LICENSE.txt
-
-Code by Peter Kovesi
-Released under the MIT "Expat" License.
+Colormaps by Peter Kovesi
+Released under: MIT "Expat" License.
 https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/LICENSE.md
 
-Color maps by Peter Kovesi
-Released under Creative Commons BY license.
-
-Matteo Niccoli palettes released under open license (similar to GPL)
+Matteo Niccoli palettes
+Released under: informal open license similar to GPL
 http://www.mathworks.com/matlabcentral/fileexchange/view_license?file_info_id=28982
 
-Color palettes by Kevin Coombes released under Apache License (== 2.0)
+Color palettes by Kevin Coombes
+Released under: Apache License (== 2.0)
 https://rdrr.io/rforge/Polychrome/
+
+---
+
+The following are currently not used. Perhaps in the future.
+
+Paraview colormaps (including coolwarm)
+Released under: BSD license
+http://www.paraview.org/paraview-license/
+http://www.paraview.org/Wiki/Colormaps
+
+Matplotlib colormaps
+Released under: Python Software Foundation Licnese (GPL compatible)
+http://www.python.org/psf/license
+

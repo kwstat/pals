@@ -1,5 +1,8 @@
 # sysdata.R
-# Time-stamp: <02 Dec 2016 20:38:19 c:/x/rpack/pals/data-raw/make_sysdata.r>
+# Time-stamp: <14 Dec 2016 11:54:06 c:/x/rpack/pals/data-raw/make_sysdata.r>
+
+# Execute this file to create the sysdata file for the pals package
+# The palettes are stored in a list, each item in the list is a separate palette
 
 lib(dplyr)
 lib(readr)
