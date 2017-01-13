@@ -22,7 +22,9 @@ pre > code { border: 0; }
 
 # Abstract
 
-The purpose of the `pals` package is twofold: (1) provide a comprehensive collection of color palettes and colormaps (2) provide tools for evaluating these collections.  This report gives some suggestions/recommendations for color and then gives an example of each evaluation tool.
+The purpose of the `pals` package is twofold: (1) provide a comprehensive collection of color palettes and colormaps (2) provide tools for evaluating these collections.  Memory use is reduced by compressing colormaps to fewer colors and by calling colorRampPalette only when a colormap is requested.
+
+This report gives some suggestions/recommendations for color and then gives an example of each evaluation tool.
 
 ```{r setup, echo=FALSE, results="hide"}
 library("knitr")

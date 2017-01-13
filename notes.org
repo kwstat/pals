@@ -1,6 +1,4 @@
 
-http://blogs.nature.com/methagora/2013/07/data-visualization-points-of-view.html
-
 Add St Helens image as used in plotly?
 https://github.com/matplotlib/viscm/tree/master/viscm/examples
 
@@ -11,36 +9,15 @@ In pal.test, add discrete=TRUE to prevent interpolation
 
 TODO: gist_earth
 
+https://www.scientificamerican.com/checkout/#/checkout
+kw.stat / science123
 
-Peter Karpov. http://inversed.ru/Blog_2.htm
-
-Peter Karpov. 2016.
-In Search Of A Perfect Colormap.https://twitter.com/inversed_ru
-
-
+Peter Karpov: In Search of a Perfect Colormap
+http://inversed.ru/Blog_2.htm
 
 http://mkweb.bcgsc.ca/
 
-
 https://github.com/matplotlib/matplotlib/blob/master/lib/matplotlib/_cm.py
-
-----------------------------------------------------------------------------
-
-
-* StackExchange
-
-Interesting palettes at bottom
-https://github.com/d3/d3-scale/blob/master/README.mdinterpolateViridis
-
-http://stackoverflow.com/questions/7251872/is-there-a-better-color-scale-than-the-rainbow-colormap
-
-http://stackoverflow.com/questions/13968520/color-selection-for-matplotlib-that-prints-well
-
-Promote pals here:
-http://stackoverflow.com/questions/15282580/how-to-generate-a-number-of-most-distinctive-colors-in-r
-
-
-
 
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
@@ -50,6 +27,9 @@ http://stackoverflow.com/questions/15282580/how-to-generate-a-number-of-most-dis
 
 Color Schemes Appropriate for Scientific Data Graphics
 http://geog.uoregon.edu/datagraphics/color_scales.htm
+
+d3-scale Interesting palettes at bottom
+https://github.com/d3/d3-scale/blob/master/README.md
 
 
 * People
@@ -66,8 +46,10 @@ https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/src/cmap.jl
 
 Credit to Matteo Niccoli as the author and mycarta.wordpress.com
 https://mycarta.wordpress.com/2012/05/29/the-rainbow-is-dead-long-live-the-rainbow-series-outline/
+
 Trimmed version of cubicyf palette
 https://www.mathworks.com/matlabcentral/fileexchange/28982-perceptually-improved-colormaps/content/pmkmp/pmkmp.m
+
 Non-trimmed version here
 https://github.com/rikrd/matlab/blob/master/output/pmkmp/pmkmp.m
 
@@ -77,6 +59,7 @@ https://github.com/rikrd/matlab/blob/master/output/pmkmp/pmkmp.m
 cmocean, MIT license
 http://matplotlib.org/cmocean/
 https://github.com/kthyng/cmocean
+
 Actual color definitions are here:
 https://github.com/kthyng/cmocean/tree/master/cmocean/rgb
 
@@ -89,7 +72,6 @@ https://www.youtube.com/watch?v=o9KxYxROSgM
 https://personal.sron.nl/~pault
 
 
-
 * StackExchange
 
 http://stackoverflow.com/questions/470690/how-to-automatically-generate-n-distinct-colors
@@ -100,7 +82,12 @@ http://graphicdesign.stackexchange.com/questions/3682/where-can-i-find-a-large-p
 
 http://mathematica.stackexchange.com/questions/64513/is-there-an-easy-way-to-use-matteo-niccolis-perceptual-color-maps-for-2d-plots
 
-** StackExchange [r]
+http://stackoverflow.com/questions/7251872/is-there-a-better-color-scale-than-the-rainbow-colormap
+
+http://stackoverflow.com/questions/13968520/color-selection-for-matplotlib-that-prints-well
+
+Linked to 9563711
+http://stackoverflow.com/questions/15282580/how-to-generate-a-number-of-most-distinctive-colors-in-r
 
 Posted 'pals' image here:
 http://stackoverflow.com/questions/9563711/r-color-palettes-for-many-data-classes/41230685
