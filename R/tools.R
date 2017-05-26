@@ -1,5 +1,5 @@
 # tools.R
-# Time-stamp: <20 Dec 2016 13:55:41 c:/x/rpack/pals/R/tools.R>
+# Time-stamp: <21 May 2017 13:45:55 c:/x/rpack/pals/R/tools.R>
 # Copyright: Kevin Wright, 2016. License: GPL-3.
 
 # ----------------------------------------------------------------------------
@@ -14,11 +14,12 @@
 #' 1. A good discrete palette has distinct colors.
 #' 
 #' 2. A good continuous colormap does not show boundaries between colors.
-#' The \code{rainbow()} palette is poor, showing bright lines at yellow, cyan, pink.
+#' For example, the \code{rainbow()} palette is poor, showing bright lines at
+#' yellow, cyan, pink.
 #' 
 #' @param ... Palettes/colormaps, each of which is either
 #' (1) a vectors of colors or
-#' (2) functions returning a vector of colors.
+#' (2) a function returning a vector of colors.
 #' 
 #' @param n The number of colors to display for palette functions.
 #' 
@@ -28,7 +29,7 @@
 #'
 #' @param gap Vertical gap between bars, default is 0.1
 #'
-#' @param sort Only affects a palette vector, not functions.
+#' @param sort
 #' If sort="none", palettes are not sorted.
 #' If sort="hue", palettes are sorted by hue.
 #' If sort="luminance", palettes are sorted by luminance.
@@ -43,15 +44,15 @@
 #'   magma, plasma, viridis, parula, n=200, gap=.05)
 #' par(op)
 #' 
-#' # Be sure to provide vectors, not functions, when sorting
-#' labs=c('alphabet','alphabet2', 'glasbey','kelly','pal36', 'watlington')
+#' # Examples of sorting
+#' labs=c('alphabet','alphabet2', 'glasbey','kelly','polychrome', 'watlington')
 #' op=par(mar=c(0,5,3,1))
 #' pal.bands(alphabet(), alphabet2(), glasbey(), kelly(),
-#'   pal36(), watlington(), sort="hue",
+#'   polychrome(), watlington(), sort="hue",
 #'   labels=labs, main="sorted by hue")
 #' par(op)
 #' pal.bands(alphabet(), alphabet2(), glasbey(), kelly(),
-#'   pal36(), watlington(), sort="luminance",
+#'   polychrome(), watlington(), sort="luminance",
 #'   labels=labs, main="sorted by luminance")
 #' 
 #' @export
@@ -59,7 +60,7 @@ pal.bands <- function(..., n=100, labels=NULL, main=NULL, gap=0.1, sort="none", 
 
   if(n < 3) warning("Using n=3")
   if(!is.element(sort, c("none","hue","luminance")))
-    warning("'sort' must be one of 'none','hue','luminance'")
+    stop("'sort' must be one of 'none','hue','luminance'")
     
   # Each argument in '...' is a palette function or palette vector.
   # if a function, use n colors
@@ -83,31 +84,28 @@ pal.bands <- function(..., n=100, labels=NULL, main=NULL, gap=0.1, sort="none", 
     labels <- ifelse(isfun, labels, "")
   }
 
-  # Sort palette vectors (not functions) if needed
-  if(sort=="hue"){
-    for(i in 1:npal){
-      if(!isfun[i]) {
-        hsvcol <- methods::as(colorspace::hex2RGB(pals[[i]]), "HSV")@coords
-        pals[[i]] <- pals[[i]][order(hsvcol[,1],hsvcol[,2])]
-      }
-    }
-  }
-  if(sort=="luminance"){
-    for(i in 1:npal){
-      if(!isfun[i]) {
-        cols <- methods::as(colorspace::hex2RGB(pals[[i]]), "LUV")@coords
-        pals[[i]] <- pals[[i]][order(cols[,1],cols[,2])]
-      }
-    }
-  }
-  
-  
   # Now convert the colormap functions to palette vectors
   for(i in 1:npal) {
     if(isfun[i]) pals[[i]] <- pals[[i]](n)
   }
   # Count the number of boxes for each palette
   nc <- unlist(lapply(pals, length))
+
+  # AFTER functions are converted to vectors, we can sort if needed
+  if(sort=="hue"){
+    for(i in 1:npal){
+        hsvcol <- methods::as(colorspace::hex2RGB(pals[[i]]), "HSV")@coords
+        pals[[i]] <- pals[[i]][order(hsvcol[,1],hsvcol[,2])]
+    }
+  }
+  if(sort=="luminance"){
+    for(i in 1:npal){
+        cols <- methods::as(colorspace::hex2RGB(pals[[i]]), "LUV")@coords
+        pals[[i]] <- pals[[i]][order(cols[,1],cols[,2])]
+    }
+  }
+  
+  
   
   maxn <- max(nc)
   ylim <- c(0, npal)
@@ -349,7 +347,7 @@ pal.csf = function(pal, n=150, main=""){
 #'
 #' Compress a colormap function to fewer colors
 #'
-#' Many colormap functions are defined with more colors than needed.
+#' Colormap functions are often defined with many more colors than needed.
 #' This function compresses a colormap function down to a sample
 #' of colors that can be passed into 'colorRampPalette' and re-create the
 #' original palette with a just-noticeable-difference.
@@ -438,7 +436,7 @@ pal.compress <- function(pal, n=5, thresh=2.5) {
 #' @examples
 #' \dontrun{
 #' pal.cube(cubehelix)
-#' pal.cube(glasbey, n=32) # blues are too close to each other
+#' pal.cube(glasbey, n=32) # RGB, blues are too close to each other
 #' pal.cube(glasbey, n=32, type="LUV")
 #' pal.cube(cols25(25), type="LUV", label=TRUE)
 #' # To open a second cube
@@ -524,7 +522,7 @@ pal.dist <- function(pal1, pal2, n=255){
   delta <- apply((p1-p2), 1, function(x) sqrt(sum(x^2)))
   return(delta)
 
-  invisible()
+  return()
 }
 
 # ----------------------------------------------------------------------------
@@ -553,6 +551,9 @@ pal.dist <- function(pal1, pal2, n=255){
 #' pal.maxdist(pa0,pa2) # 5.20
 #' pal.bands(pa1,pa0,pa2, labels=c("2.36","0","5.20"))
 #' title("Maximum Lab distance from middle palette")
+#'
+#' # distance between colormap functions
+#' pal.maxdist(coolwarm,warmcool)
 #' 
 #' @author Kevin Wright
 #' 
@@ -582,7 +583,7 @@ pal.maxdist <- function(pal1, pal2, n=255) max(pal.dist(pal1, pal2, n))
 #' pal.heatmap(coolwarm, n=12)
 #' pal.heatmap(tol, n=12)
 #' pal.heatmap(glasbey, n=32)
-#' pal.heatmap(kelly, n=22)
+#' pal.heatmap(kelly, n=22, main="kelly", miss=.25)
 #' 
 #' @author Kevin Wright
 #'
@@ -716,7 +717,8 @@ pal.safe <- function(pal, n=100, main=NULL){
 #' @return
 #' None.
 #' @examples
-#' pal.scatter(glasbey, n=31) # FIXME add legend
+#' pal.scatter(glasbey, n=31, main="glasbey") # FIXME add legend
+#' pal.scatter(parula, n=10) # not a good choice
 #' 
 #' @author Kevin Wright
 #' 
@@ -946,7 +948,7 @@ pal.test <- function(pal, main=substitute(pal)){
 #' @examples
 #' pal.volcano(parula)
 #' pal.volcano(brewer.rdbu) # Mach banding is bad
-#' pal.volcano(warmcool) # No Mach band 
+#' pal.volcano(warmcool, main="warmcool") # No Mach band 
 #' pal.volcano(rev(viridis(100))) # Bad: peak position is hidden
 #' 
 pal.volcano <- function(pal, n=100, main=""){
@@ -993,7 +995,7 @@ pal.volcano <- function(pal, n=100, main=""){
 #' @return None
 #' 
 #' @examples
-#' pal.zcurve(parula,n=4)
+#' pal.zcurve(parula,n=4,main="parula")
 #' pal.zcurve(parula,n=16)
 #' pal.zcurve(parula,n=64)
 #' pal.zcurve(parula,n=256)

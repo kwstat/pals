@@ -20,7 +20,7 @@ A vector of colors
 Compress a colormap function to fewer colors
 }
 \details{
-Many colormap functions are defined with more colors than needed.
+Colormap functions are often defined with many more colors than needed.
 This function compresses a colormap function down to a sample
 of colors that can be passed into 'colorRampPalette' and re-create the
 original palette with a just-noticeable-difference.
@@ -54,10 +54,9 @@ labels=c('original','compressed', 'basis'), main="coolwarm")
 pal.maxdist(p1,p2) # 2.33
  
 }
-\author{
-Kevin Wright
-}
 \references{
 None.
 }
-
+\author{
+Kevin Wright
+}

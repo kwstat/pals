@@ -36,10 +36,9 @@ pal.test(viridis) # dark colors are poor
 pal.test(coolwarm)
 
 }
-\author{
-Kevin Wright
-}
 \references{
 # See links above.
 }
-
+\author{
+Kevin Wright
+}

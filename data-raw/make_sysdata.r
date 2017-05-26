@@ -1,7 +1,7 @@
 # sysdata.R
-# Time-stamp: <14 Dec 2016 11:54:06 c:/x/rpack/pals/data-raw/make_sysdata.r>
+# Time-stamp: <21 May 2017 14:04:32 c:/x/rpack/pals/data-raw/make_sysdata.r>
 
-# Execute this file to create the sysdata file for the pals package
+# Execute this entire file to create the sysdata file for the pals package
 # The palettes are stored in a list, each item in the list is a separate palette
 
 lib(dplyr)
@@ -78,8 +78,17 @@ colrs %>% filter(palette=="parula") %>% select(red,green,blue) %>% rgb %>% color
 # http://geog.uoregon.edu/datagraphics/color/StepSeq_25.txt
 # Similar to the HSV codes from oregon.edu, but using 4 steps instead of 5
 
-# Even though the columns are called red, green, blue, the numbers
-# are really HSV
+# Even though the columns in the file are called red, green, blue,
+# the numbers are really HSV
+
+# The gray colors were chosen by KW with the help of
+# http://alloyui.com/examples/color-picker/hsv/
+# Type in HSV, get RGB colors, desaturate in R, type in RGB, extract HSV.
+# 260,0.9,0.6   desaturate(rgb(61,15,154,max=255))  #363636 -> 0 0 21
+# 260,0.65,0.7  desaturate(rgb(102,63,179,max=255))  #575757 -> 0 0 34
+# 260,0.4,0.8   desaturate(rgb(150,123,205,max=255)) #898989 -> 0 0 54
+# 260,0.2,0.9   desaturate(rgb(200,184,230,max=255)) #BFBFBF -> 0 0 75
+# The gray values were tweaked slightly to shift toward brighter shades
 
 colrs %>% filter(palette=="stepped") %>% select(red,green,blue) %>%
   mutate(red=red/360) %>% as.matrix -> stepcols

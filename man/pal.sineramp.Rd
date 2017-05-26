@@ -54,9 +54,6 @@ pal.sineramp(jet) # Bad: Indistinct wave in green at top. Mach bands at bottom.
 pal.sineramp(brewer.greys(100))
 
 }
-\author{
-Concept by Peter Kovesi. R code by Kevin Wright.
-}
 \references{
 Peter Kovesi (2015). Good Colour Maps: How to Design Them.
 http://arxiv.org/abs/1509.03700.
@@ -70,4 +67,6 @@ http://peterkovesi.com/projects/colourmaps/colourmaptestimage.html
 Original Julia version by Peter Kovesi from:
 https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/src/utilities.jl
 }
-
+\author{
+Concept by Peter Kovesi. R code by Kevin Wright.
+}

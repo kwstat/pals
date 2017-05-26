@@ -2744,14 +2744,14 @@ glasbey,,220,94,147
 glasbey,,147,212,255
 glasbey,,0,76,255
 glasbey,,242,243,24
-stepped,,350,0.9,0.6
-stepped,,350,0.65,0.7
-stepped,,350,0.4,0.8
-stepped,,350,0.2,0.9
-stepped,,35,0.9,0.6
-stepped,,35,0.65,0.7
-stepped,,35,0.4,0.8
-stepped,,35,0.2,0.9
+stepped,,350, 0.9,0.6
+stepped,,350, 0.65,0.7
+stepped,,350, 0.4,0.8
+stepped,,350, 0.20,0.9
+stepped,,35, 0.9,0.6
+stepped,,35, 0.65,0.7
+stepped,,35, 0.4,0.8
+stepped,,35, 0.2,0.9
 stepped,,90,0.9,0.6
 stepped,,90,0.65,0.7
 stepped,,90,0.4,0.8
@@ -2763,7 +2763,11 @@ stepped,,190,0.2,0.9
 stepped,,260,0.9,0.6
 stepped,,260,0.65,0.7
 stepped,,260,0.4,0.8
-stepped,,270,0.2,0.9
+stepped,,260,0.2,0.9
+stepped,,0,0, 0.20
+stepped,,0,0, 0.40
+stepped,,0,0, 0.60
+stepped,,0,0, 0.80
 coolwarm,,59,76,192
 coolwarm,,68,90,204
 coolwarm,,77,104,215

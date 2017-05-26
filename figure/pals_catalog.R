@@ -4,7 +4,7 @@ png("c:/x/catalog.png", width=800, height=2500, pointsize=24)
 
 op = par(mar=c(1,10,2,1))
 
-pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, pal36, stepped, tol, watlington,
+pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, polychrome, stepped, tol, watlington,
           
           coolwarm,cubehelix,gnuplot,jet,parula,tol.rainbow,
           

@@ -1,5 +1,5 @@
 # pals_logo.r
-# Time-stamp: <20 Dec 2016 22:48:52 c:/x/rpack/pals/figure/pals_logo.r>
+# Time-stamp: <26 Apr 2017 13:35:14 c:/x/rpack/pals/figure/pals_logo.r>
 
 # outline text demo
 lib(TeachingDemos)
@@ -63,8 +63,8 @@ polygon(x=c(9, 10, 10, 9), y=c(0,0, 10,10), col="white",border="white")
 # Version 2, flat bottom, equal-length sides
 
 lib(pals)
-lib(TeachingDemos)
-lib(plotrix)
+lib(TeachingDemos) # for shadowtext
+lib(plotrix) # gradient.rect
 library(spatstat)
 H <- hextess(square(1), 0.5)
 
@@ -83,3 +83,5 @@ shadowtext(.5, .4, 'pals', col='white', bg="gray30", r=0.15,
            theta= seq(pi/4, 2*pi, length.out=4), cex=10)
 
 # Click Resize, Fit to window. Shrink window, save to png
+
+savePlot("pals_logo.png", type="png",

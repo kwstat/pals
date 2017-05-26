@@ -52,4 +52,3 @@ Provide multiple tools to evaluate palettes.
 To learn more, see the vignettes:
 \code{browseVignettes(package="pals")}
 }
-

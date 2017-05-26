@@ -23,13 +23,13 @@ What to look for:
 1. Can the colors of each point be uniquely identified?
 }
 \examples{
-pal.scatter(glasbey, n=31) # FIXME add legend
+pal.scatter(glasbey, n=31, main="glasbey") # FIXME add legend
+pal.scatter(parula, n=10) # not a good choice
 
-}
-\author{
-Kevin Wright
 }
 \references{
 None.
 }
-
+\author{
+Kevin Wright
+}

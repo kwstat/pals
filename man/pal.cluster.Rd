@@ -28,18 +28,16 @@ What to look for:
 Colors that are visually similar tend to be clustered together.
 }
 \examples{
-pal.cluster(alphabet())
-pal.cluster(cols25)
-pal.cluster(glasbey) # two royal blues are very similar
-pal.cluster(kelly) # two black-ish colors are very similar
-pal.cluster(watlington)
-pal.cluster(coolwarm(15)) # curiously, grey clusters with blue
+pal.cluster(alphabet(), main="alphabet")
+pal.cluster(glasbey, main="glasbey") # two royal blues are very similar
+pal.cluster(kelly, main="kelly") # two black-ish colors are very similar
+# pal.cluster(watlington, main="watlington")
+# pal.cluster(coolwarm(15), main="coolwarm") # curiously, grey clusters with blue
 
-}
-\author{
-Kevin Wright
 }
 \references{
 None
 }
-
+\author{
+Kevin Wright
+}

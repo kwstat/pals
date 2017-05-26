@@ -32,8 +32,7 @@ What to look for:
 \examples{
 pal.volcano(parula)
 pal.volcano(brewer.rdbu) # Mach banding is bad
-pal.volcano(warmcool) # No Mach band 
+pal.volcano(warmcool, main="warmcool") # No Mach band 
 pal.volcano(rev(viridis(100))) # Bad: peak position is hidden
 
 }
-

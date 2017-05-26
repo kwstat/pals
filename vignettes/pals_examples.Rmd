@@ -1,4 +1,3 @@
-
 ---
 title: "Overview of the 'pals' package"
 author: "Kevin Wright"
@@ -20,9 +19,12 @@ code {border: 1px solid #e0e0e0; padding: 0 5px;}
 pre > code { border: 0; }
 </style>
 
-# Abstract
+The purpose of the `pals` package is twofold:
 
-The purpose of the `pals` package is twofold: (1) provide a comprehensive collection of color palettes and colormaps (2) provide tools for evaluating these collections.  Memory use is reduced by compressing colormaps to fewer colors and by calling colorRampPalette only when a colormap is requested.
+1. Provide a comprehensive collection of color palettes and colormaps
+2. Provide tools for evaluating these collections.
+
+Memory use is reduced by compressing colormaps to fewer colors and by calling `colorRampPalette` only when a colormap is requested.
 
 This report gives some suggestions/recommendations for color and then gives an example of each evaluation tool.
 
@@ -33,11 +35,19 @@ options(width=90)
 ```
 # Recommendations
 
-The appearance of color depends on (1) the display device (screen, paper, photocopy), (2) the type of graphic (regions/lines), and (3) the person (age, gender, colorblindness)--it is difficult to give definitive recommendations for the best palettes and colormaps.  Nonetheless, here are some we like (among many!).
+The appearance of color depends on:
+
+1. The display device (screen, paper, photocopy).
+2. The type of graphic (regions/lines).
+3. The person (age, gender, colorblindness)
+
+It is difficult to give definitive recommendations for the best palettes and colormaps.  Nonetheless, here are some we like.
 
 Diverging: `coolwarm`/`warmcool` avoid Mach banding in the middle.
 
-Sequential: `ocean.haline`, `parula` (default in Matlab).
+Sequential (multi-hue): `ocean.haline`, `parula` (default in Matlab).
+
+Sequential (one hue):  `brewer.blues`.
 
 Rainbow: `cubicl`, `kovesi.rainbow`.
 
@@ -47,7 +57,7 @@ Categorical: `brewer.paired`, `stepped`
 
 ```{r}
 require(pals)
-pal.bands(coolwarm, parula, ocean.haline, cubicl, kovesi.rainbow, ocean.phase, brewer.paired(12), stepped,
+pal.bands(coolwarm, parula, ocean.haline, brewer.blues, cubicl, kovesi.rainbow, ocean.phase, brewer.paired(12), stepped,
           main="Colormap suggestions")
 ```
 
@@ -60,15 +70,13 @@ Show palettes and colormaps as colored bands
 What to look for:
 
 1. A good discrete palette has distinct colors.
-
 2. A good continuous colormap does not show boundaries between colors.
-The \code{rainbow()} palette is poor, showing bright lines at yellow, cyan, pink.
 
 ```{r}
-labs=c('alphabet','alphabet2', 'glasbey','kelly','pal36', 'stepped', 'tol', 'watlington')
+labs=c('alphabet','alphabet2', 'glasbey','kelly','polychrome', 'stepped', 'tol', 'watlington')
 op=par(mar=c(0,5,3,1))
 pal.bands(alphabet(), alphabet2(), glasbey(), kelly(),
-  pal36(), stepped(), tol(), watlington(), labels=labs, show.names=FALSE)
+  polychrome(), stepped(), tol(), watlington(), labels=labs, show.names=FALSE)
 par(op)
 pal.bands(coolwarm, viridis, parula, n=200)
 ```
@@ -94,8 +102,7 @@ The palette colors are converted to LUV coordinates before clustering.
 What to look for:
 
 1. Colors that are visually similar tend to be clustered together.
-
-2. Are the leaves at substantially different heights?
+2. Leaves of the dendrogram should not be at substantially different heights.
 
 ```{r}
 pal.cluster(alphabet2(), main="alphabet2")
@@ -115,9 +122,7 @@ Your perception of this curve depends on the viewing distance.
 What to look for:
 
 1. Are the vertical bands visible across the full vertical axis?
-
-2. Do the vertical bands blur together?
- 
+2. Do the vertical bands blur together along the right side?
 
 ```{r}
 pal.csf(parula, main="parula")
@@ -152,27 +157,26 @@ hand in RGB space.
 
 What to look for:
 
-A good palette has colors that are spread somewhat uniformly in 3D.
+1. A good palette has colors that are spread somewhat uniformly in 3D.
 
 ```{r}
 #pal.cube(cubehelix)
-#pal.cube(pal36())
+#pal.cube(polychrome())
 ```
 
 ![cubehelix](cubehelix.png)
-![pal36](pal36.png)
+![polychrome](polychrome.png)
 
 ## pal.heatmap()
 
 A random heatmap is generated (with 5% missing values) and a key is added
-to the heatmap by appending a blank column and then a column with the
+to the heatmap by appending a blank column along the right side and then a column with the
 palette colors.
 
 What to look for:
 
-1. Can the value of each cell be correctly interpreted using the key on 
+1. Can the value of each cell be correctly inferred using the key on 
 the right side?
-
 2. Can missing values be identified?
 
 ```{r}
@@ -188,11 +192,10 @@ Display a palette on a choropleth map similar to the ColorBrewer website.
 
 What to look for:
 
-1. Are regions distinct from each other? Are county outlines visible?
-
-2. Are outliers identifiable within each region?
-
-3. Are colors identifiable in the complex area (lower left) part of the map.
+1. Are regions distinct from each other?
+2. Are county outlines visible?
+3. Are outliers identifiable within each region?
+4. Are colors identifiable in the complex area (lower left) part of the map?
 
 ```{r}
 pal.map(brewer.paired, n=12, main="brewer.paired")
@@ -200,17 +203,17 @@ pal.map(brewer.paired, n=12, main="brewer.paired")
 
 ## pal.safe()
 
-A single palette/colormap is shown as colored bands
-(1) without any modifications 
-(2) in black-and-white as if photocopied 
-(3) as seen by deutan color-blind
-(4) as seen by protan color-blind
-(5) as seen by tritan color-blind.
+A single palette/colormap is shown as five colored bands:
+
+1. Without any modifications.
+2. As seen in black-and-white as if photocopied.
+3. As seen by the deutan color-blind.
+4. As seen by the protan color-blind.
+5. As seen by the tritan color-blind.
 
 What to look for:
 
 1. Are colors still unique when viewed in less-than full color? 
-
 2. Is a sequential colormap still sequential?
 
 ```{r}
@@ -226,25 +229,23 @@ What to look for:
 1. Can the colors of each point be uniquely identified?
 
 ```{r}
-pal.scatter(pal36, n=36, main="alphabet")
+pal.scatter(polychrome, n=36, main="alphabet")
 ```
 
 ## pal.sineramp()
 
-The test image shows a sine wave superimposed on a ramp of the palette.  The amplitude of the sine wave is dampened/modulated from full at the top
-of the image to 0 at the bottom.
+The test image shows a sine wave superimposed on a ramp of the palette.  The amplitude of the sine wave is dampened/modulated from full at the top of the image to 0 at the bottom.
 
 What to look for:
 
-1. Is the sine wave equally visible horizontally across the entire image?
-
-2. At the bottom, is the ramp smooth, or are there features like vertical bands?
+1. Along the top edge, is the sine wave equally visible across the entire image?
+2. Along the bottom edge, is the ramp smooth, or are there vertical bands?
 
 ```{r}
 pal.sineramp(parula, main="parula")
 ```
 
-In the example below, the `jet` palette fails the tests.
+In the example below, the `jet` colormap fails both tests, the `tol.rainbow` colormap fails to clearly show the sinewave in the green/orange region.
 ```{r}
 op <- par(mfrow=c(3,1), mar=c(1,1,2,1))
 pal.sineramp(jet, main="jet")
@@ -255,17 +256,19 @@ par(op)
 
 ## pal.test()
 
-The `pal.test` function combines several other functions into a single test image.
+This function combines several other functions into a single test image.
 
 The examples below show the superiority of the `parula` colormap as compared to the `viridis` colormap.
 
 What to look for:
 
 1. Are all squares in the upper-left Z-curve distinct?
-2. Are the CSF bands visible?
+2. Are the contrast sensitivity function bands visible?
 3. Is the sinewave showing bands of similar height, and smoothly varying along the bottom?
 4. Is the actual peak of the volcano identifiable? The lowest area?
 5. Is the gray/luminosity channel monotonic?
+
+The examples below show the poor performance of the 'viridis' colormap in dark regions.  The 'parula' palette shows more structure in the volcano.
 
 ```{r}
 pal.test(parula)
@@ -279,13 +282,12 @@ Some palettes with dark colors at one end of the palette hide the shape of the v
 What to look for:
 
 1. Can you locate the exact position of the highest point on the volcano?
-
 2. Are the upper-right and lower-right corners the same elevation?
-
 3. Do any Mach bands circle the peak?
 
 ```{r}
 pal.volcano(parula)
+pal.volcano(viridis)
 ```
 
 ## pal.zcurve()
@@ -305,7 +307,7 @@ pal.zcurve(parula, main="parula")
 
 # Using palettes with ggplot2
 
-To use any colormap with the `ggplot2` package, use the `scale_fill_gradientn` function as shown in the following example.
+To use any colormap with the `ggplot2` package, use the `scale_fill_gradientn()` function.
 
 ```{r}
 require(ggplot2)
@@ -322,12 +324,12 @@ The following images show bands for all the colormaps and palettes in the `pals`
 
 ```{r}
 # Discrete
-pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, pal36, stepped, tol, watlington,
+pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, polychrome, stepped, tol, watlington,
           main="Discrete", show.names=FALSE)
 
 
 # Misc
-pal.bands(coolwarm,cubehelix,gnuplot,jet,parula,tol.rainbow)
+pal.bands(coolwarm,warmcool,cubehelix,gnuplot,jet,parula,tol.rainbow)
 
 
 # Niccoli

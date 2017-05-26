@@ -1,5 +1,5 @@
 # discrete.r
-# Time-stamp: <09 Dec 2016 15:31:29 c:/x/rpack/pals/R/discrete.R>
+# Time-stamp: <15 May 2017 14:30:11 c:/x/rpack/pals/R/discrete.R>
 # Copyright Kevin Wright, 2016, GPL-3
 
 #' Discrete palettes
@@ -36,13 +36,15 @@
 #' colors, the purples are not very distinct, color 22 (olive green) is almost
 #' identical to color 2 (black), etc.
 #'
-#' The \code{pal36} palette is also from the Polychrome package.
+#' The \code{polychrome} palette is also from the Polychrome package.
 #' Colors were given a name from the ISCC-NBS standard.
 #' 
-#' The \code{stepped} palette has 20 colors (5 hues, 4 levels within each hue)
-#' that is useful for showing varying levels within categories.
-#' In order to better separate these colors in RGB space, we
-#' moved red hue 0 to hue 350, green hue 80 to hue 90 
+#' The \code{stepped} palette has 24 colors (5 hues, 4 levels within each hue, plus
+#' 4 shades of gray) that is useful for showing varying levels within categories.
+#' Inspired by (http://geog.uoregon.edu/datagraphics/color_scales.htm), but in
+#' order to better separate these colors in RGB space, red hue 0 was moved to hue 350,
+#' green hue 80 moved to hue 90. The number of colors within each hue was reduced
+#' from 5 to 4, and gray shades were added.
 #' 
 #' The \code{tol} palette has 12 colors by Paul Tol.
 #' 
@@ -82,14 +84,14 @@
 #' pal.bands(kelly,n=22)
 #' pal.heatmap(kelly(22)) # too many orange/pink colors
 #'
-#' # ----- pal36 -----
+#' # ----- polychrome -----
 #' #  require(Polychrome)
 #' #  p36 <- createPalette(N=36,seedcolors=c("#474747", "#E2E2E2","#F70000"))
-#' #  pal.bands(p36, pal36(), sort="hue", labels=c("createPalette","pal36"))
+#' #  pal.bands(p36, polychrome(), sort="hue", labels=c("createPalette","polychrome"))
 #' 
 #' # ----- stepped -----
-#' pal.bands(stepped,n=20)
-#' pal.heatmap(stepped, n=20)
+#' pal.bands(stepped,n=24)
+#' pal.heatmap(stepped, n=24)
 #' 
 #' # ----- tol -----
 #' pal.bands(tol,n=12)
@@ -99,7 +101,7 @@
 #' pal.bands(watlington,n=16)
 #' pal.heatmap(watlington(16))
 #'
-#' pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, pal36, stepped, tol, watlington)
+#' pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, polychrome, stepped, tol, watlington)
 #' 
 #' @references
 #' 
@@ -279,10 +281,10 @@ kelly <- function(n=22) {
 
 #' @rdname discrete
 #' @export
-pal36 <- function(n=36){
+polychrome <- function(n=36){
   
   if(n > 36) {
-    message("Only 36 colors are available with 'pal36'.")
+    message("Only 36 colors are available with 'polychrome'.")
     n <- 36
   }
 
@@ -311,11 +313,11 @@ pal36 <- function(n=36){
 
 #' @export
 #' @rdname discrete
-stepped <- function(n=20) {
+stepped <- function(n=24) {
   
-  if(n > 20) {
-    message("Only 20 colors are available with 'stepped'")
-    n <- 20
+  if(n > 24) {
+    message("Only 24 colors are available with 'stepped'")
+    n <- 24
   }
 
   return(syspals$stepped[1:n])

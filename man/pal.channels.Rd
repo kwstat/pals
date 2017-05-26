@@ -31,10 +31,9 @@ pal.channels(coolwarm)
 # pal.channels(glasbey) # Nonsensical.
 
 }
-\author{
-Kevin Wright
-}
 \references{
 None
 }
-
+\author{
+Kevin Wright
+}

@@ -41,10 +41,11 @@ pal.safe(cubicyf(100), main="cubicyf")
 pal.safe(parula, main="parula")
 
 }
+\references{
+Vischeck. \url{http://www.vischeck.com/vischeck/}
+
+None
+}
 \author{
 Kevin Wright
 }
-\references{
-None
-}
-

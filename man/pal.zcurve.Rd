@@ -28,14 +28,11 @@ What to look for:
 within each of the 16 squares.
 }
 \examples{
-pal.zcurve(parula,n=4)
+pal.zcurve(parula,n=4,main="parula")
 pal.zcurve(parula,n=16)
 pal.zcurve(parula,n=64)
 pal.zcurve(parula,n=256)
 
-}
-\author{
-Kevin Wright.
 }
 \references{
 Peter Karpov. 2016.
@@ -43,4 +40,6 @@ In Search Of A Perfect Colormap. https://twitter.com/inversed_ru
 
 Z-order curve. https://en.wikipedia.org/wiki/Z-order_curve
 }
-
+\author{
+Kevin Wright.
+}

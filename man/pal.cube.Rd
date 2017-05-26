@@ -32,7 +32,7 @@ A good palette has colors that are spread somewhat uniformly in 3D.
 \examples{
 \dontrun{
 pal.cube(cubehelix)
-pal.cube(glasbey, n=32) # blues are too close to each other
+pal.cube(glasbey, n=32) # RGB, blues are too close to each other
 pal.cube(glasbey, n=32, type="LUV")
 pal.cube(cols25(25), type="LUV", label=TRUE)
 # To open a second cube
@@ -45,4 +45,3 @@ pal.cube(colors()[c(1:152, 254:260, 362:657)]) # All R non-grey colors
 \references{
 None
 }
-

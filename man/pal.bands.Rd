@@ -10,7 +10,7 @@ pal.bands(..., n = 100, labels = NULL, main = NULL, gap = 0.1,
 \arguments{
 \item{...}{Palettes/colormaps, each of which is either
 (1) a vectors of colors or
-(2) functions returning a vector of colors.}
+(2) a function returning a vector of colors.}
 
 \item{n}{The number of colors to display for palette functions.}
 
@@ -20,8 +20,7 @@ pal.bands(..., n = 100, labels = NULL, main = NULL, gap = 0.1,
 
 \item{gap}{Vertical gap between bars, default is 0.1}
 
-\item{sort}{Only affects a palette vector, not functions.
-If sort="none", palettes are not sorted.
+\item{sort}{If sort="none", palettes are not sorted.
 If sort="hue", palettes are sorted by hue.
 If sort="luminance", palettes are sorted by luminance.}
 
@@ -36,7 +35,8 @@ What to look for:
 1. A good discrete palette has distinct colors.
 
 2. A good continuous colormap does not show boundaries between colors.
-The \code{rainbow()} palette is poor, showing bright lines at yellow, cyan, pink.
+For example, the \code{rainbow()} palette is poor, showing bright lines at
+yellow, cyan, pink.
 }
 \examples{
 pal.bands(c('red','white','blue'), rainbow)
@@ -46,16 +46,15 @@ pal.bands(cubehelix, gnuplot, jet, tol.rainbow, inferno,
   magma, plasma, viridis, parula, n=200, gap=.05)
 par(op)
 
-# Be sure to provide vectors, not functions, when sorting
-labs=c('alphabet','alphabet2', 'glasbey','kelly','pal36', 'watlington')
+# Examples of sorting
+labs=c('alphabet','alphabet2', 'glasbey','kelly','polychrome', 'watlington')
 op=par(mar=c(0,5,3,1))
 pal.bands(alphabet(), alphabet2(), glasbey(), kelly(),
-  pal36(), watlington(), sort="hue",
+  polychrome(), watlington(), sort="hue",
   labels=labs, main="sorted by hue")
 par(op)
 pal.bands(alphabet(), alphabet2(), glasbey(), kelly(),
-  pal36(), watlington(), sort="luminance",
+  polychrome(), watlington(), sort="luminance",
   labels=labs, main="sorted by luminance")
 
 }
-

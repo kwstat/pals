@@ -1,4 +1,6 @@
 
+* Ideas
+
 Add St Helens image as used in plotly?
 https://github.com/matplotlib/viscm/tree/master/viscm/examples
 
@@ -31,8 +33,12 @@ http://geog.uoregon.edu/datagraphics/color_scales.htm
 d3-scale Interesting palettes at bottom
 https://github.com/d3/d3-scale/blob/master/README.md
 
+Choosing colormaps
+http://matplotlib.org/users/colormaps.html
+
 
 * People
+
 
 ** Peter Kovesi
 
@@ -41,6 +47,7 @@ http://peterkovesi.com/projects/colourmaps/index.html
 
 Some interesting comments about the palettes
 https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/src/cmap.jl
+
 
 ** Matteo Niccoli
 
@@ -92,6 +99,7 @@ http://stackoverflow.com/questions/15282580/how-to-generate-a-number-of-most-dis
 Posted 'pals' image here:
 http://stackoverflow.com/questions/9563711/r-color-palettes-for-many-data-classes/41230685
 
+
 * R packages
 
 ** beyonce
@@ -117,7 +125,6 @@ An R package providing pokemon colour palettes.
 ** palr
 https://github.com/AustralianAntarcticDivision/palr
 palr provides color palettes for data, based on some well known remotely sensed data sets for sea ice concentration, sea surface temperature and chlorophyll-a.
-
 
 ** Polychrome
 https://rdrr.io/rforge/Polychrome/man/viewers.html

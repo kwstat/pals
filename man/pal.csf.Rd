@@ -36,9 +36,6 @@ pal.csf(brewer.greys) # Classic example from psychology
 pal.csf(parula)
 
 }
-\author{
-Kevin Wright
-}
 \references{
 Izumi Ohzawa. Make Your Own Campbell-Robson Contrast Sensitivity Chart.
 http://ohzawa-lab.bpe.es.osaka-u.ac.jp/ohzawa-lab/izumi/CSF/A_JG_RobsonCSFchart.html
@@ -47,4 +44,6 @@ Campbell, F. W. and Robson, J. G. (1968).
 Application of Fourier analysis to the visibility of gratings. 
 \emph{Journal of Physiology}, 197: 551-566.
 }
-
+\author{
+Kevin Wright
+}

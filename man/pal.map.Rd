@@ -57,11 +57,10 @@ for(i in 3:12){
 }
 
 }
-\author{
-Kevin Wright
-}
 \references{
 http://www.personal.psu.edu/cab38/Pub_scans/Brewer_pubs.html
 Map based on www.ColorBrewer.org, by Cynthia A. Brewer, Penn State.
 }
-
+\author{
+Kevin Wright
+}
