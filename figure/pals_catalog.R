@@ -1,6 +1,6 @@
 lib(pals)
 
-png("c:/x/catalog.png", width=800, height=2500, pointsize=24)
+png("c:/x/rpack/pals/figure/pals_catalog.png", width=800, height=2500, pointsize=24)
 
 op = par(mar=c(1,10,2,1))
 
@@ -60,4 +60,4 @@ pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, polychrome, stepped, tol,
 par(op)
 dev.off()
 
-# click("c:/x/catalog.png")
+# click("c:/x/rpack/pals/figure/pals_catalog.png")
