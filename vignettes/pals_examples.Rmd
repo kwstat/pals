@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 bibliography: pals.bib
 output:
   html_document:
+    theme: cerulean
     highlight: tango
 vignette: >
   % \VignetteIndexEntry{Overview of the 'pals' package}

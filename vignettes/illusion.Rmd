@@ -6,6 +6,7 @@ date: "`r Sys.Date()`"
 bibliography: pals.bib
 output:
   html_document:
+    theme: cerulean
     highlight: tango
 vignette: >
   % \VignetteIndexEntry{A Color-Caused Optical Illusion}

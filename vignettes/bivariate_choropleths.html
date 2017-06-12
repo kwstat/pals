@@ -168,16 +168,11 @@ knitr::opts_chunk$<span class="kw">set</span>(<span class="dt">fig.align=</span>
 <div id="single-variate-choropleth-maps" class="section level1">
 <h1>Single-variate choropleth maps</h1>
 <p>The two maps below show male and female cancer rates on separate maps. The rates are coarsely binned into three classes so as to be somewhat comparable to the bivariate choropleth below.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(latticeExtra) <span class="co"># USCancerRates, mapplot</span></code></pre></div>
-<pre><code>## Loading required package: latticeExtra</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## Loading required package: RColorBrewer</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(maps) <span class="co"># map</span>
-<span class="kw">require</span>(classInt) <span class="co"># classIntervals, findCols</span></code></pre></div>
-<pre><code>## Loading required package: classInt</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(grid) <span class="co"># pushViewport</span></code></pre></div>
-<pre><code>## Loading required package: grid</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(pals) <span class="co"># brewer.blues, stevens.pinkgreen</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(latticeExtra) <span class="co"># USCancerRates, mapplot</span>
+<span class="kw">require</span>(maps) <span class="co"># map</span>
+<span class="kw">require</span>(classInt) <span class="co"># classIntervals, findCols</span>
+<span class="kw">require</span>(grid) <span class="co"># pushViewport</span>
+<span class="kw">require</span>(pals) <span class="co"># brewer.blues, stevens.pinkgreen</span>
 
 <span class="kw">suppressWarnings</span>(<span class="kw">print</span>(
   <span class="kw">mapplot</span>(<span class="kw">rownames</span>(USCancerRates) ~<span class="st"> </span><span class="kw">log</span>(rate.male) +<span class="st"> </span><span class="kw">log</span>(rate.female),
