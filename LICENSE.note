@@ -1,0 +1,59 @@
+The 'pals' package as a whole is released under the GPL-3 license.
+
+This file lists the copyright holders and licenses of the various colormaps
+and palettes in the 'pals' package.
+
+-----
+
+cmocean colormaps
+Copyright: Kristen Thyng
+License: MIT
+https://github.com/matplotlib/cmocean/blob/master/LICENSE.txt
+
+-----
+
+ColorBrewer palettes
+Copyright: Cynthia Brewer, Mark Harrower, and The Pennsylvania State University
+License: Apache License, Version 2.0
+http://www.personal.psu.edu/cab38/ColorBrewer/ColorBrewer_updates.html
+
+-----
+
+Matplotlib colormaps
+By: Nathaniel J. Smith, Stefan van der Walt, and (in the case of viridis) Eric Firing.
+License: CC0 license / public domain
+https://github.com/BIDS/colormap/blob/master/colormaps.py
+
+-----
+
+Colormaps by Peter Kovesi
+License: CC BY
+http://peterkovesi.com/projects/colourmaps/index.html
+License: MIT
+https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/LICENSE.md
+
+-----
+
+Matteo Niccoli palettes
+License: Similar to MIT
+http://www.mathworks.com/matlabcentral/fileexchange/view_license?file_info_id=28982
+
+-----
+
+Color palettes by Kevin Coombes
+License: Apache License (== 2.0)
+https://rdrr.io/rforge/Polychrome/
+
+---
+
+The following are currently not used. Perhaps in the future.
+
+Paraview colormaps (including coolwarm)
+License: BSD license
+http://www.paraview.org/paraview-license/
+http://www.paraview.org/Wiki/Colormaps
+
+Matplotlib colormaps
+License: Python Software Foundation Licnese
+http://www.python.org/psf/license
+

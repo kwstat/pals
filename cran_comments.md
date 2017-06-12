@@ -1,5 +1,24 @@
+# pals 1.3
 
-# Version 1.0
+## Test environments
+
+local R 3.4.0 on Windows 7
+win-builder r-devel
+win-builder on R 3.4.0
+
+## Rcmd check results
+
+There is 1 NOTE
+
+Possibly mis-spelled words in DESCRIPTION:
+  Colormaps (5:24)
+  colormaps (6:60)
+  
+## Downstream dependencies
+
+None
+
+# pals 1.0
 
 ## Test environments
 

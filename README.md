@@ -31,7 +31,9 @@ Vignettes:
 
 [Overview of the pals package](https://rawgit.com/kwstat/pals/master/vignettes/pals_examples.html)
 
-[A Color-Caused Optical Illusion](https://rawgit.com/kwstat/pals/master/vignettes/illusion.html)
+[A Color-caused optical illusion](https://rawgit.com/kwstat/pals/master/vignettes/illusion.html)
+
+[Bivariate chopleths](https://rawgit.com/kwstat/pals/master/vignettes/bivariate_choropleths.html)
 
 ## Glimpse
 

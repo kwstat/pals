@@ -1,6 +1,6 @@
 # pals.R
-# Time-stamp: <07 Dec 2016 15:10:05 c:/x/rpack/pals/R/pals.R>
-# Copyright: Kevin Wright, 2016. License: GPL-2.
+# Time-stamp: <10 Jun 2017 10:23:22 c:/x/rpack/pals/R/pals.R>
+# Copyright: Kevin Wright, 2017. License: GPL-2.
 
 #' pals: A package for comprehensive palettes and palette evaluation tools
 #'
@@ -15,7 +15,7 @@
 #' (2) the type of graphic to be constructed, and
 #' (3) the type of device used to show the graphic.
 #' The ColorBrewer website approaches this problem by suggesting different
-#' colors for qualitative, sequential, and divergining data, and also
+#' colors for qualitative, sequential, and diverging data, and also
 #' considers the display of the graphic on LCD and photocopies.
 #' One limitation with ColorBrewer is that it only uses maps, and does not
 #' consider other types of graphics.

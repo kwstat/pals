@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{pal.cluster}
 \alias{pal.cluster}
-\title{Show a palette with heirarchical clustering}
+\title{Show a palette with hierarchical clustering}
 \usage{
 pal.cluster(pal, n = 50, type = "LUV", main = "")
 }

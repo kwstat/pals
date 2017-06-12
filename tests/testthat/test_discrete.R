@@ -94,3 +94,15 @@ pal.bands(watlington(1),watlington(2),watlington(3),watlington(4),watlington(5),
           watlington(13),watlington(14),watlington(15),watlington(16),
           labels=1:16, main="watlington")
 
+# bivariate
+expect_message(pal.bands(kelly(10)))
+expect_message(stevens.pinkgreen(10))
+expect_message(stevens.bluered(10))
+expect_message(stevens.pinkblue(10))
+expect_message(stevens.greenblue(10))
+expect_message(stevens.purplegold(10))
+expect_message(brewer.orangeblue(10))
+expect_message(brewer.pinkblue(10))
+expect_message(tolochko.redblue(10))
+expect_message(arc.bluepink(17))
+expect_message(census.blueyellow(10))

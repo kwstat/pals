@@ -1,6 +1,6 @@
-# discrete.r
-# Time-stamp: <15 May 2017 14:30:11 c:/x/rpack/pals/R/discrete.R>
-# Copyright Kevin Wright, 2016, GPL-3
+# discrete.R
+# Time-stamp: <07 Jun 2017 13:27:08 c:/x/rpack/pals/R/discrete.R>
+# Copyright Kevin Wright, 2017, GPL-3
 
 #' Discrete palettes
 #'
@@ -14,7 +14,7 @@
 #'
 #' The \code{alphabet2} palette uses a similar idea with slightly different colors
 #' and slightly different names.  This palette comes from the Polychrome package,
-#' geenrated with the \code{createPalette} function and then manually
+#' generated with the \code{createPalette} function and then manually
 #' arranged and named.
 #' 
 #' The \code{cols25} palette was created experimentally by Wright (unpublished)
@@ -59,50 +59,34 @@
 #' 
 #' @examples
 #'
-#' # ----- alphabet -----
+#' pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, polychrome,
+#'   stepped, tol, watlington)
+#' 
+#' \dontrun{
 #' alphabet()
 #' alphabet()["jade"]
 #' pal.bands(alphabet,n=26)
 #' pal.heatmap(alphabet)
-#' pal.cube(alphabet)
-#'
-#' # ----- alphabet2 -----
-#' #  require(Polychrome)
-#' #  ab2 <- createPalette(N=26,seedcolors=c("#E2E2E2","#474747","#F70000"))
-#' #  pal.bands(ab2, alphabet2(), sort="hue", labels=c("createPalette","alphabet2"))
+#' # pal.cube(alphabet)
 #' 
-#' # ----- cols25 -----
-#' pal.bands(cols25,n=25)
+#' pal.heatmap(alphabet2)
+#' 
 #' pal.heatmap(cols25)
 #'
-#' # ------ glasbey ------
-#' pal.bands(glasbey,n=32)
 #' pal.heatmap(glasbey(32))
-#' pal.cube(glasbey, n=32) # Blues are close together
+#' # pal.cube(glasbey, n=32) # Blues are close together
 #'
-#' # ----- kelly -----
-#' pal.bands(kelly,n=22)
 #' pal.heatmap(kelly(22)) # too many orange/pink colors
-#'
-#' # ----- polychrome -----
-#' #  require(Polychrome)
-#' #  p36 <- createPalette(N=36,seedcolors=c("#474747", "#E2E2E2","#F70000"))
-#' #  pal.bands(p36, polychrome(), sort="hue", labels=c("createPalette","polychrome"))
 #' 
-#' # ----- stepped -----
-#' pal.bands(stepped,n=24)
+#' pal.heatmap(polychrome)
+#' 
 #' pal.heatmap(stepped, n=24)
 #' 
-#' # ----- tol -----
-#' pal.bands(tol,n=12)
 #' pal.heatmap(tol, 12)
 #' 
-#' # ----- watlington -----
-#' pal.bands(watlington,n=16)
 #' pal.heatmap(watlington(16))
+#' }
 #'
-#' pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, polychrome, stepped, tol, watlington)
-#' 
 #' @references
 #' 
 #' Robert M. Boynton. (1989)

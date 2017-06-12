@@ -9,28 +9,6 @@
 \alias{parula}
 \alias{coolwarm}
 \alias{warmcool}
-\alias{ocean.algae}
-\alias{ocean.deep}
-\alias{ocean.dense}
-\alias{ocean.gray}
-\alias{ocean.haline}
-\alias{ocean.ice}
-\alias{ocean.matter}
-\alias{ocean.oxy}
-\alias{ocean.phase}
-\alias{ocean.solar}
-\alias{ocean.thermal}
-\alias{ocean.turbid}
-\alias{ocean.balance}
-\alias{ocean.curl}
-\alias{ocean.delta}
-\alias{ocean.amp}
-\alias{ocean.speed}
-\alias{ocean.tempo}
-\alias{magma}
-\alias{inferno}
-\alias{plasma}
-\alias{viridis}
 \title{Miscellaneous colormaps}
 \usage{
 cubehelix(n = 25, start = 0.5, r = -1.5, hue = 1, gamma = 1)
@@ -46,50 +24,6 @@ parula(n)
 coolwarm(n)
 
 warmcool(n)
-
-ocean.algae(n)
-
-ocean.deep(n)
-
-ocean.dense(n)
-
-ocean.gray(n)
-
-ocean.haline(n)
-
-ocean.ice(n)
-
-ocean.matter(n)
-
-ocean.oxy(n)
-
-ocean.phase(n)
-
-ocean.solar(n)
-
-ocean.thermal(n)
-
-ocean.turbid(n)
-
-ocean.balance(n)
-
-ocean.curl(n)
-
-ocean.delta(n)
-
-ocean.amp(n)
-
-ocean.speed(n)
-
-ocean.tempo(n)
-
-magma(n)
-
-inferno(n)
-
-plasma(n)
-
-viridis(n)
 }
 \arguments{
 \item{n}{Number of colors to return.}
@@ -147,22 +81,22 @@ according to Equation 3 of Tol (2012).
 }
 \examples{
 
+pal.bands(coolwarm, cubehelix, gnuplot, jet, parula, tol.rainbow)
+
+if(FALSE){
+
 # ----- coolwarm -----
-pal.volcano(coolwarm)
-pal.test(coolwarm)
+pal.test(coolwarm) # Minimal mach banding
 # Note the mach banding gray line in the following:
 # pal.volcano(colorRampPalette(c("#3B4CC0", "lightgray", "#B40426")))
 
 # ----- cubehelix -----
 # Full range of colors. Pink is overwhelming. Not the best choice.
-pal.volcano(cubehelix)
 pal.test(cubehelix)
 
-# Limited to mostly blues/greens. Dark areas severely too black.
-# pal.volcano(function(n) cubehelix(n, start=.5, r=-.75))
-
+# Mostly blues/greens. Dark areas severely too black. 
 # Similar, but more saturated. See: http://inversed.ru/Blog_2.htm
-# pal.volcano(function(n) cubehelix(n, start=.25, r=-.67, hue=1.5))
+pal.volcano(function(n) cubehelix(n, start=.25, r=-.67, hue=1.5))
 
 # Dark colors totally lose structure of the volcano peak.
 op <- par(mfrow=c(2,2), mar=c(2,2,2,2))
@@ -174,22 +108,21 @@ image(volcano, col = rev(cubehelix(51, start=.25, r=-.67, hue=1.5)),
 par(op)
 
 # ----- gnuplot -----
-pal.volcano(gnuplot)
 pal.test(gnuplot)
 
 # ----- jet -----
-pal.volcano(jet)
+# pal.volcano(jet)
 pal.test(jet)
 
 # ----- parula -----
-pal.volcano(parula)
+# pal.volcano(parula)
 pal.test(parula)
 
 # ----- tol.rainbow -----
-pal.volcano(tol.rainbow)
+# pal.volcano(tol.rainbow)
 pal.test(tol.rainbow)
 
-pal.bands(magma, inferno, plasma, viridis)
+} 
 
 }
 \references{

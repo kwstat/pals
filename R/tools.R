@@ -1,6 +1,6 @@
 # tools.R
-# Time-stamp: <21 May 2017 13:45:55 c:/x/rpack/pals/R/tools.R>
-# Copyright: Kevin Wright, 2016. License: GPL-3.
+# Time-stamp: <10 Jun 2017 10:23:30 c:/x/rpack/pals/R/tools.R>
+# Copyright: Kevin Wright, 2017. License: GPL-3.
 
 # ----------------------------------------------------------------------------
 # pal.bands
@@ -226,7 +226,7 @@ pal.channels <- function(pal,n=150,main=""){
 # ----------------------------------------------------------------------------
 # pal.cluster
 
-#' Show a palette with heirarchical clustering
+#' Show a palette with hierarchical clustering
 #'
 #' The palette colors are converted to LUV coordinates before clustering.
 #' (RGB coordinates are available, but not recommended.)
@@ -753,7 +753,7 @@ pal.scatter <- function(pal, n=50, main=""){
 #' capabilities of human vision.  For the default amplitude of 12.5, the trough
 #' to peak distance is 25, which is about 10 percent of the 256 levels of the ramp.
 #' Some color palettes (like 'jet') have perceptual flat areas that can hide
-#' fluctations/features of this magnitude.
+#' fluctuations/features of this magnitude.
 #' 
 #' What to look for:
 #' 

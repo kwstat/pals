@@ -40,7 +40,7 @@ The wavelength is chosen to create a stimulus that is aligned with the
 capabilities of human vision.  For the default amplitude of 12.5, the trough
 to peak distance is 25, which is about 10 percent of the 256 levels of the ramp.
 Some color palettes (like 'jet') have perceptual flat areas that can hide
-fluctations/features of this magnitude.
+fluctuations/features of this magnitude.
 
 What to look for:
 

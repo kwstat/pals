@@ -1,6 +1,6 @@
 # colormaps.R
-# Time-stamp: <06 Apr 2017 18:33:36 c:/x/rpack/pals/R/colormaps.R>
-# Copyright: Kevin Wright, 2016. License: GPL-3.
+# Time-stamp: <10 Jun 2017 10:22:57 c:/x/rpack/pals/R/colormaps.R>
+# Copyright: Kevin Wright, 2017. License: GPL-3.
 
 # R auto-loads R/sysdata.rda, which contains the 'syspals' object.
 # You would think that this code should work:
@@ -55,22 +55,22 @@
 #' 
 #' @examples
 #'
+#' pal.bands(coolwarm, cubehelix, gnuplot, jet, parula, tol.rainbow)
+#' 
+#' if(FALSE){
+#' 
 #' # ----- coolwarm -----
-#' pal.volcano(coolwarm)
-#' pal.test(coolwarm)
+#' pal.test(coolwarm) # Minimal mach banding
 #' # Note the mach banding gray line in the following:
 #' # pal.volcano(colorRampPalette(c("#3B4CC0", "lightgray", "#B40426")))
 #'
 #' # ----- cubehelix -----
 #' # Full range of colors. Pink is overwhelming. Not the best choice.
-#' pal.volcano(cubehelix)
 #' pal.test(cubehelix)
 #' 
-#' # Limited to mostly blues/greens. Dark areas severely too black.
-#' # pal.volcano(function(n) cubehelix(n, start=.5, r=-.75))
-#' 
+#' # Mostly blues/greens. Dark areas severely too black. 
 #' # Similar, but more saturated. See: http://inversed.ru/Blog_2.htm
-#' # pal.volcano(function(n) cubehelix(n, start=.25, r=-.67, hue=1.5))
+#' pal.volcano(function(n) cubehelix(n, start=.25, r=-.67, hue=1.5))
 #'
 #' # Dark colors totally lose structure of the volcano peak.
 #' op <- par(mfrow=c(2,2), mar=c(2,2,2,2))
@@ -82,20 +82,21 @@
 #' par(op)
 #'
 #' # ----- gnuplot -----
-#' pal.volcano(gnuplot)
 #' pal.test(gnuplot)
 #'
 #' # ----- jet -----
-#' pal.volcano(jet)
+#' # pal.volcano(jet)
 #' pal.test(jet)
 #'
 #' # ----- parula -----
-#' pal.volcano(parula)
+#' # pal.volcano(parula)
 #' pal.test(parula)
 #'
 #' # ----- tol.rainbow -----
-#' pal.volcano(tol.rainbow)
+#' # pal.volcano(tol.rainbow)
 #' pal.test(tol.rainbow)
+#' 
+#' } 
 #' 
 #' @author Palette colors by various authors. R code by Kevin Wright.
 #' 
@@ -555,75 +556,75 @@ brewer.set3 <- function(n) get.brewer.pal(syspals$brewer.set3, n)
 NULL
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.algae <- function(n) colorRampPalette(syspals$ocean.algae)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.deep <- function(n) colorRampPalette(syspals$ocean.deep)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.dense <- function(n) colorRampPalette(syspals$ocean.dense)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.gray <- function(n) colorRampPalette(syspals$ocean.gray)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.haline <- function(n) colorRampPalette(syspals$ocean.haline)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.ice <- function(n) colorRampPalette(syspals$ocean.ice)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.matter <- function(n) colorRampPalette(syspals$ocean.matter)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.oxy <- function(n) colorRampPalette(syspals$ocean.oxy)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.phase <- function(n) colorRampPalette(syspals$ocean.phase)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.solar <- function(n) colorRampPalette(syspals$ocean.solar)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.thermal <- function(n) colorRampPalette(syspals$ocean.thermal)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.turbid <- function(n) colorRampPalette(syspals$ocean.turbid)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.balance <- function(n) colorRampPalette(syspals$ocean.balance)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.curl <- function(n) colorRampPalette(syspals$ocean.curl)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.delta <- function(n) colorRampPalette(syspals$ocean.delta)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.amp <- function(n) colorRampPalette(syspals$ocean.amp)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.speed <- function(n) colorRampPalette(syspals$ocean.speed)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname ocean
 ocean.tempo <- function(n) colorRampPalette(syspals$ocean.tempo)(n)
 
 
@@ -663,6 +664,7 @@ ocean.tempo <- function(n) colorRampPalette(syspals$ocean.tempo)(n)
 #' (a modest deviation from 100% perceptual)
 #' 
 #' @param n Number of colors to return
+#' 
 #' @return A vector of colors
 #' 
 #' @author Palettes by Matteo Niccoli. R code by Kevin Wright.
@@ -711,25 +713,37 @@ linearlhot <- function(n) colorRampPalette(syspals$linearlhot)(n)
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
 
-# Matplotlib colormaps
-
+#' Matplotlib colormaps
+#' 
+#' Viridis family of colormaps as found in Matplotlib. Designed to be perceptually 
+#' uniform, but generally too dark to be useful.
+#' 
+#' @param n Number of colors to return
+#' 
+#' @return A vector of colors
+#' 
+#' @author Palettes by Matteo Niccoli. R code by Kevin Wright.
+#' 
 #' @examples
 #' pal.bands(magma, inferno, plasma, viridis)
 #' 
+#' @name matplotlib
+NULL
+
 #' @export
-#' @rdname continuous
+#' @rdname matplotlib
 magma <- function(n) colorRampPalette(syspals$magma)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname matplotlib
 inferno <- function(n) colorRampPalette(syspals$inferno)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname matplotlib
 plasma <- function(n) colorRampPalette(syspals$plasma)(n)
 
 #' @export
-#' @rdname continuous
+#' @rdname matplotlib
 viridis <- function(n) colorRampPalette(syspals$viridis)(n)
 
 # ----------------------------------------------------------------------------

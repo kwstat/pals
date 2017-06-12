@@ -1,6 +1,6 @@
 # counties.R
-# Time-stamp: <11 Dec 2016 22:08:30 c:/x/rpack/pals/R/counties.R>
-# Copyright: Kevin Wright, 2016. License: GPL-3.
+# Time-stamp: <10 Jun 2017 10:23:14 c:/x/rpack/pals/R/map.R>
+# Copyright: Kevin Wright, 2017. License: GPL-3.
 
 #' Show a palette using a map of U.S. counties
 #'
@@ -22,7 +22,7 @@
 #' which contains the class identifier for each polygon, for 3 to 12 classes.
 #' Unfortunately, the polygons have no other identification (e.g. FIPS, county name).
 #' We used the identify.map function in R to manually define the classes
-#' similar to the 12-class map of ColorBewer.
+#' similar to the 12-class map of ColorBrewer.
 #' This proved to be too tedious to do more than once, so our maps of 1-11 classes were
 #' created by combining classes from the 12-class map.  The ColorBrewer website
 #' sometimes used this strategy to combine classes, but not always.

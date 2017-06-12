@@ -18,7 +18,7 @@ The best palette/colormap is determined by
 (2) the type of graphic to be constructed, and
 (3) the type of device used to show the graphic.
 The ColorBrewer website approaches this problem by suggesting different
-colors for qualitative, sequential, and divergining data, and also
+colors for qualitative, sequential, and diverging data, and also
 considers the display of the graphic on LCD and photocopies.
 One limitation with ColorBrewer is that it only uses maps, and does not
 consider other types of graphics.
