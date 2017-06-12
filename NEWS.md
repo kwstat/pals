@@ -1,3 +1,4 @@
+
 # pals 1.4 - Jun 2017
 
 Added 10 new discrete palettes for bivariate choropleth maps.
@@ -21,7 +22,3 @@ Assembling package begins Jul 2016.
 # pals 0.0 - 2005
 
 First palettes and evaluation tools created.
-
-
-Todo: Update code here
-http://stackoverflow.com/questions/9563711/r-color-palettes-for-many-data-classes/9568659#9568659

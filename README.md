@@ -35,6 +35,7 @@ Vignettes:
 
 [Bivariate chopleths](https://rawgit.com/kwstat/pals/master/vignettes/bivariate_choropleths.html)
 
+
 ## Glimpse
 
 Tools for testing colormap and palette effectiveness.
