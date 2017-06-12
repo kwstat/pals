@@ -403,6 +403,7 @@ main="Kovesi linear"
 )
 par(op)
 
+
 # Bivariate
 bivcol <- function(pal){
   tit <- substitute(pal)
