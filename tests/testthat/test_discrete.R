@@ -79,6 +79,15 @@ pal.bands(stepped(1),stepped(2),stepped(3),stepped(4),stepped(5),stepped(6),
           stepped(19),stepped(20),stepped(21),stepped(22),stepped(23),stepped(24),
           labels=1:24, main="stepped")
 
+# tableau20
+expect_message(tableau20(21)) # too many
+
+pal.bands(tableau20(1),tableau20(2),tableau20(3),tableau20(4),tableau20(5),tableau20(6),
+          tableau20(7),tableau20(8),tableau20(9),tableau20(10),tableau20(11),tableau20(12),
+          tableau20(13),tableau20(14),tableau20(15),tableau20(16),tableau20(17),tableau20(18),
+          tableau20(19),tableau20(20),
+          labels=1:20, main="tableau20")
+
 # tol
 expect_message(tol(13)) # too many
 

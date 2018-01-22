@@ -4,20 +4,19 @@
 \alias{discrete}
 \alias{alphabet}
 \alias{alphabet2}
-\alias{watlington}
 \alias{cols25}
 \alias{glasbey}
 \alias{kelly}
 \alias{polychrome}
 \alias{stepped}
+\alias{tableau20}
 \alias{tol}
+\alias{watlington}
 \title{Discrete palettes}
 \usage{
 alphabet(n = 26)
 
 alphabet2(n = 26)
-
-watlington(n = 16)
 
 cols25(n = 25)
 
@@ -29,7 +28,11 @@ polychrome(n = 36)
 
 stepped(n = 24)
 
+tableau20(n = 20)
+
 tol(n = 12)
+
+watlington(n = 16)
 }
 \arguments{
 \item{n}{Number of colors to return.}
@@ -81,6 +84,9 @@ order to better separate these colors in RGB space, red hue 0 was moved to hue 3
 green hue 80 moved to hue 90. The number of colors within each hue was reduced
 from 5 to 4, and gray shades were added.
 
+The \code{tableau20} palette has 10 pairs of dark/light colors that are used by
+the Tableau software.
+
 The \code{tol} palette has 12 colors by Paul Tol.
 
 The \code{watlington} palette has 16 colors.
@@ -89,7 +95,7 @@ The color 'white' has been re-defined as light-gray, #F2F3F4.
 \examples{
 
 pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, polychrome,
-  stepped, tol, watlington)
+  stepped, tableau20, tol, watlington)
 
 \dontrun{
 alphabet()

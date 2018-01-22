@@ -330,7 +330,7 @@ pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, polychrome, stepped, tol,
 
 
 # Misc
-pal.bands(coolwarm,warmcool,cubehelix,gnuplot,jet,parula,tol.rainbow)
+pal.bands(coolwarm,warmcool,cubehelix,gnuplot,jet,parula,tol.rainbow,cividis)
 
 
 # Niccoli

@@ -1,5 +1,5 @@
-# sysdata.R
-# Time-stamp: <21 May 2017 14:04:32 c:/x/rpack/pals/data-raw/make_sysdata.r>
+# make_sysdata.R
+# Time-stamp: <22 Jan 2018 15:03:08 c:/x/rpack/pals/data-raw/make_sysdata.R>
 
 # Execute this entire file to create the sysdata file for the pals package
 # The palettes are stored in a list, each item in the list is a separate palette
@@ -1161,9 +1161,20 @@ syspals$kovesi.rainbow_bgyrm_35_85_c69 <- make.kovesi("rainbow_bgyrm_35-85_c69_n
 syspals$kovesi.rainbow_bgyrm_35_85_c71 <- make.kovesi("rainbow_bgyrm_35-85_c71_n256.csv")
 
 # ----------------------------------------------------------------------------
+# cividis
+
+# Data downloaded from
+# https://github.com/pnnl/cmaputil/tree/master/colormaps
+
+setwd("c:/x/rpack/pals/data-raw")
+cividis <- read.fwf("cividis.lut",c(6,6,6))
+cividis <- rgb(cividis, max=255)
+cividis %>% colorRampPalette %>% pal.compress -> syspals$cividis
+
+# ----------------------------------------------------------------------------
 
 # Now save all objects into R/sysdata.rda
-devtools::use_data(syspals, pkg="c:/x/rpack/pals", internal=TRUE, overwrite=TRUE)
+devtools::devtools::use_data(syspals, pkg="c:/x/rpack/pals", internal=TRUE, overwrite=TRUE)
 
 # file.info("R/sysdata.rda")
 # file.size("R/sysdata.rda") # in bytes

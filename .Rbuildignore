@@ -1,15 +1,34 @@
+# ----- Git -----
 .gitignore
-.Rproj
-.Rproj\.user
-README.md
+LICENSE
+
+# ----- devtools -----
+^revdep
+
+# ----- R -----
+.RData
+.Rhistory
 cran-comments.md
 cran_comments.md
+README.md
 NEWS.md
-.travis\.yml
 data-done
 data-raw
 data-unused
 figure
-notes.org
+notes.Rmd
+Rplots.pdf
+debug.log
+
+# ----- RStudio -----
 ^.*\.Rproj$
 ^\.Rproj\.user$
+
+# ----- testthat -----
+^tests/testthat/Rplots.pdf$
+^tests/testthat/.*\.png$
+^tests/testthat/.*\.html$
+
+# ----- Travis -----
+.travis\.yml
+

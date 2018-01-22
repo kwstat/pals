@@ -5,7 +5,7 @@ setwd("c:/x/rpack/pals/data-raw/paraview")
 # http://www.paraview.org/Wiki/Colormaps
 
 # Some of these are weird.  I'm not sure there's any value including
-# these coloramps into 'pals'
+# these coloramps into 'pals'.  Not included in pals.
 
 # ----------------------------------------------------------------------------
 
@@ -16,6 +16,7 @@ lib(pals)
 lib(XML)
 
 # Get palette names
+setwd("c:/x/rpack/pals/data-raw/paraview")
 d1 <- xmlTreeParse("All_idl_cmaps.xml")
 topx <- xmlRoot(d1)
 nms <- as.vector(xmlSApply(topx, xmlAttrs)[1,])

@@ -49,13 +49,16 @@
 #' If n > 21 or if manual=FALSE, the palette computes the colors
 #' according to Equation 3 of Tol (2012).
 #' 
+#' The \code{cividis} palette by  Jamie R. Nuñez, Christopher R. Anderton, Ryan S. Renslow,
+#' is a variation of viridis that is less colorful.
+#' 
 #' @param n Number of colors to return.
 #' 
 #' @return A vector of colors.
 #' 
 #' @examples
 #'
-#' pal.bands(coolwarm, cubehelix, gnuplot, jet, parula, tol.rainbow)
+#' pal.bands(coolwarm, cubehelix, gnuplot, jet, parula, tol.rainbow, cividis)
 #' 
 #' if(FALSE){
 #' 
@@ -98,6 +101,10 @@
 #' 
 #' } 
 #' 
+#' # ----- cividis -----
+#' # pal.volcano(cividis)
+#' pal.test(cividis)
+#' 
 #' @author Palette colors by various authors. R code by Kevin Wright.
 #' 
 #' @references
@@ -125,6 +132,10 @@
 #'
 #' BIDS/colormap.
 #' https://github.com/BIDS/colormap/blob/master/parula.py
+#' 
+#' Jamie R. Nuñez, Christopher R. Anderton, Ryan S. Renslow (2017).
+#' An optimized colormap for the scientific community.
+#' https://arxiv.org/abs/1712.01662
 #' 
 #' @name continuous
 NULL
@@ -241,6 +252,9 @@ warmcool <- function(n){
   rev(coolwarm(n))
 }
 
+#' @export
+#' @rdname continuous
+cividis <- function(n) colorRampPalette(syspals$cividis)(n)
 
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------

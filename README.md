@@ -25,24 +25,21 @@ install.packages("pals")
 devtools::install_github("kwstat/pals")
 ```
 
-## Usage
-
-Vignettes:
+## Vignettes
 
 [Overview of the pals package](https://rawgit.com/kwstat/pals/master/vignettes/pals_examples.html)
 
 [A Color-caused optical illusion](https://rawgit.com/kwstat/pals/master/vignettes/illusion.html)
 
-[Bivariate chopleths](https://rawgit.com/kwstat/pals/master/vignettes/bivariate_choropleths.html)
+[Bivariate choropleths](https://rawgit.com/kwstat/pals/master/vignettes/bivariate_choropleths.html)
 
-
-## Glimpse
+## Usage
 
 Tools for testing colormap and palette effectiveness.
 
 ![parula](figure/test_colormap.png)
 
-![parula](figure/test_palette.png)
+![alphabet](figure/test_palette.png)
 
 Catalog of colormaps and palettes included in the package.
 

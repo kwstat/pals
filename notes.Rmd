@@ -1,5 +1,5 @@
 
-* Ideas
+# Ideas
 
 Add St Helens image as used in plotly?
 https://github.com/matplotlib/viscm/tree/master/viscm/examples
@@ -21,11 +21,11 @@ http://mkweb.bcgsc.ca/
 
 https://github.com/matplotlib/matplotlib/blob/master/lib/matplotlib/_cm.py
 
-# ----------------------------------------------------------------------------
+
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
 
-* Misc
+# Misc
 
 Color Schemes Appropriate for Scientific Data Graphics
 http://geog.uoregon.edu/datagraphics/color_scales.htm
@@ -37,10 +37,10 @@ Choosing colormaps
 http://matplotlib.org/users/colormaps.html
 
 
-* People
+# People
 
 
-** Peter Kovesi
+## Peter Kovesi
 
 Palettes defined in csv format here:
 http://peterkovesi.com/projects/colourmaps/index.html
@@ -49,7 +49,7 @@ Some interesting comments about the palettes
 https://github.com/peterkovesi/PerceptualColourMaps.jl/blob/master/src/cmap.jl
 
 
-** Matteo Niccoli
+## Matteo Niccoli
 
 Credit to Matteo Niccoli as the author and mycarta.wordpress.com
 https://mycarta.wordpress.com/2012/05/29/the-rainbow-is-dead-long-live-the-rainbow-series-outline/
@@ -61,7 +61,7 @@ Non-trimmed version here
 https://github.com/rikrd/matlab/blob/master/output/pmkmp/pmkmp.m
 
 
-** Kristen Thyng
+## Kristen Thyng
 
 cmocean, MIT license
 http://matplotlib.org/cmocean/
@@ -74,12 +74,12 @@ PlotCon 2016 talk
 https://www.youtube.com/watch?v=o9KxYxROSgM
 
 
-** Paul Tol
+## Paul Tol
 
 https://personal.sron.nl/~pault
 
 
-* StackExchange
+# StackExchange
 
 http://stackoverflow.com/questions/470690/how-to-automatically-generate-n-distinct-colors
 
@@ -100,55 +100,55 @@ Posted 'pals' image here:
 http://stackoverflow.com/questions/9563711/r-color-palettes-for-many-data-classes/41230685
 
 
-* R packages
+# R packages
 
-** beyonce
+## beyonce
 https://github.com/dill/beyonce
 An R package for beyoncepalettes.tumblr.com
 
-** catecolors
+## catecolors
 https://github.com/btupper/catecolors
 Colors from various sources that are suitable for displaying categorical (qualitative) colors.
 
-** ggsci
+## ggsci
 https://github.com/road2stat/ggsci
 ggsci offers a collection of ggplot2 color palettes inspired by scientific journals, data visualization libraries, and science fiction TV shows.
 
-** oce
+## oce
 https://github.com/dankelley/oce/
 Contains R version of cmocean colormaps
 
-** palettetown
+## palettetown
 https://github.com/timcdlucas/palettetown
 An R package providing pokemon colour palettes.
 
-** palr
+## palr
 https://github.com/AustralianAntarcticDivision/palr
 palr provides color palettes for data, based on some well known remotely sensed data sets for sea ice concentration, sea surface temperature and chlorophyll-a.
 
-** Polychrome
+## Polychrome
 https://rdrr.io/rforge/Polychrome/man/viewers.html
 install.packages("Polychrome", repos="http://R-Forge.R-project.org")
 
-** qualpalr
+## qualpalr
 qualpalr generates distinct qualitative color palettes
 https://cran.r-project.org/web/packages/qualpalr/vignettes/introduction.html
 https://github.com/jolars/qualpalr
 
-** randomcoloR
+## randomcoloR
 https://github.com/ronammar/randomcoloR
 An R package for generating attractive and distinctive colors.
 
-** RColorBrewer
+## RColorBrewer
 Has one main function brewer.pal to access ColorBrewer palettes.
 
-** RSkittleBrewer
+## RSkittleBrewer
 https://github.com/alyssafrazee/RSkittleBrewer
 Candy-themed palettes.
 
-** spatstat
+## spatstat
 Contains Kovesi's colormaps.  For example:
 
-** wesanderson
+## wesanderson
 https://github.com/karthik/wesanderson
 Wes Anderson palettes.

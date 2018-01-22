@@ -1,4 +1,18 @@
 
+Todo:
+http://www.ncl.ucar.edu/Document/Graphics/color_table_gallery.shtml
+http://www.ncl.ucar.edu/Document/Graphics/color_tables.shtml
+https://matplotlib.org/xkcd/examples/color/colormaps_reference.html
+https://matplotlib.org/examples/color/colormaps_reference.html
+Data: 
+http://www.ncl.ucar.edu/Document/Graphics/ColorTables/Files/
+
+# pals 1.5 - unpublished
+
+Added `tableau20` palette.
+Added `penobscot` data.
+Added `cividis` palette.
+
 # pals 1.4 - Jun 2017
 
 Added 10 new discrete palettes for bivariate choropleth maps.

@@ -9,6 +9,7 @@
 \alias{parula}
 \alias{coolwarm}
 \alias{warmcool}
+\alias{cividis}
 \title{Miscellaneous colormaps}
 \usage{
 cubehelix(n = 25, start = 0.5, r = -1.5, hue = 1, gamma = 1)
@@ -24,6 +25,8 @@ parula(n)
 coolwarm(n)
 
 warmcool(n)
+
+cividis(n)
 }
 \arguments{
 \item{n}{Number of colors to return.}
@@ -78,10 +81,13 @@ used, where distances are defined by the CIEDE2000 color difference.
 If 14 <= n <= 21, manually-chosen triplets of colours are used.
 If n > 21 or if manual=FALSE, the palette computes the colors
 according to Equation 3 of Tol (2012).
+
+The \code{cividis} palette by  Jamie R. Nuñez, Christopher R. Anderton, Ryan S. Renslow,
+is a variation of viridis that is less colorful.
 }
 \examples{
 
-pal.bands(coolwarm, cubehelix, gnuplot, jet, parula, tol.rainbow)
+pal.bands(coolwarm, cubehelix, gnuplot, jet, parula, tol.rainbow, cividis)
 
 if(FALSE){
 
@@ -124,6 +130,10 @@ pal.test(tol.rainbow)
 
 } 
 
+# ----- cividis -----
+# pal.volcano(cividis)
+pal.test(cividis)
+
 }
 \references{
 Dave A. Green. (2011).
@@ -149,6 +159,10 @@ http://www.mathworks.com/help/matlab/ref/colormap.html
 
 BIDS/colormap.
 https://github.com/BIDS/colormap/blob/master/parula.py
+
+Jamie R. Nuñez, Christopher R. Anderton, Ryan S. Renslow (2017).
+An optimized colormap for the scientific community.
+https://arxiv.org/abs/1712.01662
 }
 \author{
 Palette colors by various authors. R code by Kevin Wright.

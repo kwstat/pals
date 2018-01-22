@@ -1,7 +1,6 @@
 The 'pals' package as a whole is released under the GPL-3 license.
 
-This file lists the copyright holders and licenses of the various colormaps
-and palettes in the 'pals' package.
+This file lists the copyright holders and licenses of the various colormaps and palettes in the 'pals' package.
 
 -----
 
@@ -43,6 +42,12 @@ http://www.mathworks.com/matlabcentral/fileexchange/view_license?file_info_id=28
 Color palettes by Kevin Coombes
 License: Apache License (== 2.0)
 https://rdrr.io/rforge/Polychrome/
+
+---
+
+Cividis, by  Jamie R. Nuñez, Christopher R. Anderton, Ryan S. Renslow
+License: Similar to MIT
+https://github.com/pnnl/cmaputil/blob/master/LICENSE
 
 ---
 

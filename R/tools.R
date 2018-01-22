@@ -1,5 +1,5 @@
 # tools.R
-# Time-stamp: <10 Jun 2017 10:23:30 c:/x/rpack/pals/R/tools.R>
+# Time-stamp: <22 Jun 2017 19:14:56 c:/x/rpack/pals/R/tools.R>
 # Copyright: Kevin Wright, 2017. License: GPL-3.
 
 # ----------------------------------------------------------------------------
@@ -106,7 +106,6 @@ pal.bands <- function(..., n=100, labels=NULL, main=NULL, gap=0.1, sort="none", 
   }
   
   
-  
   maxn <- max(nc)
   ylim <- c(0, npal)
   # mgp: The margin line (in mex units) for the axis title, axis labels and axis line.
@@ -127,7 +126,9 @@ pal.bands <- function(..., n=100, labels=NULL, main=NULL, gap=0.1, sort="none", 
     # If inidividual colors in a palette have names, add them
     nms <- names(shadi)
     if(show.names & !is.null(nms)) {
-      text(brks[1:nj] + 0.5, i-.6, nms, srt=90, cex=.75)
+      textcol <- ifelse(col2rgb(colorspace::desaturate(shadi))['red',] < 128,
+                        "white", "black")
+      text(brks[1:nj] + 0.5, i-.6, nms, srt=90, cex=.75, col=textcol)
     }
   }
 
