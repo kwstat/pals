@@ -4,15 +4,18 @@
 Add St Helens image as used in plotly?
 https://github.com/matplotlib/viscm/tree/master/viscm/examples
 
-Good test image? Galaxy.
+The 'IsolatedGalaxy' image is a very good test image which can look very different depending on the colormap.
 http://yt-project.org/doc/visualizing/colormaps/index.html
+The data is in a mysterious (3D?) format.  Perhaps one of these images could be cropped and rasterized and back-transformed from color to numerical value.
+http://yt-project.org/doc/_images/cmap_images__Projection_Greys_r.png
+http://yt-project.org/doc/_images/cmap_images__Projection_BuPu.png
+http://yt-project.org/doc/_images/cmap_images__Projection_Pastels.png
+http://yt-project.org/doc/_images/cmap_images__Projection_Pastel2.png
+
 
 In pal.test, add discrete=TRUE to prevent interpolation
 
 TODO: gist_earth
-
-https://www.scientificamerican.com/checkout/#/checkout
-kw.stat / science123
 
 Peter Karpov: In Search of a Perfect Colormap
 http://inversed.ru/Blog_2.htm
@@ -148,6 +151,11 @@ Candy-themed palettes.
 
 ## spatstat
 Contains Kovesi's colormaps.  For example:
+
+## cetcolor
+https://cran.rstudio.com/web/packages/cetcolor/vignettes/cet_color_schemes.html
+https://cran.rstudio.com/web/packages/cetcolor/vignettes/cet_color_schemes.html
+Contains Kovesi's colormaps.
 
 ## wesanderson
 https://github.com/karthik/wesanderson

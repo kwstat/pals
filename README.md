@@ -14,6 +14,8 @@ Key features:
 
 * Conscientous memory use.
 
+* Consistency: All palettes and colormaps are _functions_, with all lower-case names.
+
 ## Installation
 
 ```R

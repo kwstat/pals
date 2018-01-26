@@ -1,4 +1,3 @@
-
 ---
 title: "A Color-Caused Optical Illusion"
 author: "Kevin Wright"
@@ -21,8 +20,6 @@ code {border: 1px solid #e0e0e0; padding: 0 5px;}
 pre > code { border: 0; }
 </style>
 
-##  Setup
-
 ```{r setup, echo=FALSE, results="hide"}
 library("knitr")
 opts_chunk$set(fig.align="center", fig.width=6, fig.height=6)
@@ -30,7 +27,7 @@ options(width=90)
 ```
 
 @cleveland1983color conducted experiments with different partitionings of
-colored-areas that were nearly the same size.  (Here less than 1% different.)
+colored-areas that were nearly the same size.  In the example below, the two colored regions are less tha 1% different in area.
 
 Using a map (similar to the one below left) with regions coded by two saturated
 colors, 49% of subjects said the red area was bigger, 22% said
@@ -50,16 +47,18 @@ nv.names <- c(reds,grns)
 # Draw the map and color it
 nv.names <- map('county', 'nevada', namesonly=TRUE, plot=FALSE)
 
-# Green/Red
+# green/red
 op <- par(mar=c(0,1,0,1), mfrow=c(1,2))
 nv <- map('county', 'nevada', fill=TRUE,
           col=ifelse(nv.names %in% reds,
-            rgb(206, 60, 17, max=255), rgb(80,164,52, max=255)),
+                     rgb(206, 60, 17, max=255), # red
+                     rgb(80,164,52, max=255)), # green
           projection="mollweide")
-# Red/Green
+# red/green
 nv <- map('county', 'nevada', fill=TRUE,
           col=ifelse(nv.names %in% reds,
-            rgb(80,164,52, max=255), rgb(206, 60, 17, max=255)),
+                     rgb(80,164,52, max=255),
+                     rgb(206, 60, 17, max=255)),
           projection="mollweide")
 par(op)
 ```
@@ -76,11 +75,20 @@ sum(area.map(nv, regions=grns))
 When low-saturated, muted colors were used, the observers demonstrated no systematic biases.
 
 ```{r muted}
-op <- par(mar=c(0,1,0,1))
+op <- par(mar=c(0,1,0,1), mfrow=c(1,2))
+# green/tan
 nv <- map('county', 'nevada', fill=TRUE,
           col=ifelse(nv.names %in% reds,
-                     rgb(250, 229, 139, max=255), rgb(204, 246, 186, max=255)),
+                     rgb(250, 229, 139, max=255),
+                     rgb(204, 246, 186, max=255)),
           projection="mollweide")
+# tan/green
+nv <- map('county', 'nevada', fill=TRUE,
+          col=ifelse(nv.names %in% reds,
+                     rgb(204, 246, 186, max=255),
+                     rgb(250, 229, 139, max=255)),
+          projection="mollweide")
+
 par(op)
 ```
  

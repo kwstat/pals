@@ -133,7 +133,7 @@ pal.bands <- function(..., n=100, labels=NULL, main=NULL, gap=0.1, sort="none", 
   }
 
   # Palette name along left side
-  text(rep(-0.1, npal), (1:npal) - 0.6,
+  text(rep(-0.2, npal), (1:npal) - 0.6,
        labels = rev(labels),
        cex=0.6, xpd = TRUE, adj = 1)
 

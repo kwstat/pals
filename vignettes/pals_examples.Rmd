@@ -68,7 +68,7 @@ pal.bands(coolwarm, parula, ocean.haline, brewer.blues, cubicl, kovesi.rainbow, 
 
 Show palettes and colormaps as colored bands
 
-What to look for:
+### What to look for:
 
 1. A good discrete palette has distinct colors.
 2. A good continuous colormap does not show boundaries between colors.
@@ -86,7 +86,7 @@ pal.bands(coolwarm, viridis, parula, n=200)
 
 Show the amount of red, green, blue, and gray in colors of a palette.  The gray line corresponds to luminosity.
 
-What to look for:
+### What to look for:
 
 1. Sequential data should usually be shown with a colormap that is smoothly
 increasing in lightness, as shown by the gray line.
@@ -100,13 +100,31 @@ Show a palette with heirarchical clustering
 
 The palette colors are converted to LUV coordinates before clustering.
 
-What to look for:
+### What to look for:
 
 1. Colors that are visually similar tend to be clustered together.
 2. Leaves of the dendrogram should not be at substantially different heights.
 
 ```{r}
 pal.cluster(alphabet2(), main="alphabet2")
+```
+
+## pal.compress()
+
+A few colormaps in the `pals` package are defined with mathematical formulas (e.g. the cubehelix colormap), but most of the colormaps are originally defined as a smooth curve through a seqence of 256 colors. There seems to be no theoretical reason for 256 colors, other than tradition. It is natural to wonder if a smooth curve through fewer colors would be equally sufficient. This function compresses a colormap function down to a small-ish vector of colors that can be passed into `colorRampPalette` to re-create the original palette with a non-noticeable difference.  Most of the palettes in the `pals` package are stored as a compressed sequence of colors.
+
+How effective is `pal.compress`? Compressing all 50 `kovesi.*` colormaps reduced memory from 352000 to 46000 bytes, a savings of 87%.
+
+In the figure below, the top band is the (mathematically-defined) `cubehelix` colormap function evaluated at 255 colors. The `cubebasis` vector has 17 colors (shown in the middle). These 17 colors are passed into the `colorRampPalette` function and expanded to 255 colors shown in the bottom band.  The maximum squared LUV distance between the individual colors in the two bands is 2.34, which is smaller than the theoretical perceptual difference of roughly 2.5.
+```{r}
+# smooth palettes are usually easy to compress
+p1 <- cubehelix(255)
+cubebasis <- pal.compress(cubehelix)
+p2 <- colorRampPalette(cubebasis)(255)
+pal.bands(p1, cubebasis, p2,
+  labels=c('cubehelix(255)', 'cubebasis','expanded'), main="compression of cubehelix")
+pal.maxdist(p1,p2) # 2.08
+
 ```
 
 ## pal.csf()
@@ -120,33 +138,13 @@ of the image than at the edges, creating an upside-down "U" shape, which
 is the "contrast sensitivity function". 
 Your perception of this curve depends on the viewing distance.
 
-What to look for:
+### What to look for:
 
 1. Are the vertical bands visible across the full vertical axis?
 2. Do the vertical bands blur together along the right side?
 
 ```{r}
 pal.csf(parula, main="parula")
-```
-
-## pal.compress()
-
-Many colormap functions are defined with more colors than needed.
-This function compresses a colormap function down to a small-ish vector
-of colors that can be passed into `colorRampPalette` to re-create the original palette with a just-noticeable-difference.
-
-How effective is `pal.compress`? Compressing all 50 `kovesi.*` colormaps reduces memory from 352000 to 46000 bytes, a savings of 87%.
-
-In the figure below, the top band is the `coolwarm` colormap function with 255 colors. The `cool2` vector has 13 colors (shown at the bottom) which can be passed into the `colorRampPalette` function and expanded to 255 colors shown in the middle band.  The maximum squared LUV distance between the individual colors in the two bands is 2.08, which is smaller than the theoretical perceptual difference.
-```{r}
-# smooth palettes usually easy to compress
-p1 <- coolwarm(255)
-cool2 <- pal.compress(coolwarm)
-p2 <- colorRampPalette(cool2)(255)
-pal.bands(p1, p2, cool2,
-  labels=c('original','compressed', 'basis'), main="coolwarm")
-pal.maxdist(p1,p2) # 2.08
-
 ```
 
 ## pal.cube()
@@ -156,7 +154,7 @@ and plotted in a three-dimensional scatterplot.
 The LUV space is probably better, but it is easier to tweak colors by
 hand in RGB space.
 
-What to look for:
+### What to look for:
 
 1. A good palette has colors that are spread somewhat uniformly in 3D.
 
@@ -174,7 +172,7 @@ A random heatmap is generated (with 5% missing values) and a key is added
 to the heatmap by appending a blank column along the right side and then a column with the
 palette colors.
 
-What to look for:
+### What to look for:
 
 1. Can the value of each cell be correctly inferred using the key on 
 the right side?
@@ -191,7 +189,7 @@ par(op)
 
 Display a palette on a choropleth map similar to the ColorBrewer website.
 
-What to look for:
+### What to look for:
 
 1. Are regions distinct from each other?
 2. Are county outlines visible?
@@ -212,7 +210,7 @@ A single palette/colormap is shown as five colored bands:
 4. As seen by the protan color-blind.
 5. As seen by the tritan color-blind.
 
-What to look for:
+### What to look for:
 
 1. Are colors still unique when viewed in less-than full color? 
 2. Is a sequential colormap still sequential?
@@ -225,7 +223,7 @@ pal.safe(parula, main="parula")
 
 Show a colormap with a scatterplot
 
-What to look for:
+### What to look for:
 
 1. Can the colors of each point be uniquely identified?
 
@@ -237,7 +235,7 @@ pal.scatter(polychrome, n=36, main="alphabet")
 
 The test image shows a sine wave superimposed on a ramp of the palette.  The amplitude of the sine wave is dampened/modulated from full at the top of the image to 0 at the bottom.
 
-What to look for:
+### What to look for:
 
 1. Along the top edge, is the sine wave equally visible across the entire image?
 2. Along the bottom edge, is the ramp smooth, or are there vertical bands?
@@ -261,9 +259,9 @@ This function combines several other functions into a single test image.
 
 The examples below show the superiority of the `parula` colormap as compared to the `viridis` colormap.
 
-What to look for:
+### What to look for:
 
-1. Are all squares in the upper-left Z-curve distinct?
+1. Are all squares (especially upper left and lower right) in the Z-curve distinct?
 2. Are the contrast sensitivity function bands visible?
 3. Is the sinewave showing bands of similar height, and smoothly varying along the bottom?
 4. Is the actual peak of the volcano identifiable? The lowest area?
@@ -280,7 +278,7 @@ pal.test(viridis) # dark colors are poor
 
 Some palettes with dark colors at one end of the palette hide the shape of the volcano in the dark colors.
 
-What to look for:
+### What to look for:
 
 1. Can you locate the exact position of the highest point on the volcano?
 2. Are the upper-right and lower-right corners the same elevation?
@@ -297,7 +295,7 @@ Show a Z-order curve, coloring cells with a colormap.
 The difference in color between squares side-by-side is 1/48 of the full range.
 The difference in color between one square atop another is 1/96 the full range.
 
-What to look for:
+### What to look for:
  
 1. A good color palette of 64 colors should be able to resolve 4 sub-squares 
 within each of the 16 squares. 
@@ -308,7 +306,7 @@ pal.zcurve(parula, main="parula")
 
 # Using palettes with ggplot2
 
-To use any colormap with the `ggplot2` package, use the `scale_fill_gradientn()` function.
+To use any colormap with the `ggplot2` package, use the `ggplot2::scale_fill_gradientn()` function.
 
 ```{r}
 require(ggplot2)
