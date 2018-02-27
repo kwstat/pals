@@ -1,5 +1,5 @@
 # tools.R
-# Time-stamp: <22 Jun 2017 19:14:56 c:/x/rpack/pals/R/tools.R>
+# Time-stamp: <26 Jan 2018 16:28:08 c:/x/rpack/pals/R/tools.R>
 # Copyright: Kevin Wright, 2017. License: GPL-3.
 
 # ----------------------------------------------------------------------------
@@ -359,11 +359,11 @@ pal.csf = function(pal, n=150, main=""){
 #'
 #' @param pal A colormap function or a vector of colors.
 #' 
-#' @param n Initial number of colors to use.
+#' @param n Initial number of colors to use for the basis.
 #' 
 #' @param thresh Maximum allowable Lab distance from original palette
 #' 
-#' @return A vector of colors
+#' @return A vector of equally-spaced colors that form the 'basis' of a colormap.
 #'
 #' @examples
 #' # The 'cm.colors' palette in R compresses to only 3 colors
@@ -396,11 +396,19 @@ pal.csf = function(pal, n=150, main=""){
 #' @export 
 pal.compress <- function(pal, n=5, thresh=2.5) {
   # pal is a function
+
+  # 255 equal-spaced colors from the original palette function
   pal255 <- pal(255)
   
   done <- FALSE
   while(!done) {
-    palc <- colorRampPalette(pal(n))(255) # compressed palette ramp
+    
+    # 255 colors expanded from n colors
+    palc <- colorRampPalette(pal(n))(255)
+
+    # Compare 255 colors from the original palette with
+    #         255 colors using the n basis colors
+    # If they are too far apart, increase n and try again
     p1 <- convertColor(t(col2rgb(pal255)), from="sRGB",to="Lab",scale.in=255)
     p2 <- convertColor(t(col2rgb(palc)), from="sRGB",to="Lab",scale.in=255)
     delta <- max(apply((p1-p2), 1, function(x) sqrt(sum(x^2))))

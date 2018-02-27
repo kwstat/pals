@@ -323,7 +323,7 @@ The following images show bands for all the colormaps and palettes in the `pals`
 
 ```{r}
 # Discrete
-pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, polychrome, stepped, tol, watlington,
+pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, okabe, polychrome, stepped, tol, watlington,
           main="Discrete", show.names=FALSE)
 
 

@@ -150,7 +150,7 @@ https://github.com/alyssafrazee/RSkittleBrewer
 Candy-themed palettes.
 
 ## spatstat
-Contains Kovesi's colormaps.  For example:
+Contains Kovesi's colormaps.
 
 ## cetcolor
 https://cran.rstudio.com/web/packages/cetcolor/vignettes/cet_color_schemes.html

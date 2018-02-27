@@ -1,5 +1,5 @@
 # discrete.R
-# Time-stamp: <05 Dec 2017 22:37:55 c:/x/rpack/pals/R/discrete.R>
+# Time-stamp: <26 Feb 2018 18:15:24 c:/x/rpack/pals/R/discrete.R>
 # Copyright Kevin Wright, 2017, GPL-3
 
 #' Discrete palettes
@@ -36,6 +36,11 @@
 #' colors, the purples are not very distinct, color 22 (olive green) is almost
 #' identical to color 2 (black), etc.
 #'
+#' The \code{okabe} palette was design to be (1) clear for both colorblind and
+#' non-colorblind people, (2) vividly colored, and (3) good for screen and printed.
+#' The color-blind simulation tools in R suggest this palette is not as useful
+#' as hoped.
+#' 
 #' The \code{polychrome} palette is also from the Polychrome package.
 #' Colors were given a name from the ISCC-NBS standard.
 #' 
@@ -62,7 +67,7 @@
 #' 
 #' @examples
 #'
-#' pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, polychrome,
+#' pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, okabe, polychrome,
 #'   stepped, tableau20, tol, watlington)
 #' 
 #' \dontrun{
@@ -80,6 +85,8 @@
 #' # pal.cube(glasbey, n=32) # Blues are close together
 #'
 #' pal.heatmap(kelly(22)) # too many orange/pink colors
+#'
+#' pal.safe(okabe(8)) # not great
 #' 
 #' pal.heatmap(polychrome)
 #' 
@@ -112,6 +119,11 @@
 #' K. Kelly (1965): Twenty-two colors of maximum contrast.
 #' \emph{Color Eng}., 3(6), 1965.
 #' http://www.iscc.org/pdf/PC54_1724_001.pdf
+#'
+#' Masataka Okabe and Kei Ito (2002).
+#' Color Universal Design (CUD) - How to make figures and presentations
+#' that are friendly to Colorblind people.
+#' http://jfly.iam.u-tokyo.ac.jp/color/
 #' 
 #' Paul Tol (2012). Color Schemes. SRON technical note, SRON/EPS/TN/09-002.
 #' https://personal.sron.nl/~pault/
@@ -291,6 +303,20 @@ stepped <- function(n=24) {
   }
 
   return(syspals$stepped[1:n])
+}
+
+# ----------------------------------------------------------------------------
+
+#' @export
+#' rdname discrete
+okabe = function(n=8) {
+
+  # (0,0,0), (230,159,0), (86,180,233) (0,158,115)
+  # (240,228,66) (0,114,178) (213,94,0) (204,121,167)
+  pal <- c("#000000","#E69F00","#56B4E9","#009E73",
+           "#F0E442","#0072B2","#D55E00","#009E73")
+  
+  return(pal[1:n])
 }
 
 # ----------------------------------------------------------------------------
