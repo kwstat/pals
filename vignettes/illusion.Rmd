@@ -4,6 +4,7 @@ author: "Kevin Wright"
 date: "`r Sys.Date()`"
 bibliography: pals.bib
 output:
+  rmarkdown::html_vignette: default
   html_document:
     theme: cerulean
     highlight: tango

@@ -2,7 +2,7 @@
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/pals)](https://cran.r-project.org/package=pals)
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/pals)](https://cranlogs.r-pkg.org/badges/pals)
-[![Research software impact](http://depsy.org/api/package/cran/pals/badge.svg)](http://depsy.org/package/r/pals)
+
 
 Color Palettes, Colormaps, and Tools to Evaluate Them
 

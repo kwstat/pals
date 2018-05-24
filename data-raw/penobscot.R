@@ -85,6 +85,7 @@ z0 = matrix(dmvnorm(xy, mean=c(1,0.5))^2 - 0.4*dmvnorm(xy, mean=c(-1,-0.5))^2,
 filled.contour(x=x0, y=y0, z=z0, color.palette=ocean.delta, nlevels=99)
 filled.contour(x=x0, y=y0, z=z0, color.palette=cubehelix, nlevels=99)
 filled.contour(x=x0, y=y0, z=z0, color.palette=parula, nlevels=99)
+filled.contour(x=x0, y=y0, z=z0, color.palette=viridis, nlevels=99)
 
 # oblique stripes
 x1 = seq(from = -pi, to =  pi, length=100)
@@ -94,3 +95,5 @@ z1 = matrix( sin(xy1$Var1 + xy1$Var2/4), 100, 100)
 filled.contour(x=x1, y=y1, z=z1, color.palette=ocean.delta, nlevels=99)
 filled.contour(x=x1, y=y1, z=z1, color.palette=cubehelix, nlevels=99)
 filled.contour(x=x1, y=y1, z=z1, color.palette=parula, nlevels=99)
+filled.contour(x=x1, y=y1, z=z1, color.palette=viridis, nlevels=99)
+

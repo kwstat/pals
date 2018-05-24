@@ -4,6 +4,7 @@ author: "Kevin Wright"
 date: "`r Sys.Date()`"
 bibliography: pals.bib
 output:
+  rmarkdown::html_vignette: default
   html_document:
     theme: cerulean
     highlight: tango
@@ -33,7 +34,7 @@ options(width=90)
 The two maps below show male and female cancer rates on separate maps.
 The rates are coarsely binned into three classes so as to be somewhat comparable to the bivariate choropleth below.
 
-```{r}
+```{r, message=FALSE}
 require(latticeExtra) # USCancerRates, mapplot
 require(maps) # map
 require(classInt) # classIntervals, findCols

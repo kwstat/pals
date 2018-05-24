@@ -9,12 +9,12 @@ pal.compress(pal, n = 5, thresh = 2.5)
 \arguments{
 \item{pal}{A colormap function or a vector of colors.}
 
-\item{n}{Initial number of colors to use.}
+\item{n}{Initial number of colors to use for the basis.}
 
 \item{thresh}{Maximum allowable Lab distance from original palette}
 }
 \value{
-A vector of colors
+A vector of equally-spaced colors that form the 'basis' of a colormap.
 }
 \description{
 Compress a colormap function to fewer colors

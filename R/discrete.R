@@ -260,8 +260,8 @@ kelly <- function(n=22) {
 
 # ----------------------------------------------------------------------------
 
-#' @rdname discrete
 #' @export
+#' @rdname discrete
 polychrome <- function(n=36){
   
   if(n > 36) {
@@ -308,7 +308,7 @@ stepped <- function(n=24) {
 # ----------------------------------------------------------------------------
 
 #' @export
-#' rdname discrete
+#' @rdname discrete
 okabe = function(n=8) {
 
   # (0,0,0), (230,159,0), (86,180,233) (0,158,115)

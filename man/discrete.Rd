@@ -9,6 +9,7 @@
 \alias{kelly}
 \alias{polychrome}
 \alias{stepped}
+\alias{okabe}
 \alias{tableau20}
 \alias{tol}
 \alias{watlington}
@@ -27,6 +28,8 @@ kelly(n = 22)
 polychrome(n = 36)
 
 stepped(n = 24)
+
+okabe(n = 8)
 
 tableau20(n = 20)
 
@@ -74,6 +77,11 @@ Commentary: We think the kelly palette has an over-abundance of orange-ish
 colors, the purples are not very distinct, color 22 (olive green) is almost
 identical to color 2 (black), etc.
 
+The \code{okabe} palette was design to be (1) clear for both colorblind and
+non-colorblind people, (2) vividly colored, and (3) good for screen and printed.
+The color-blind simulation tools in R suggest this palette is not as useful
+as hoped.
+
 The \code{polychrome} palette is also from the Polychrome package.
 Colors were given a name from the ISCC-NBS standard.
 
@@ -94,7 +102,7 @@ The color 'white' has been re-defined as light-gray, #F2F3F4.
 }
 \examples{
 
-pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, polychrome,
+pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, okabe, polychrome,
   stepped, tableau20, tol, watlington)
 
 \dontrun{
@@ -112,6 +120,8 @@ pal.heatmap(glasbey(32))
 # pal.cube(glasbey, n=32) # Blues are close together
 
 pal.heatmap(kelly(22)) # too many orange/pink colors
+
+pal.safe(okabe(8)) # not great
 
 pal.heatmap(polychrome)
 
@@ -144,6 +154,11 @@ www.aic-color.org/journal/v5/jaic_v5_06.pdf
 K. Kelly (1965): Twenty-two colors of maximum contrast.
 \emph{Color Eng}., 3(6), 1965.
 http://www.iscc.org/pdf/PC54_1724_001.pdf
+
+Masataka Okabe and Kei Ito (2002).
+Color Universal Design (CUD) - How to make figures and presentations
+that are friendly to Colorblind people.
+http://jfly.iam.u-tokyo.ac.jp/color/
 
 Paul Tol (2012). Color Schemes. SRON technical note, SRON/EPS/TN/09-002.
 https://personal.sron.nl/~pault/

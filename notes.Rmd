@@ -1,6 +1,8 @@
 
 # Ideas
 
+https://github.com/EmilHvitfeldt/r-color-palettes
+
 Add St Helens image as used in plotly?
 https://github.com/matplotlib/viscm/tree/master/viscm/examples
 
