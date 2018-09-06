@@ -1,10 +1,10 @@
-# cmocean.r
-# Time-stamp: <21 Dec 2016 10:12:59 c:/x/rpack/pals/data-raw/ocean/0 - cmocean.r>
+# 0_cmocean.R
+# Time-stamp: <04 Jun 2018 10:23:22 c:/x/rpack/pals/data-raw/ocean/0_cmocean.R>
 
 # Color definitions downloaded 10.10.16 from
 # https://github.com/matplotlib/cmocean/tree/master/cmocean/rgb
 # Note, github thought all these .py files meant the project was Python,
-# so I renamed the files to .pyth
+# but they are not, so I renamed the files to .pyth
 
 setwd("c:/x/rpack/pals/data-raw/ocean/")
 
@@ -57,17 +57,3 @@ for(ff in fil){
   title(ff)
 }
 
-
-# ----------------------------------------------------------------------------
-
-# Not a particularly effective visualization test
-
-# hist2d from here:
-# https://github.com/matplotlib/viscm/blob/master/viscm/examples/hist2d.txt
-
-hist2d <- read.csv("hist2d.txt", sep=" ", header=FALSE)
-hist2d <- as.matrix(hist2d)
-image(hist2d)
-image(round(hist2d,2), col=viridis(100)) # Only slightly different
-image(round(hist2d,2), col=jet(100)) # Only slightly different
-image(round(hist2d,2), col=parula(100)) # Only slightly different

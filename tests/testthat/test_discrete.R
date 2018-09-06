@@ -56,6 +56,9 @@ pal.bands(kelly(1),kelly(2),kelly(3),kelly(4),kelly(5),kelly(6),
           kelly(19),kelly(20),kelly(21),kelly(22),
           labels=1:22, main="kelly")
 
+# okabe
+expect_message(okabe(9)) # too many
+
 # polychrome
 expect_message(polychrome(37)) # too many
 
@@ -72,6 +75,8 @@ pal.bands(polychrome(1),polychrome(2),polychrome(3),polychrome(4),
 
 # stepped
 expect_message(stepped(25)) # too many
+expect_message(stepped2(21))
+expect_message(stepped3(21))
 
 pal.bands(stepped(1),stepped(2),stepped(3),stepped(4),stepped(5),stepped(6),
           stepped(7),stepped(8),stepped(9),stepped(10),stepped(11),stepped(12),
@@ -104,13 +109,20 @@ pal.bands(watlington(1),watlington(2),watlington(3),watlington(4),watlington(5),
           labels=1:16, main="watlington")
 
 # bivariate
-expect_message(stevens.pinkgreen(10))
 expect_message(stevens.bluered(10))
 expect_message(stevens.pinkblue(10))
+expect_message(stevens.pinkgreen(10))
 expect_message(stevens.greenblue(10))
 expect_message(stevens.purplegold(10))
-expect_message(brewer.orangeblue(10))
-expect_message(brewer.pinkblue(10))
 expect_message(tolochko.redblue(10))
 expect_message(arc.bluepink(17))
 expect_message(census.blueyellow(10))
+expect_message(brewer.qualbin(7))
+expect_message(brewer.divbin(7))
+expect_message(brewer.divseq(10))
+expect_message(brewer.qualseq(10))
+expect_message(brewer.divdiv(10))
+expect_message(brewer.seqseq1(10))
+expect_message(brewer.seqseq2(10))
+expect_message(vsup.redblue(33))
+expect_message(vsup.viridis(33))

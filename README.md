@@ -46,3 +46,5 @@ Tools for testing colormap and palette effectiveness.
 Catalog of colormaps and palettes included in the package.
 
 ![pals_catalog](figure/pals_catalog.png)
+![pals_bivariate](figure/pals_bivariate.png)
+

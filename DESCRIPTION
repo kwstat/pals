@@ -8,14 +8,15 @@ URL: https://github.com/kwstat/pals
 BugReports: https://github.com/kwstat/pals/issues
 VignetteBuilder: knitr
 Encoding: UTF-8
-Depends: R (>= 2.10),
-  maps,
+Depends: 
+  R (>= 2.10)
 Imports:
   dichromat,
   colorspace,
   graphics,
   grDevices,
   mapproj,
+  maps,
   methods,
   rgl,
   stats
@@ -27,4 +28,4 @@ Suggests:
   reshape2,
   testthat
 License: GPL-3
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0

@@ -9,6 +9,8 @@
 \alias{kelly}
 \alias{polychrome}
 \alias{stepped}
+\alias{stepped2}
+\alias{stepped3}
 \alias{okabe}
 \alias{tableau20}
 \alias{tol}
@@ -29,7 +31,11 @@ polychrome(n = 36)
 
 stepped(n = 24)
 
-okabe(n = 8)
+stepped2(n = 20)
+
+stepped3(n = 20)
+
+okabe(n = 22)
 
 tableau20(n = 20)
 
@@ -92,6 +98,9 @@ order to better separate these colors in RGB space, red hue 0 was moved to hue 3
 green hue 80 moved to hue 90. The number of colors within each hue was reduced
 from 5 to 4, and gray shades were added.
 
+\code{stepped2} and \code{stepped3} are from the 'vega' package
+https://github.com/vega/vega/wiki/Scales.
+
 The \code{tableau20} palette has 10 pairs of dark/light colors that are used by
 the Tableau software.
 
@@ -126,6 +135,10 @@ pal.safe(okabe(8)) # not great
 pal.heatmap(polychrome)
 
 pal.heatmap(stepped, n=24)
+
+pal.heatmap(stepped2, n=20)
+
+pal.heatmap(stepped3, n=20)
 
 pal.heatmap(tol, 12)
 

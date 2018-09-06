@@ -1,6 +1,20 @@
 
 # Ideas
 
+Crameri
+https://www.data-imaginist.com/2018/scico-and-the-colour-conundrum/
+http://www.fabiocrameri.ch/colourmaps.php
+https://zenodo.org/record/1243909
+
+Todo:
+http://www.ncl.ucar.edu/Document/Graphics/color_table_gallery.shtml
+http://www.ncl.ucar.edu/Document/Graphics/color_tables.shtml
+https://matplotlib.org/xkcd/examples/color/colormaps_reference.html
+https://matplotlib.org/examples/color/colormaps_reference.html
+Data: 
+http://www.ncl.ucar.edu/Document/Graphics/ColorTables/Files/
+
+
 https://github.com/EmilHvitfeldt/r-color-palettes
 
 Add St Helens image as used in plotly?
@@ -28,7 +42,7 @@ https://github.com/matplotlib/matplotlib/blob/master/lib/matplotlib/_cm.py
 
 
 # ----------------------------------------------------------------------------
-# ----------------------------------------------------------------------------
+# done
 
 # Misc
 

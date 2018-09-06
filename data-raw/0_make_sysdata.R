@@ -1,11 +1,11 @@
 # make_sysdata.R
-# Time-stamp: <22 Jan 2018 15:03:08 c:/x/rpack/pals/data-raw/make_sysdata.R>
+# Time-stamp: <04 Jun 2018 10:16:21 c:/x/rpack/pals/data-raw/0_make_sysdata.R>
 
 # Execute this entire file to create the sysdata file for the pals package
 # The palettes are stored in a list, each item in the list is a separate palette
 
-lib(dplyr)
-lib(readr)
+library(pacman)
+p_load(dplyr, readr)
 
 pal.compress <- function(pal, n=5, thresh=2.5) {
   # pal is a function
@@ -54,10 +54,18 @@ syspals$jet <- c("#00007F", "blue", "#007FFF", "cyan",
 # ----------------------------------------------------------------------------
 
 # kelly
-#' The color values used here are from
-#' http://hackerspace.kinja.com/iscc-nbs-number-hex-r-g-b-263-f2f3f4-242-243-244-267-22-1665795040
+# The color values used here are from
+# http://hackerspace.kinja.com/iscc-nbs-number-hex-r-g-b-263-f2f3f4-242-243-244-267-22-1665795040
 
 colrs %>% filter(palette=="kelly") %>% select(red,green,blue) %>% rgb(., max=255) -> syspals$kelly
+
+# ----------------------------------------------------------------------------
+
+# okabe
+# The color values used here are from
+# http://jfly.iam.u-tokyo.ac.jp/color/
+
+colrs %>% filter(palette=="okabe") %>% select(red,green,blue) %>% rgb(., max=255) -> syspals$okabe
 
 # ----------------------------------------------------------------------------
 
@@ -1174,7 +1182,7 @@ cividis %>% colorRampPalette %>% pal.compress -> syspals$cividis
 # ----------------------------------------------------------------------------
 
 # Now save all objects into R/sysdata.rda
-devtools::devtools::use_data(syspals, pkg="c:/x/rpack/pals", internal=TRUE, overwrite=TRUE)
+devtools::use_data(syspals, pkg="c:/x/rpack/pals", internal=TRUE, overwrite=TRUE)
 
 # file.info("R/sysdata.rda")
 # file.size("R/sysdata.rda") # in bytes

@@ -18,15 +18,15 @@ gnuplot(n = 25, trim = 0.1)
 
 tol.rainbow(n = 25, manual = TRUE)
 
-jet(n)
+jet(n = 25)
 
-parula(n)
+parula(n = 25)
 
-coolwarm(n)
+coolwarm(n = 25)
 
-warmcool(n)
+warmcool(n = 25)
 
-cividis(n)
+cividis(n = 25)
 }
 \arguments{
 \item{n}{Number of colors to return.}

@@ -1,14 +1,15 @@
 # galaxy.R
-# Time-stamp: <18 Apr 2018 14:14:06 c:/x/rpack/pals/data-raw/galaxy/galaxy.R>
+# Time-stamp: <06 Sep 2018 17:27:18 c:/x/rpack/pals/data-raw/test_images/galaxy.R>
 
-libs(asreml,dplyr,fs,kw,lattice,readxl,readr,reshape2,tibble)
-libs(png)
+library(pacman)
+p_load(dplyr,fs,lattice,pals,png,readxl,readr,reshape2,tibble)
 
 # Inspiration from this site:
 # http://yt-project.org/doc/visualizing/colormaps/index.html
 
+# Downloaded the galaxy image from here:
 # http://yt-project.org/doc/_images/cmap_images__Projection_B-W_LINEAR_r.png
-setwd("c:/x/rpack/pals/data-raw/galaxy/")
+setwd("c:/x/rpack/pals/data-raw/test_images/")
 dat0 <- readPNG("cmap_images__Projection_B-W_LINEAR_r.png")
 dat0 <- dat0[,,3]
 dat0 <- t(dat0)[,920:1]
@@ -34,9 +35,6 @@ gal(brewer.greys)
 gal(brewer.orrd)
 gal(brewer.prgn)
 gal(brewer.paired)
-gal(brewer.pastel1)
-gal(brewer.pastel2)
-gal(brewer.set3)
 gal(brewer.spectral)
 gal(cubehelix)
 gal(coolwarm)

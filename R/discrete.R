@@ -1,5 +1,5 @@
 # discrete.R
-# Time-stamp: <26 Feb 2018 18:15:24 c:/x/rpack/pals/R/discrete.R>
+# Time-stamp: <04 Jun 2018 10:13:07 c:/x/rpack/pals/R/discrete.R>
 # Copyright Kevin Wright, 2017, GPL-3
 
 #' Discrete palettes
@@ -51,6 +51,9 @@
 #' green hue 80 moved to hue 90. The number of colors within each hue was reduced
 #' from 5 to 4, and gray shades were added.
 #'
+#' \code{stepped2} and \code{stepped3} are from the 'vega' package
+#' https://github.com/vega/vega/wiki/Scales.
+#' 
 #' The \code{tableau20} palette has 10 pairs of dark/light colors that are used by
 #' the Tableau software.
 #' 
@@ -91,6 +94,10 @@
 #' pal.heatmap(polychrome)
 #' 
 #' pal.heatmap(stepped, n=24)
+#'
+#' pal.heatmap(stepped2, n=20)
+#'
+#' pal.heatmap(stepped3, n=20)
 #' 
 #' pal.heatmap(tol, 12)
 #' 
@@ -309,14 +316,49 @@ stepped <- function(n=24) {
 
 #' @export
 #' @rdname discrete
-okabe = function(n=8) {
-
-  # (0,0,0), (230,159,0), (86,180,233) (0,158,115)
-  # (240,228,66) (0,114,178) (213,94,0) (204,121,167)
-  pal <- c("#000000","#E69F00","#56B4E9","#009E73",
-           "#F0E442","#0072B2","#D55E00","#009E73")
-  
+stepped2 <- function(n=20) {
+  if(n > 20) {
+    message("Only 20 colors are available with 'stepped2'.")
+    n <- 20
+  }
+  pal <- c("#393b79","#5254a3","#6b6ecf","#9c9ede",
+           "#637939","#8ca252","#b5cf6b","#cedb9c",
+           "#8c6d31","#bd9e39","#e7ba52","#e7cb94",
+           "#843c39","#ad494a","#d6616b","#e7969c",
+           "#7b4173","#a55194","#ce6dbd","#de9ed6")
   return(pal[1:n])
+}
+
+
+# ----------------------------------------------------------------------------
+
+#' @export
+#' @rdname discrete
+stepped3 <- function(n=20) {
+  if(n > 20) {
+    message("Only 20 colors are available with 'stepped3'.")
+    n <- 20
+  }
+  
+  pal <- c("#3182bd","#6baed6","#9ecae1","#c6dbef",
+           "#e6550d","#fd8d3c","#fdae6b","#fdd0a2",
+           "#31a354","#74c476","#a1d99b","#c7e9c0",
+           "#756bb1","#9e9ac8","#bcbddc","#dadaeb",
+           "#636363","#969696","#bdbdbd","#d9d9d9")
+  return(pal[1:n])
+}
+
+
+# ----------------------------------------------------------------------------
+
+#' @export
+#' @rdname discrete
+okabe <- function(n=22) {
+  if(n > 8) {
+    message("Only 8 colors are available with 'okabe'.")
+    n <- 8
+  }
+  return(syspals$okabe[1:n])
 }
 
 # ----------------------------------------------------------------------------
@@ -328,12 +370,6 @@ tableau20 = function(n=20) {
     message("Only 20 colors are available with 'tableau20'.")
     n <- 20
   }
-
-  # (31, 119, 180), (174, 199, 232), (255, 127, 14), (255, 187, 120),  
-  # (44, 160, 44), (152, 223, 138), (214, 39, 40), (255, 152, 150),  
-  # (148, 103, 189), (197, 176, 213), (140, 86, 75), (196, 156, 148),  
-  # (227, 119, 194), (247, 182, 210), (127, 127, 127), (199, 199, 199),  
-  # (188, 189, 34), (219, 219, 141), (23, 190, 207), (158, 218, 229)]
   
   pal <- c("#1F77B4","#AEC7E8","#FF7F0E","#FFBB78","#2CA02C","#98DF8A",
            "#D62728","#FF9896","#9467BD","#C5B0D5","#8C564B","#C49C94",

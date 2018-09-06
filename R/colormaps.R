@@ -1,5 +1,5 @@
 # colormaps.R
-# Time-stamp: <10 Jun 2017 10:22:57 c:/x/rpack/pals/R/colormaps.R>
+# Time-stamp: <06 Sep 2018 14:15:08 c:/x/rpack/pals/R/colormaps.R>
 # Copyright: Kevin Wright, 2017. License: GPL-3.
 
 # R auto-loads R/sysdata.rda, which contains the 'syspals' object.
@@ -148,17 +148,17 @@ NULL
 #' @rdname continuous
 cubehelix <- function(n=25, start = 0.5, r = -1.5, hue = 1, gamma = 1) {
   
-  lambda = seq(0, 1, length=n) # value along the black-white diagonal
+   lambda <- seq(0, 1, length=n) # value along the black-white diagonal
   
-  lgam = rep(lambda^gamma, each = 3)
-  phi = 2 * pi * (start/3 + r * lambda) # angle for deviation
-  amp = hue * lgam * (1 - lgam)/2 # amplitude
-  M = matrix(c(-0.14861, -0.29227, 1.97294, 1.78277, -0.90649, 0),
+  lgam <- rep(lambda^gamma, each = 3)
+  phi <- 2 * pi * (start/3 + r * lambda) # angle for deviation
+  amp <- hue * lgam * (1 - lgam)/2 # amplitude
+  M <- matrix(c(-0.14861, -0.29227, 1.97294, 1.78277, -0.90649, 0),
              byrow=FALSE, ncol = 2)
-  out = lgam + amp * (M %*% rbind(cos(phi), sin(phi))) # Eqn 2
+  out <- lgam + amp * (M %*% rbind(cos(phi), sin(phi))) # Eqn 2
   
   # truncate values into [0,1]
-  out = pmin(pmax(out, 0), 1)
+  out <- pmin(pmax(out, 0), 1)
 
   # Convert to rgb value
   rgb(t(out))
@@ -173,11 +173,11 @@ cubehelix <- function(n=25, start = 0.5, r = -1.5, hue = 1, gamma = 1) {
 gnuplot <- function (n = 25, trim = 0.1) {
   if (trim >= 1 || trim < 0) 
     stop("trim should be in [0, 1]")
-  i = seq(0.5 * trim, 1 - 0.5 * trim, length = n)
+  i <- seq(0.5 * trim, 1 - 0.5 * trim, length = n)
 
-  R = ifelse(i < 0.25, 0, ifelse(i < 0.57, i/0.32 - 0.78125, 1))
-  G = ifelse(i < 0.42, 0, ifelse(i < 0.92, 2 * i - 0.84, 1))
-  B = ifelse(i < 0.25, 4 * i, ifelse(i < 0.42, 1, ifelse(i < 0.92, -2 * i + 1.84, i/0.08 - 11.5)))
+  R <- ifelse(i < 0.25, 0, ifelse(i < 0.57, i/0.32 - 0.78125, 1))
+  G <- ifelse(i < 0.42, 0, ifelse(i < 0.92, 2 * i - 0.84, 1))
+  B <- ifelse(i < 0.25, 4 * i, ifelse(i < 0.42, 1, ifelse(i < 0.92, -2 * i + 1.84, i/0.08 - 11.5)))
   rgb(R, G, B)
 }
 
@@ -236,25 +236,25 @@ tol.rainbow <- function(n=25, manual=TRUE){
 
 #' @export
 #' @rdname continuous
-jet = function(n) colorRampPalette(syspals$jet)(n)
+jet <- function(n=25) colorRampPalette(syspals$jet)(n)
   
 #' @export
 #' @rdname continuous
-parula <- function(n) colorRampPalette(syspals$parula)(n)
+parula <- function(n=25) colorRampPalette(syspals$parula)(n)
  
 #' @export
 #' @rdname continuous
-coolwarm <- function(n) colorRampPalette(syspals$coolwarm)(n)
+coolwarm <- function(n=25) colorRampPalette(syspals$coolwarm)(n)
 
 #' @export
 #' @rdname continuous
-warmcool <- function(n){
+warmcool <- function(n=25){
   rev(coolwarm(n))
 }
 
 #' @export
 #' @rdname continuous
-cividis <- function(n) colorRampPalette(syspals$cividis)(n)
+cividis <- function(n=25) colorRampPalette(syspals$cividis)(n)
 
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
@@ -345,10 +345,10 @@ cividis <- function(n) colorRampPalette(syspals$cividis)(n)
 #' @name brewer
 NULL
 
-get.brewer.pal = function(bpal, n){
+get.brewer.pal <- function(bpal, n){
   # bpal is a brewer palette list, list item k-2 is a vector of k color
-  rng = as.numeric(names(bpal))
-  maxn = max(rng)
+  rng <- as.numeric(names(bpal))
+  maxn <- max(rng)
   if(n < 3) warning("Only accepts n>2")
   if(n <= maxn) {
     return(bpal[[n-2]])

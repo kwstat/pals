@@ -1,8 +1,8 @@
 # pals_logo.r
-# Time-stamp: <26 Apr 2017 13:35:14 c:/x/rpack/pals/figure/pals_logo.r>
+# Time-stamp: <14 Jun 2018 08:24:33 c:/x/rpack/pals/figure/pals_logo.R>
 
 # outline text demo
-lib(TeachingDemos)
+libs(TeachingDemos)
 plot(1:10, 1:10, bg='aliceblue')
       rect(3,3,5,8, col='navy')
       text(5,6, 'Test 1', col='lightsteelblue')
@@ -40,7 +40,7 @@ plot(5,type="n",xlim=c(0,10), ylim=c(0,10), axes=FALSE, xlab="", ylab="",
      )
 gradient.rect(0,0,10,10, col=parula(150), gradient="y")
 shadowtext(5, 4, 'pals', col='white', bg="gray30", r=0.1,
-           theta= seq(pi/4, 2*pi, length.out=16), cex=4)
+           theta= seq(pi/4, 2*pi, length.out=16), cex=10)
 hexagon(1,1,unit=8)
 # locator()
 # $x
@@ -65,7 +65,7 @@ polygon(x=c(9, 10, 10, 9), y=c(0,0, 10,10), col="white",border="white")
 lib(pals)
 lib(TeachingDemos) # for shadowtext
 lib(plotrix) # gradient.rect
-library(spatstat)
+lib(spatstat)
 H <- hextess(square(1), 0.5)
 
 op <- par(mar=c(0,0,0,0))

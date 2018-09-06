@@ -1,5 +1,5 @@
 # tools.R
-# Time-stamp: <26 Jan 2018 16:28:08 c:/x/rpack/pals/R/tools.R>
+# Time-stamp: <06 Sep 2018 14:16:52 c:/x/rpack/pals/R/tools.R>
 # Copyright: Kevin Wright, 2017. License: GPL-3.
 
 # ----------------------------------------------------------------------------
@@ -58,7 +58,7 @@
 #' @export
 pal.bands <- function(..., n=100, labels=NULL, main=NULL, gap=0.1, sort="none", show.names=TRUE){
 
-  if(n < 3) warning("Using n=3")
+  #if(n < 3) warning("Using n=3")
   if(!is.element(sort, c("none","hue","luminance")))
     stop("'sort' must be one of 'none','hue','luminance'")
     
@@ -275,7 +275,7 @@ pal.cluster <- function(pal, n=50, type="LUV", main=""){
   if(is.null(names(pal))){
     # use hex color
     #labs <- paste0(pal, " [", 1:length(pal), "]")
-    labs <- paste0(" [", 1:length(pal), "]")
+    labs <- paste0(" [", seq_along(pal), "]")
   } else {
     labs <- names(pal)
   }
@@ -328,8 +328,8 @@ pal.cluster <- function(pal, n=50, type="LUV", main=""){
 #' \emph{Journal of Physiology}, 197: 551-566.
 #' 
 #' @export
-pal.csf = function(pal, n=150, main=""){
-  if(is.function(pal)) pal = pal(n)
+pal.csf <- function(pal, n=150, main=""){
+  if(is.function(pal)) pal <- pal(n)
 
   x <- seq(0,5*pi,length=400)
   y <- seq(0,2*pi,length=400)
@@ -412,7 +412,7 @@ pal.compress <- function(pal, n=5, thresh=2.5) {
     p1 <- convertColor(t(col2rgb(pal255)), from="sRGB",to="Lab",scale.in=255)
     p2 <- convertColor(t(col2rgb(palc)), from="sRGB",to="Lab",scale.in=255)
     delta <- max(apply((p1-p2), 1, function(x) sqrt(sum(x^2))))
-    if(delta >  thresh) n=n+1 else done=TRUE
+    if(delta >  thresh) n <- n+1 else done <- TRUE
   }
   return(pal(n))
 }
@@ -440,7 +440,7 @@ pal.compress <- function(pal, n=5, thresh=2.5) {
 #' @param type Either "RGB" (default) or "LUV".
 #' 
 #' @return None
-#' @import rgl
+#' @importFrom rgl plot3d text3d
 #' @export 
 #' @examples
 #' \dontrun{
@@ -464,11 +464,11 @@ pal.cube <- function(pal, n=100, label=FALSE, type="RGB"){
 
   if(type=="RGB") {
     x <- t(col2rgb(pal))
-    xl="red"; yl="green"; zl="blue"
+    xl <- "red"; yl <- "green"; zl <- "blue"
   } else if (type=="LUV") {
     luvmat <- methods::as(colorspace::hex2RGB(pal), "LUV")
     x <- luvmat@coords
-    xl="L"; yl="U"; zl="V"
+    xl <- "L"; yl <- "U"; zl <- "V"
   }
 
   plot3d(x, col=pal,
@@ -603,7 +603,7 @@ pal.maxdist <- function(pal1, pal2, n=255) max(pal.dist(pal1, pal2, n))
 pal.heatmap <- function(pal, n=25, miss=.05, main=""){
 
   if(miss >  1)
-    warning("`miss` should be less than 1.")
+    stop("`miss` should be less than 1.")
   
   if(is.function(pal)) {
     pal <- pal(n)
@@ -819,24 +819,24 @@ pal.sineramp <- function(pal, n=150, nx=512, ny=256,
   # Adjust width of image so there is an integer number of cycles of
   # the sinewave.  Helps for cyclic color palette.
   # May still be a slight discontinuity along the edge.
-  cycles = round(nx/wavelen)
-  nx = cycles*wavelen
+  cycles <- round(nx/wavelen)
+  nx <- cycles*wavelen
   
   # Sine wave
-  xval = 0:(nx-1)
-  fx = amp*sin( 1.0/wavelen * 2*pi*xval)
+  xval <- 0:(nx-1)
+  fx <- amp*sin( 1.0/wavelen * 2*pi*xval)
 
   # Vertical dampening of the wave
-  img = outer(fx, seq(0,1,length=ny), function(x,y) x*y^pow)
+  img <- outer(fx, seq(0,1,length=ny), function(x,y) x*y^pow)
 
   # Add ramp across entire image
-  img = img + outer(seq(0,1,length=nx), seq(1,1,length=ny), '*') * (255-2*amp)
+  img <- img + outer(seq(0,1,length=nx), seq(1,1,length=ny), '*') * (255-2*amp)
 
   # Normalise each row (offset and rescale into [0,1]). Important for cyclic
   # color maps
   img <- apply(img, 2, function(x){
-    x = x - min(x) # set smallest value to 0
-    x = x/max(x) # set largest value to 1
+    x <- x - min(x) # set smallest value to 0
+    x <- x/max(x) # set largest value to 1
     x
   })
 
@@ -969,7 +969,7 @@ pal.volcano <- function(pal, n=100, main=""){
   if(is.function(pal)) {
     pal <- pal(n)
   } else {
-    n=length(pal)
+    n <- length(pal)
   }
   
   #filled.contour(volcano, col=pal, color.palette = pal, n=n+1, asp = 1, axes=0)
@@ -1021,7 +1021,7 @@ pal.volcano <- function(pal, n=100, main=""){
 pal.zcurve <- function(pal, n=64, main=""){
   
   if(!(n %in% c(4,16,64,256))) stop("Value of n can only be one of 4,16,64,256.")
-  if(is.function(pal)) pal=pal(n)
+  if(is.function(pal)) pal <- pal(n)
   nr <- sqrt(n)
   
   # Probably a fancier way with recursion...but this is simpler

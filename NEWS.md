@@ -1,17 +1,22 @@
-
-Todo:
-http://www.ncl.ucar.edu/Document/Graphics/color_table_gallery.shtml
-http://www.ncl.ucar.edu/Document/Graphics/color_tables.shtml
-https://matplotlib.org/xkcd/examples/color/colormaps_reference.html
-https://matplotlib.org/examples/color/colormaps_reference.html
-Data: 
-http://www.ncl.ucar.edu/Document/Graphics/ColorTables/Files/
-
 # pals 1.5 - unpublished
 
 Added `tableau20` palette.
+
 Added `penobscot` data.
+
 Added `cividis` palette.
+
+Added value-suppressing uncertainty palettes.
+
+Added `brewer.*` bivariate palettes.
+
+`brewer.pinkblue` is renamed `brewer.seqseq1`.
+
+`brewer.orangeblue` is renamed `brewer.seqseq2`.
+
+DESCRIPTION file: moved `maps` from Depends to Imports.
+
+`covr` coverage exceeds 90 percent.
 
 # pals 1.4 - Jun 2017
 
@@ -27,7 +32,7 @@ Re-named `pal36()` palette to `polychrome()`.
 
 First CRAN release.
 
-Include 'maps' in Depends, otherwise there is an error about countyMapEnv.
+Include `maps` in Depends, otherwise there is an error about countyMapEnv.
 
 # pals 0.1 - Jul 2016
 
