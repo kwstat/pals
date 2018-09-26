@@ -186,6 +186,24 @@ pal.heatmap(alphabet2, n=26, main="alphabet2")
 par(op)
 ```
 
+## pal.heatmap2()
+
+Display multiple palettes on a heatmap (similar to the ColorBrewer website).
+
+### What to look for:
+
+1. Are large regions distinct from each other?
+2. Are rectangular outlines visible?
+3. Are outliers identifiable within each region?
+4. Are colors identifiable in the complex area (left) part of the map?
+5. Are missing values visible?
+
+```{r}
+pal.heatmap2(watlington(16), tol.groundcover(14), brewer.rdylbu(11),
+  nc=6, nr=20,
+  labels=c("watlington","tol.groundcover","brewer.rdylbu"))
+```
+
 ## pal.map()
 
 Display a palette on a choropleth map similar to the ColorBrewer website.

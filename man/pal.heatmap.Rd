@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{pal.heatmap}
 \alias{pal.heatmap}
-\title{Show a palette/colormap with a heatmap}
+\title{Show a palette/colormap with a random heatmap}
 \usage{
 pal.heatmap(pal, n = 25, miss = 0.05, main = "")
 }
@@ -19,7 +19,7 @@ pal.heatmap(pal, n = 25, miss = 0.05, main = "")
 None.
 }
 \description{
-Show a palette/colormap with a heatmap
+Show a palette/colormap with a random heatmap
 }
 \examples{
 pal.heatmap(brewer.paired, n=12)

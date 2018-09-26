@@ -1,5 +1,5 @@
-# colormaps.R
-# Time-stamp: <06 Sep 2018 14:15:08 c:/x/rpack/pals/R/colormaps.R>
+# colors_continuous.R
+# Time-stamp: <25 Sep 2018 15:57:24 c:/x/rpack/pals/R/colors_continuous.R>
 # Copyright: Kevin Wright, 2017. License: GPL-3.
 
 # R auto-loads R/sysdata.rda, which contains the 'syspals' object.

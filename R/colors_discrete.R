@@ -1,5 +1,5 @@
-# discrete.R
-# Time-stamp: <04 Jun 2018 10:13:07 c:/x/rpack/pals/R/discrete.R>
+# colors_discrete.R
+# Time-stamp: <25 Sep 2018 16:50:20 c:/x/rpack/pals/R/colors_discrete.R>
 # Copyright Kevin Wright, 2017, GPL-3
 
 #' Discrete palettes
@@ -71,7 +71,9 @@
 #' @examples
 #'
 #' pal.bands(alphabet, alphabet2, cols25, glasbey, kelly, okabe, polychrome,
-#'   stepped, tableau20, tol, watlington)
+#'   tableau20, tol, watlington)
+#' pal.bands(stepped, stepped2, stepped3)
+#' pal.bands(tol.groundcover)
 #' 
 #' \dontrun{
 #' alphabet()
@@ -84,12 +86,12 @@
 #' 
 #' pal.heatmap(cols25)
 #'
-#' pal.heatmap(glasbey(32))
+#' pal.heatmap(glasbey())
 #' # pal.cube(glasbey, n=32) # Blues are close together
 #'
-#' pal.heatmap(kelly(22)) # too many orange/pink colors
+#' pal.heatmap(kelly()) # too many orange/pink colors
 #'
-#' pal.safe(okabe(8)) # not great
+#' pal.safe(okabe()) # not great
 #' 
 #' pal.heatmap(polychrome)
 #' 
@@ -321,12 +323,8 @@ stepped2 <- function(n=20) {
     message("Only 20 colors are available with 'stepped2'.")
     n <- 20
   }
-  pal <- c("#393b79","#5254a3","#6b6ecf","#9c9ede",
-           "#637939","#8ca252","#b5cf6b","#cedb9c",
-           "#8c6d31","#bd9e39","#e7ba52","#e7cb94",
-           "#843c39","#ad494a","#d6616b","#e7969c",
-           "#7b4173","#a55194","#ce6dbd","#de9ed6")
-  return(pal[1:n])
+
+  return(syspals$stepped2[1:n])
 }
 
 
@@ -340,12 +338,7 @@ stepped3 <- function(n=20) {
     n <- 20
   }
   
-  pal <- c("#3182bd","#6baed6","#9ecae1","#c6dbef",
-           "#e6550d","#fd8d3c","#fdae6b","#fdd0a2",
-           "#31a354","#74c476","#a1d99b","#c7e9c0",
-           "#756bb1","#9e9ac8","#bcbddc","#dadaeb",
-           "#636363","#969696","#bdbdbd","#d9d9d9")
-  return(pal[1:n])
+  return(syspals$stepped3[1:n])
 }
 
 
@@ -353,7 +346,7 @@ stepped3 <- function(n=20) {
 
 #' @export
 #' @rdname discrete
-okabe <- function(n=22) {
+okabe <- function(n=8) {
   if(n > 8) {
     message("Only 8 colors are available with 'okabe'.")
     n <- 8
@@ -371,12 +364,7 @@ tableau20 = function(n=20) {
     n <- 20
   }
   
-  pal <- c("#1F77B4","#AEC7E8","#FF7F0E","#FFBB78","#2CA02C","#98DF8A",
-           "#D62728","#FF9896","#9467BD","#C5B0D5","#8C564B","#C49C94",
-           "#E377C2","#F7B6D2","#7F7F7F","#C7C7C7","#BCBD22","#DBDB8D",
-           "#17BECF","#9EDAE5")
-
-  return(pal[1:n])
+  return(syspals$tableau20[1:n])
 }
 
 # ----------------------------------------------------------------------------
@@ -390,6 +378,25 @@ tol <- function(n=12) {
   }
 
   return(syspals$tol[[n]])
+}
+
+#' @export
+#' @rdname discrete
+tol.groundcover <- function(n=14){
+  if(n > 14) {
+     message("Only 14 colors are available with 'tol.groundcover'")
+    n <- 14
+  }
+
+  pal <- c("#5566AA","#117733","#44AA66","#55AA22","#668822","#99BB55","#558877",
+           "#88BBAA","#AADDCC","#44AA88","#DDCC66","#FFDD44","#FFEE88","#BB0011")
+  
+  names(pal) <- c("water","evergreen needleleaf forest","deciduous needleleaf forest",
+                  "mixed forest","evergreen broadleaf forest", "deciduous broadleaf forest","woodland",
+                  "wooded grassland","grassland","cropland","closed shrubland",
+                  "open shrubland","bare ground","urban and built")
+
+  return(pal[1:n])
 }
 
 # ----------------------------------------------------------------------------

@@ -18,6 +18,8 @@ DESCRIPTION file: moved `maps` from Depends to Imports.
 
 `covr` coverage exceeds 90 percent.
 
+Added `pal.heatmap2` function.
+
 # pals 1.4 - Jun 2017
 
 Added 10 new discrete palettes for bivariate choropleth maps.

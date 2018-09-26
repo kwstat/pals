@@ -1,6 +1,10 @@
 
 # Ideas
 
+Emil Hvitfeldt has THE comprehensive list of palettes in R
+https://github.com/EmilHvitfeldt/r-color-palettes
+
+
 Crameri
 https://www.data-imaginist.com/2018/scico-and-the-colour-conundrum/
 http://www.fabiocrameri.ch/colourmaps.php
@@ -15,7 +19,6 @@ Data:
 http://www.ncl.ucar.edu/Document/Graphics/ColorTables/Files/
 
 
-https://github.com/EmilHvitfeldt/r-color-palettes
 
 Add St Helens image as used in plotly?
 https://github.com/matplotlib/viscm/tree/master/viscm/examples
@@ -42,7 +45,8 @@ https://github.com/matplotlib/matplotlib/blob/master/lib/matplotlib/_cm.py
 
 
 # ----------------------------------------------------------------------------
-# done
+
+# Done
 
 # Misc
 

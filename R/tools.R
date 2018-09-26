@@ -1,5 +1,5 @@
 # tools.R
-# Time-stamp: <06 Sep 2018 14:16:52 c:/x/rpack/pals/R/tools.R>
+# Time-stamp: <26 Sep 2018 16:46:34 c:/x/rpack/pals/R/tools.R>
 # Copyright: Kevin Wright, 2017. License: GPL-3.
 
 # ----------------------------------------------------------------------------
@@ -113,7 +113,8 @@ pal.bands <- function(..., n=100, labels=NULL, main=NULL, gap=0.1, sort="none", 
   on.exit(par(oldpar))
   plot(1, 1, xlim = c(0, maxn), ylim = ylim,
        type = "n", axes = FALSE, bty = "n", xlab = "", ylab = "")
-  
+
+  # draw a band for each palette
   for (i in 1:npal) {
     # i goes bottom to top, npal+1-i goes top to bottom
     nj <- nc[npal+1 - i]
@@ -574,7 +575,7 @@ pal.maxdist <- function(pal1, pal2, n=255) max(pal.dist(pal1, pal2, n))
 # ----------------------------------------------------------------------------
 # pal.heatmap
 
-#' Show a palette/colormap with a heatmap
+#' Show a palette/colormap with a random heatmap
 #'
 #' 
 #' @param pal A palette function or a vector of colors.
@@ -626,6 +627,7 @@ pal.heatmap <- function(pal, n=25, miss=.05, main=""){
   if(main != "") mtext(main)
   invisible()
 }
+
 
 # ----------------------------------------------------------------------------
 # pal.safe
@@ -1047,6 +1049,108 @@ pal.zcurve <- function(pal, n=64, main=""){
 
   if(main!="") mtext(main)
   
+  invisible()
+}
+
+# ----------------------------------------------------------------------------
+
+
+#' Show palettes/colormaps with comparison heatmaps
+#'
+#' Draw a heatmap for each palette. Each palette heatmap consists
+#' of a block of randomly-chosen colors, plus a block for each
+#' color with random substitutions of the other colors.
+#' A missing value NA is added to each palette of colors.
+#'
+#' @param ... Palettes/colormaps, each of which is either
+#' (1) a vectors of colors or
+#' (2) a function returning a vector of colors.
+#' 
+#' @param n The number of colors to display for palette functions.
+#' 
+#' @param nc The number of columns in each color block.
+#' 
+#' @param nr The number of rows in each color block.
+#' 
+#' @param labels Vector of labels for palettes
+#' 
+#' @return None
+#' 
+#' @author Kevin Wright
+#' 
+#' @examples 
+#' pal.heatmap2(watlington(16), tol.groundcover(14), brewer.rdylbu(11),
+#'   nc=6, nr=20,
+#'   labels=c("watlington","tol.groundcover","brewer.rdylbu"))
+#' @references 
+#' None
+#' @export 
+pal.heatmap2 <- function(..., n=100, nc=6, nr=20, labels=NULL){
+  # nr = number of rows in block
+  # nc = number of columns
+
+  #if(n < 3) warning("Using n=3")
+    
+  # Each argument in '...' is a palette function or palette vector.
+  # if a function, use n colors
+  # if a vector, use all colors in the palette
+
+  pals <- list(...)
+  isfun <- unlist(lapply(pals, is.function))
+  npal <- length(pals)
+
+  if(!is.null(labels)) {
+    if(length(labels) != npal)
+      stop("Length of labels needs to match number of palettes.")
+  } else {
+    # Get the palette function name, or blank
+    # Once a function is passed as an argument, the name of the function is gone,
+    # so we have to use 'match.call' to get the names
+    mc <- match.call()
+    labels <- unlist(lapply(mc, deparse))
+    labels <- labels[-1] # first item is 'pal.bands'
+    labels <- labels[1:npal] # other arguments n, labels
+    labels <- ifelse(isfun, labels, "")
+  }
+
+  # Now convert the colormap functions to palette vectors
+  for(i in 1:npal) {
+    if(isfun[i]) pals[[i]] <- pals[[i]](n)
+  }
+  # Count the number of boxes for each palette
+  ncols <- unlist(lapply(pals, length))
+
+  #ylim <- c(0, npal)
+  # mgp: The margin line (in mex units) for the axis title, axis labels and axis line.
+  oldpar <- par(mgp = c(1, 0.25, 0), mfrow=c(npal, 1), mar=c(1,2,1,1))
+  on.exit(par(oldpar))
+  #plot(1, 1, xlim = c(0, maxn), ylim = ylim,
+  #     type = "n", axes = FALSE, bty = "n", xlab = "", ylab = "")
+
+  # draw a tile band for each palette
+  # nc is a list of the number of colors, pals is a list of color vectors
+  for (i in 1:npal) { # palette i
+    nci <- ncols[[i]] # number of colors for palette i
+    # first block is all random
+    zmat <- matrix(sample(c(NA, 1:nci), size=nr*nc, replace=TRUE),
+                   nrow=nr, ncol=nc)
+    # another block for each color
+    for (j in 1:nci) {
+      zmatj <- matrix(j, nrow=nr, ncol=nc) # solid color
+      tmp <- as.vector(zmatj[2:(nr-1), 2:(nc-1)]) # interior
+      ix <- seq(from=i+j, to = length(tmp), length=(nci+1))
+      tmp[ix] <- sample(c(NA, 1:nci)) # randomly permute other colors
+      zmatj[2:(nr-1), 2:(nc-1)] <- tmp
+      zmat <- cbind(zmat, zmatj)
+    }
+    image(t(zmat), col=pals[[i]], axes=FALSE)
+    abline(h=seq(from=par()$usr[3], to=par()$usr[4], length=nr+1), col="gray")
+    abline(v=seq(from=par()$usr[1], to=par()$usr[2], length=(nci+1)*nc + 1), col="gray")
+    mtext(labels[i], side=2, line=0)
+  }
+
+  # if(!is.null(main)) title(main)
+
   invisible()
 }
 
