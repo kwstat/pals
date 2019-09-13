@@ -1,8 +1,12 @@
-# pals <img src="figure/pals_logo_150.png" align="right" />
+# pals <img src="man/figure/logo.png" align="right" />
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/pals)](https://cran.r-project.org/package=pals)
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/pals)](https://cranlogs.r-pkg.org/badges/pals)
 
+
+Homepage: https://kwstat.github.io/pals
+
+Repository: https://github.com/kwstat/pals
 
 Color Palettes, Colormaps, and Tools to Evaluate Them
 
@@ -27,24 +31,16 @@ install.packages("pals")
 devtools::install_github("kwstat/pals")
 ```
 
-## Vignettes
-
-[Overview of the pals package](https://rawgit.com/kwstat/pals/master/vignettes/pals_examples.html)
-
-[A Color-caused optical illusion](https://rawgit.com/kwstat/pals/master/vignettes/illusion.html)
-
-[Bivariate choropleths](https://rawgit.com/kwstat/pals/master/vignettes/bivariate_choropleths.html)
-
 ## Usage
 
 Tools for testing colormap and palette effectiveness.
 
-![parula](figure/test_colormap.png)
+![parula](man/figures/test_colormap.png)
 
-![alphabet](figure/test_palette.png)
+![alphabet](man/figures/test_palette.png)
 
 Catalog of colormaps and palettes included in the package.
 
-![pals_catalog](figure/pals_catalog.png)
-![pals_bivariate](figure/pals_bivariate.png)
+![pals_catalog](man/figures/pals_catalog.png)
+![pals_bivariate](man/figures/pals_bivariate.png)
 

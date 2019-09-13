@@ -1,6 +1,4 @@
 
-context("test_tools.R")
-
 test_that("sort", {
   pal.bands(alphabet, alphabet2) # default none
   pal.bands(alphabet, alphabet2, sort="none")

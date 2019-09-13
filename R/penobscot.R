@@ -16,7 +16,8 @@
 #' \url{https://github.com/agile-geoscience/notebooks/blob/master/Filtering_horizons.ipynb}
 #'
 #' @examples 
-#' # 
+#' #
+#' library(pals)
 #' data(penobscot)
 #' 
 #' # Hall used cubehelix palette

@@ -4,7 +4,7 @@ Authors@R: person("Kevin","Wright", email="kw.stat@gmail.com", comment=c(ORCID =
 Date: 2018-01-22
 Title: Color Palettes, Colormaps, and Tools to Evaluate Them
 Description: A comprehensive collection of color palettes, colormaps, and tools to evaluate them.
-URL: https://github.com/kwstat/pals
+URL: http://kwstat.github.io/pals/
 BugReports: https://github.com/kwstat/pals/issues
 VignetteBuilder: knitr
 Encoding: UTF-8

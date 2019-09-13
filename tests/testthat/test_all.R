@@ -1,7 +1,6 @@
 # test_all.R
 
 library(pals)
-context("test_all.R")
 
 cm5 <- c("#80FFFFFF", "#BFFFFFFF", "#FFFFFFFF", "#FFBFFFFF", "#FF80FFFF")
 heat12 <- c("#FF0000FF", "#FF2000FF", "#FF4000FF", "#FF6000FF", "#FF8000FF", 

@@ -4,22 +4,12 @@ author: "Kevin Wright"
 date: "`r Sys.Date()`"
 bibliography: pals.bib
 output:
-  rmarkdown::html_vignette: default
-  html_document:
-    theme: cerulean
-    highlight: tango
+  rmarkdown::html_vignette:
 vignette: >
-  % \VignetteIndexEntry{Overview of the 'pals' package}
-  % \VignetteEncoding{UTF-8}
-  % \VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Overview of the 'pals' package}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
-<style type="text/css">
-body, td { font-size: 14pt; color: #000; padding:1em; }
-code, pre, #ws, #message { font-size: 12pt;
-  color: #000; background-color: #f5f5f5; }
-code {border: 1px solid #e0e0e0; padding: 0 5px;}
-pre > code { border: 0; }
-</style>
 
 The purpose of the `pals` package is twofold:
 

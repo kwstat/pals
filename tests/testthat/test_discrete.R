@@ -1,8 +1,6 @@
 
 require(pals)
 
-context("test_discrete.R")
-
 # alphabet
 expect_message(alphabet(27)) # too many
 

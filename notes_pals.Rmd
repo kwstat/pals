@@ -1,9 +1,26 @@
 
 # Ideas
 
+Add Wong colors
+https://github.com/DesiQuintans/Pebble-safe
+Add named colors
+https://sashat.me/2017/01/11/list-of-20-simple-distinct-colors/
+
 Emil Hvitfeldt has THE comprehensive list of palettes in R
 https://github.com/EmilHvitfeldt/r-color-palettes
 
+```{r}
+pal.test(viridis)
+pal.test(paletteer_c(package = "scico", palette = "davos", n = 111)) # good
+pal.test(paletteer_c(package = "scico", palette = "devon", n = 111))
+pal.test(paletteer_c(package = "scico", palette = "lapaz", n = 111)) # good
+pal.test(paletteer_c(package = "scico", palette = "oslo", n = 111))
+pal.test(paletteer_c(package = "scico", palette = "tokyo", n = 111))
+pal.test(paletteer_c(package = "scico", palette = "turku", n = 111))
+image(penobscot, col=viridis(111))
+image(penobscot, col=paletteer_c(package = "scico", palette = "davos", n = 111))
+image(penobscot, col=paletteer_c(package = "scico", palette = "lapaz", n = 111))
+```
 
 Crameri
 https://www.data-imaginist.com/2018/scico-and-the-colour-conundrum/

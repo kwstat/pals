@@ -1,0 +1,8 @@
+pandoc: 2.7.2
+pkgdown: 1.4.0
+pkgdown_sha: ~
+articles:
+  bivariate_choropleths: bivariate_choropleths.html
+  illusion: illusion.html
+  pals_examples: pals_examples.html
+

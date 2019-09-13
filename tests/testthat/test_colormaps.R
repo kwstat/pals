@@ -1,7 +1,5 @@
 # test_colormaps.R
 
-context("test_colormaps.R")
-
 test_that("colormaps", {
   cubehelix(n=10)
   gnuplot(n=10)
