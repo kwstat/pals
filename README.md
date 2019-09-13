@@ -1,4 +1,4 @@
-# pals <img src="man/figure/logo.png" align="right" />
+# pals <img src="man/figures/logo.png" align="right" />
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/pals)](https://cran.r-project.org/package=pals)
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/pals)](https://cranlogs.r-pkg.org/badges/pals)
