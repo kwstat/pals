@@ -12,9 +12,11 @@
 ^\.RData$
 ^\.Rhistory$
 ^cran-comments\.md$
+^cran_comments\.md$
 ^README\.md$
 ^$NEWS\.md$
 ^notes.*\.md$
+^notes.*\.Rmd$
 ^data-done$
 ^data-raw$
 ^data-unused$
@@ -34,3 +36,6 @@
 # ----- Travis -----
 ^.travis\.yml
 
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

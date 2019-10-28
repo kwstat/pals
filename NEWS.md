@@ -1,4 +1,20 @@
-# pals 1.5 - unpublished
+# pals 1.6 - Unpublished
+
+* DESCRIPTION file: Moved `rgl` from Imports to Suggests (reduces startup load). Request of Kent Johnson.
+
+* DESCRIPTION file: moved `maps` from Depends to Imports.
+
+* Added `pal.heatmap2` function.
+
+* Added value-suppressing uncertainty palettes.
+
+* `brewer.pinkblue` is renamed `brewer.seqseq1`.
+
+* `brewer.orangeblue` is renamed `brewer.seqseq2`.
+
+* `covr` coverage exceeds 90 percent.
+
+# pals 1.5 - Jan 2018
 
 * Added `tableau20` palette.
 
@@ -6,19 +22,7 @@
 
 * Added `cividis` palette.
 
-* Added value-suppressing uncertainty palettes.
-
 * Added `brewer.*` bivariate palettes.
-
-* `brewer.pinkblue` is renamed `brewer.seqseq1`.
-
-* `brewer.orangeblue` is renamed `brewer.seqseq2`.
-
-* DESCRIPTION file: moved `maps` from Depends to Imports.
-
-* `covr` coverage exceeds 90 percent.
-
-* Added `pal.heatmap2` function.
 
 # pals 1.4 - Jun 2017
 

@@ -441,7 +441,6 @@ pal.compress <- function(pal, n=5, thresh=2.5) {
 #' @param type Either "RGB" (default) or "LUV".
 #' 
 #' @return None
-#' @importFrom rgl plot3d text3d
 #' @export 
 #' @examples
 #' \dontrun{
@@ -472,12 +471,12 @@ pal.cube <- function(pal, n=100, label=FALSE, type="RGB"){
     xl <- "L"; yl <- "U"; zl <- "V"
   }
 
-  plot3d(x, col=pal,
-         xlab=xl, ylab=yl,zlab=zl,
-         lit=FALSE,
-         size=1.5, type='s')
+  rgl::plot3d(x, col=pal,
+              xlab=xl, ylab=yl,zlab=zl,
+              lit=FALSE,
+              size=1.5, type='s')
   if(label)
-    text3d(x, texts=pal, cex=0.8)
+    rgl::text3d(x, texts=pal, cex=0.8)
 
   invisible()
 }

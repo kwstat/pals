@@ -19,7 +19,8 @@ Full details can be found at https://www.opendtect.org/osr/Main/PENOBSCOT3DSABLE
 License CC-BY.
 }
 \examples{
-# 
+#
+library(pals)
 data(penobscot)
 
 # Hall used cubehelix palette
