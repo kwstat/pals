@@ -1,5 +1,5 @@
 # tools.R
-# Time-stamp: <26 Sep 2018 16:46:34 c:/x/rpack/pals/R/tools.R>
+# Time-stamp: <30 Oct 2019 08:18:33 c:/x/rpack/pals/R/tools.R>
 # Copyright: Kevin Wright, 2017. License: GPL-3.
 
 # ----------------------------------------------------------------------------
@@ -471,6 +471,8 @@ pal.cube <- function(pal, n=100, label=FALSE, type="RGB"){
     xl <- "L"; yl <- "U"; zl <- "V"
   }
 
+  # Note, rgl is deliberately not part of Imports, so we must
+  # explicitly reference the package here.
   rgl::plot3d(x, col=pal,
               xlab=xl, ylab=yl,zlab=zl,
               lit=FALSE,

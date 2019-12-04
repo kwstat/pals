@@ -16,7 +16,7 @@ Key features:
 
 * Multiple tools to evaluate colormaps.
 
-* Conscientous memory use.
+* Conscientious memory use.
 
 * Consistency: All palettes and colormaps are _functions_, with all lower-case names.
 
@@ -44,3 +44,6 @@ Catalog of colormaps and palettes included in the package.
 ![pals_catalog](man/figures/pals_catalog.png)
 ![pals_bivariate](man/figures/pals_bivariate.png)
 
+## Similar packages
+
+See the paletteer package https://github.com/EmilHvitfeldt/paletteer

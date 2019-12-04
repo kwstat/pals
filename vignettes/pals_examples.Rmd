@@ -87,7 +87,7 @@ pal.channels(parula, main="parula")
 
 ## pal.cluster()
 
-Show a palette with heirarchical clustering
+Show a palette with hierarchical clustering
 
 The palette colors are converted to LUV coordinates before clustering.
 

@@ -19,3 +19,6 @@ vignettes/*.synctex.gz
 vignettes/*.tex
 debug.log
 pkgdown
+
+# Misc
+tests/testthat/Rplots.pdf

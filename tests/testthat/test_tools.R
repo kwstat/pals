@@ -1,5 +1,28 @@
 
-test_that("sort", {
+test_that("pal.dist", {
+  pa0 <- c("#ff0000","#00ff00","#0000ff")
+  pa1 <- c("#fa0000","#00fa00","#0000fa") # maxdist 2.4
+  pa2 <- c("#f40000","#00f400","#0000f4") # maxdist 5.2
+
+  expect_equivalent( 
+    round(pal.dist(pa0,pa1), 3),
+    c(1.871, 2.360, 2.117)
+  )
+  
+  expect_equivalent( 
+    round( pal.maxdist(pa0,pa1), 3),
+    2.360
+  )
+  
+  # both palettes are functions
+  expect_equivalent(
+    round(pal.maxdist(parula, viridis), 3),
+    56.199
+  )
+
+})
+
+test_that("pal.bands sort", {
   pal.bands(alphabet, alphabet2) # default none
   pal.bands(alphabet, alphabet2, sort="none")
   pal.bands(alphabet, alphabet2, sort="hue")
@@ -57,6 +80,10 @@ test_that("tools", {
   pal.heatmap(alphabet, main="alphabet")
   expect_error(pal.heatmap(alphabet(10), miss=10))
 
+  # pal.heatmap2
+  pal.heatmap2(watlington(16), tol.groundcover(14), nc=6, nr=20, 
+               labels=c("watlington","tol.groundcover"))
+  
   # pal.safe
   pal.safe(parula(10))
   pal.safe(parula, main="parula")
@@ -82,8 +109,3 @@ test_that("tools", {
   
 })
 
-## pa0 <- c("#ff0000","#00ff00","#0000ff")
-## pa1 <- c("#fa0000","#00fa00","#0000fa") # 2.4
-## pa2 <- c("#f40000","#00f400","#0000f4") # 5.2
-## pal.dist(pa0,pa1) # 1.87, 2.36, 2.11
-## pal.maxdist(pa0,pa1) # 2.36

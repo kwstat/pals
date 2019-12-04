@@ -1,10 +1,10 @@
-# pals 1.6 - Unpublished
+# pals 1.6 - Dec 2019
 
-* DESCRIPTION file: Moved `rgl` from Imports to Suggests (reduces startup load). Request of Kent Johnson.
+* Moved `rgl` from Imports to Suggests to reduce startup load (#2, Kent Johnson).
 
-* DESCRIPTION file: moved `maps` from Depends to Imports.
+* Moved `maps` from Depends to Imports.
 
-* Added `pal.heatmap2` function.
+* New function `pal.heatmap2()`.
 
 * Added value-suppressing uncertainty palettes.
 
@@ -13,6 +13,7 @@
 * `brewer.orangeblue` is renamed `brewer.seqseq2`.
 
 * `covr` coverage exceeds 90 percent.
+
 
 # pals 1.5 - Jan 2018
 
@@ -24,9 +25,11 @@
 
 * Added `brewer.*` bivariate palettes.
 
+
 # pals 1.4 - Jun 2017
 
 * Added 10 new discrete palettes for bivariate choropleth maps.
+
 
 # pals 1.3 - Jun 2017
 
@@ -34,15 +37,18 @@
 
 * Re-named `pal36()` palette to `polychrome()`.
 
+
 # pals 1.0 - Dec 2016
 
 * First CRAN release.
 
 * Include `maps` in Depends, otherwise there is an error about countyMapEnv.
 
+
 # pals 0.1 - Jul 2016
 
 * Assembling package begins Jul 2016.
+
 
 # pals 0.0 - 2005
 
