@@ -1,5 +1,5 @@
 Package: pals
-Version: 1.6
+Version: 1.7
 Authors@R: person("Kevin","Wright", email="kw.stat@gmail.com", comment=c(ORCID = "0000-0002-0617-8673"), role=c("aut","cre"))
 Date: 2019-12-03
 Title: Color Palettes, Colormaps, and Tools to Evaluate Them
