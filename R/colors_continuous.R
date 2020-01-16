@@ -52,13 +52,16 @@
 #' The \code{cividis} palette by  Jamie R. Nuñez, Christopher R. Anderton, Ryan S. Renslow,
 #' is a variation of viridis that is less colorful.
 #' 
+#' The \code{turbo} palette by Mikhailov, is similar to \code{jet}, but avoids the 
+#' artificial color banding that plagues \code{jet}. See also \code{tol.rainbow}.
+#' 
 #' @param n Number of colors to return.
 #' 
 #' @return A vector of colors.
 #' 
 #' @examples
 #'
-#' pal.bands(coolwarm, cubehelix, gnuplot, jet, parula, tol.rainbow, cividis)
+#' pal.bands(coolwarm, cubehelix, gnuplot, parula, cividis, jet, turbo, tol.rainbow)
 #' 
 #' if(FALSE){
 #' 
@@ -136,6 +139,10 @@
 #' Jamie R. Nuñez, Christopher R. Anderton, Ryan S. Renslow (2017).
 #' An optimized colormap for the scientific community.
 #' https://arxiv.org/abs/1712.01662
+#' 
+#' Anton Mikhailov,
+#' Turbo, An Improved Rainbow Colormap for Visualization (2019).
+#' https://ai.googleblog.com/2019/08/turbo-improved-rainbow-colormap-for.html
 #' 
 #' @name continuous
 NULL
@@ -242,6 +249,10 @@ jet <- function(n=25) colorRampPalette(syspals$jet)(n)
 #' @rdname continuous
 parula <- function(n=25) colorRampPalette(syspals$parula)(n)
  
+#' @export
+#' @rdname continuous
+turbo <- function(n=25) colorRampPalette(syspals$turbo)(n)
+
 #' @export
 #' @rdname continuous
 coolwarm <- function(n=25) colorRampPalette(syspals$coolwarm)(n)

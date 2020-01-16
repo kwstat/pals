@@ -146,6 +146,11 @@ colsr %>% filter(palette=="tableau20") %>% select(red,green,blue) %>%
   rgb(., max=255) -> syspals$tableau20
 
 # ----------------------------------------------------------------------------
+# turbo
+
+colsr %>% filter(palette=="turbo") %>% select(red,green,blue) %>%
+       rgb %>% colorRampPalette %>% pal.compress -> syspals$turbo
+# ----------------------------------------------------------------------------
 
 # watlington
 
@@ -401,8 +406,18 @@ cividis %>% colorRampPalette %>% pal.compress -> syspals$cividis
 
 # ----------------------------------------------------------------------------
 
-# Now save all objects into R/sysdata.rda
-devtools::use_data(syspals, pkg="c:/x/rpack/pals", internal=TRUE, overwrite=TRUE)
+library(purrr)
+library(usethis)
+
+# https://stackoverflow.com/questions/49673667
+walk2(syspals, names(syspals), 
+      function(obj, name) {
+        assign(name, obj)
+          do.call("use_data",
+                list(as.name(name),
+                     internal=TRUE,
+                     overwrite = TRUE))
+      })
 
 # file.info("R/sysdata.rda")
 # file.size("R/sysdata.rda") # in bytes
