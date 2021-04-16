@@ -3,7 +3,6 @@
 \docType{package}
 \name{pals}
 \alias{pals}
-\alias{pals-package}
 \title{pals: A package for comprehensive palettes and palette evaluation tools}
 \description{
 pals: A package for comprehensive palettes and palette evaluation tools

@@ -10,7 +10,7 @@ Repository: https://github.com/kwstat/pals
 
 Color Palettes, Colormaps, and Tools to Evaluate Them
 
-Key features:
+## Key features
 
 * Extensive collection of colormaps and palettes.
 

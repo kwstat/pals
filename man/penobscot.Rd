@@ -4,7 +4,9 @@
 \name{penobscot}
 \alias{penobscot}
 \title{Seismic data horizon offshore of Nova Scotia.}
-\format{A matrix 463 x 595.}
+\format{
+A matrix 463 x 595.
+}
 \source{
 \url{https://github.com/agile-geoscience/notebooks/}
 \url{https://github.com/agile-geoscience/notebooks/blob/master/Filtering_horizons.ipynb}

@@ -30,7 +30,7 @@ around 3 to 7 percent, depending on the race.
 
 What to look for:
 
-1. Are colors still unique when viewed in less-than full color?
+1. Are colors still unique when viewed in less-than full color? 
 
 2. Is a sequential colormap still sequential?
 }

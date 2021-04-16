@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -44,7 +48,6 @@
 
 <meta property="og:title" content="Changelog" />
 <meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -62,7 +65,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -76,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pals</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7</span>
       </span>
     </div>
 
@@ -84,7 +87,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -102,9 +105,6 @@
       <a href="../articles/bivariate_choropleths.html">Bivariate choropleth maps</a>
     </li>
     <li>
-      <a href="../articles/illusion.html">A Color-Caused Optical Illusion</a>
-    </li>
-    <li>
       <a href="../articles/pals_examples.html">Overview of the 'pals' package</a>
     </li>
   </ul>
@@ -114,7 +114,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/kwstat/pals/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -128,16 +133,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
-      
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/kwstat/pals/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="pals-16---dec-2019" class="section level1">
-<h1 class="page-header">
-<a href="#pals-16---dec-2019" class="anchor"></a>pals 1.6 - Dec 2019<small> Unreleased </small>
+    <div id="pals-17---unpublished" class="section level1">
+<h1 class="page-header" data-toc-text="1.7">
+<a href="#pals-17---unpublished" class="anchor"></a>pals 1.7 - Unpublished<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>Moved <code>rgl</code> from Imports to Suggests to reduce startup load (#2, Kent Johnson).</p></li>
+<li>Added ‘turbo’ palette.</li>
+</ul>
+</div>
+    <div id="pals-16---dec-2019" class="section level1">
+<h1 class="page-header" data-toc-text="1.6">
+<a href="#pals-16---dec-2019" class="anchor"></a>pals 1.6 - Dec 2019<small> 2019-12-04 </small>
+</h1>
+<ul>
+<li><p>Moved <code>rgl</code> from Imports to Suggests to reduce startup load (<a href='https://github.com/kwstat/pals/issues/2'>#2</a>, Kent Johnson).</p></li>
 <li><p>Moved <code>maps</code> from Depends to Imports.</p></li>
 <li><p>New function <code><a href="../reference/pal.heatmap2.html">pal.heatmap2()</a></code>.</p></li>
 <li><p>Added value-suppressing uncertainty palettes.</p></li>
@@ -147,7 +160,7 @@
 </ul>
 </div>
     <div id="pals-15---jan-2018" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.5">
 <a href="#pals-15---jan-2018" class="anchor"></a>pals 1.5 - Jan 2018<small> 2018-01-22 </small>
 </h1>
 <ul>
@@ -158,7 +171,7 @@
 </ul>
 </div>
     <div id="pals-14---jun-2017" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.4">
 <a href="#pals-14---jun-2017" class="anchor"></a>pals 1.4 - Jun 2017<small> 2017-06-12 </small>
 </h1>
 <ul>
@@ -166,7 +179,7 @@
 </ul>
 </div>
     <div id="pals-13---jun-2017" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.3">
 <a href="#pals-13---jun-2017" class="anchor"></a>pals 1.3 - Jun 2017<small> 2017-06-02 </small>
 </h1>
 <ul>
@@ -175,7 +188,7 @@
 </ul>
 </div>
     <div id="pals-10---dec-2016" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.0">
 <a href="#pals-10---dec-2016" class="anchor"></a>pals 1.0 - Dec 2016<small> 2016-12-14 </small>
 </h1>
 <ul>
@@ -184,7 +197,7 @@
 </ul>
 </div>
     <div id="pals-01---jul-2016" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1">
 <a href="#pals-01---jul-2016" class="anchor"></a>pals 0.1 - Jul 2016<small> Unreleased </small>
 </h1>
 <ul>
@@ -192,7 +205,7 @@
 </ul>
 </div>
     <div id="pals-00---2005" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.0">
 <a href="#pals-00---2005" class="anchor"></a>pals 0.0 - 2005<small> Unreleased </small>
 </h1>
 <ul>
@@ -201,19 +214,10 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#pals-16---dec-2019">1.6</a></li>
-        <li><a href="#pals-15---jan-2018">1.5</a></li>
-        <li><a href="#pals-14---jun-2017">1.4</a></li>
-        <li><a href="#pals-13---jun-2017">1.3</a></li>
-        <li><a href="#pals-10---dec-2016">1.0</a></li>
-        <li><a href="#pals-01---jul-2016">0.1</a></li>
-        <li><a href="#pals-00---2005">0.0</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -225,7 +229,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

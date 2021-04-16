@@ -1,3 +1,16 @@
+# pals 1.7
+
+## Test environments
+
+* local R 4.0.5 on Windows 10
+* Winbuilder R-devel
+* Rhub Windows Server 2008 R2 SP1, R-devel, 32/64 bit
+
+## Rcmd check results
+
+OK
+
+
 # pals 1.6
 
 Fix to accomodate change in base R: cm.colors(n) etc no longer append the code for 'alpha = 1', "FF".

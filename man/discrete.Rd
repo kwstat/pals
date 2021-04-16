@@ -60,7 +60,7 @@ categories.
 The \code{alphabet} palette has 26 distinguishable colors that have logical names
 starting with the English alphabet letters A, B, ... Z.
 This palette is based on the work by Green-Armytage (2010), but uses the
-names 'orange' instead of 'orpiment', and 'magenta' instead of 'mallow'.
+names 'orange' instead of 'orpiment', and 'magenta' instead of 'mallow'. 
 
 The \code{alphabet2} palette uses a similar idea with slightly different colors
 and slightly different names.  This palette comes from the Polychrome package,

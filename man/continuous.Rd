@@ -7,6 +7,7 @@
 \alias{tol.rainbow}
 \alias{jet}
 \alias{parula}
+\alias{turbo}
 \alias{coolwarm}
 \alias{warmcool}
 \alias{cividis}
@@ -21,6 +22,8 @@ tol.rainbow(n = 25, manual = TRUE)
 jet(n = 25)
 
 parula(n = 25)
+
+turbo(n = 25)
 
 coolwarm(n = 25)
 
@@ -84,10 +87,13 @@ according to Equation 3 of Tol (2012).
 
 The \code{cividis} palette by  Jamie R. Nuñez, Christopher R. Anderton, Ryan S. Renslow,
 is a variation of viridis that is less colorful.
+
+The \code{turbo} palette by Mikhailov, is similar to \code{jet}, but avoids the 
+artificial color banding that plagues \code{jet}. See also \code{tol.rainbow}.
 }
 \examples{
 
-pal.bands(coolwarm, cubehelix, gnuplot, jet, parula, tol.rainbow, cividis)
+pal.bands(coolwarm, cubehelix, gnuplot, parula, cividis, jet, turbo, tol.rainbow)
 
 if(FALSE){
 
@@ -163,6 +169,10 @@ https://github.com/BIDS/colormap/blob/master/parula.py
 Jamie R. Nuñez, Christopher R. Anderton, Ryan S. Renslow (2017).
 An optimized colormap for the scientific community.
 https://arxiv.org/abs/1712.01662
+
+Anton Mikhailov,
+Turbo, An Improved Rainbow Colormap for Visualization (2019).
+https://ai.googleblog.com/2019/08/turbo-improved-rainbow-colormap-for.html
 }
 \author{
 Palette colors by various authors. R code by Kevin Wright.

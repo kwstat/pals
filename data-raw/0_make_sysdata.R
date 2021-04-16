@@ -409,23 +409,27 @@ cividis %>% colorRampPalette %>% pal.compress -> syspals$cividis
 library(purrr)
 library(usethis)
 
+# For a while, use_data would not work with a list, and this was needed
 # https://stackoverflow.com/questions/49673667
-walk2(syspals, names(syspals), 
-      function(obj, name) {
-        assign(name, obj)
-          do.call("use_data",
-                list(as.name(name),
-                     internal=TRUE,
-                     overwrite = TRUE))
-      })
+# walk2(syspals, names(syspals), 
+#       function(obj, name) {
+#         assign(name, obj)
+#           do.call("use_data",
+#                 list(as.name(name),
+#                      internal=TRUE,
+#                      overwrite = TRUE))
+#       })
+use_data(syspals, internal=TRUE, overwrite=TRUE)
 
-# file.info("R/sysdata.rda")
-# file.size("R/sysdata.rda") # in bytes
+if(FALSE){
+file.info("c:/x/rpack/pals/R/sysdata.rda")
+file.size("c:/x/rpack/pals/R/sysdata.rda") # in bytes
 # check rda to verify the best compression
-# tools::checkRdaFiles("R/sysdata.rda")
+tools::checkRdaFiles("c:/x/rpack/pals/R/sysdata.rda")
 # resave rda with a better compression if available
 # tools::resaveRdaFiles("R/sysdata.rda")
 # tools::checkRdaFiles("R/sysdata.rda") # actually bigger!
+}
 
 # ----------------------------------------------------------------------------
 

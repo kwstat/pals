@@ -4,8 +4,15 @@
 \alias{pal.bands}
 \title{Show palettes and colormaps as colored bands}
 \usage{
-pal.bands(..., n = 100, labels = NULL, main = NULL, gap = 0.1,
-  sort = "none", show.names = TRUE)
+pal.bands(
+  ...,
+  n = 100,
+  labels = NULL,
+  main = NULL,
+  gap = 0.1,
+  sort = "none",
+  show.names = TRUE
+)
 }
 \arguments{
 \item{...}{Palettes/colormaps, each of which is either

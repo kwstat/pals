@@ -1,10 +1,10 @@
 Package: pals
 Version: 1.7
 Authors@R: person("Kevin","Wright", email="kw.stat@gmail.com", comment=c(ORCID = "0000-0002-0617-8673"), role=c("aut","cre"))
-Date: 2019-12-03
+Date: 2021-04-16
 Title: Color Palettes, Colormaps, and Tools to Evaluate Them
 Description: A comprehensive collection of color palettes, colormaps, and tools to evaluate them.
-URL: http://kwstat.github.io/pals/
+URL: https://kwstat.github.io/pals/
 BugReports: https://github.com/kwstat/pals/issues
 VignetteBuilder: knitr
 Language: en-US
@@ -27,6 +27,7 @@ Suggests:
   latticeExtra,
   reshape2,
   rgl,
+  rmarkdown,
   testthat
 License: GPL-3
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

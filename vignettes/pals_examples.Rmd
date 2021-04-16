@@ -35,7 +35,7 @@ The appearance of color depends on:
 
 It is difficult to give definitive recommendations for the best palettes and colormaps.  Nonetheless, here are some we like.
 
-Diverging: `coolwarm`/`warmcool` avoid Mach banding in the middle.
+Diverging: `coolwarm`/`warmcool` (avoid Mach banding in the middle).
 
 Sequential (multi-hue): `ocean.haline`, `parula` (default in Matlab).
 
@@ -47,9 +47,11 @@ Cyclical: `ocean.phase`.
 
 Categorical: `brewer.paired`, `stepped`
 
+Bivariate: `brewer.seqseq2`.
+
 ```{r}
 require(pals)
-pal.bands(coolwarm, parula, ocean.haline, brewer.blues, cubicl, kovesi.rainbow, ocean.phase, brewer.paired(12), stepped,
+pal.bands(coolwarm, parula, ocean.haline, brewer.blues, cubicl, kovesi.rainbow, ocean.phase, brewer.paired(12), stepped, brewer.seqseq2,
           main="Colormap suggestions")
 ```
 
@@ -443,5 +445,3 @@ bivcol(vsup.redblue, nx=8)
 par(op)
 
 ```
-
-

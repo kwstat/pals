@@ -4,8 +4,16 @@
 \alias{pal.sineramp}
 \title{Show a colormap with a sineramp}
 \usage{
-pal.sineramp(pal, n = 150, nx = 512, ny = 256, amp = 12.5,
-  wavelen = 8, pow = 2, main = "")
+pal.sineramp(
+  pal,
+  n = 150,
+  nx = 512,
+  ny = 256,
+  amp = 12.5,
+  wavelen = 8,
+  pow = 2,
+  main = ""
+)
 }
 \arguments{
 \item{pal}{A palette function or a vector of colors.}
