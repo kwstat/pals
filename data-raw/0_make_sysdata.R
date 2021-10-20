@@ -1,5 +1,5 @@
 # make_sysdata.R
-# Time-stamp: <25 Sep 2018 16:50:20 c:/x/rpack/pals/data-raw/0_make_sysdata.R>
+# Time-stamp: <17 Jun 2021 22:19:03 c:/one/rpack/pals/data-raw/0_make_sysdata.R>
 
 # Execute this entire file to create the sysdata file for the pals package
 # The palettes are stored in a list, each item in the list is a separate palette
@@ -24,7 +24,7 @@ pal.compress <- function(pal, n=5, thresh=2.5) {
   return(pal(n))
 }
 
-setwd("c:/x/rpack/pals/data-raw/")
+setwd("c:/one/rpack/pals/data-raw/")
 colsr <- read.csv("colors_rgb.csv")
 # Initialize list to hold palettes in sysdata
 syspals <- list()
@@ -73,6 +73,7 @@ colsr %>% filter(palette=="okabe") %>% select(red,green,blue) %>% rgb(., max=255
 # ----------------------------------------------------------------------------
 
 # parula
+
 # mpl-colormaps have CC0 license.
 # https://github.com/BIDS/colormap/blob/master/parula.py
 
@@ -93,7 +94,7 @@ colsr %>% filter(palette=="parula") %>% select(red,green,blue) %>%
 # Even though the columns in the file are called red, green, blue,
 # the numbers are really HSV
 
-# The gray colors were chosen by KW with the help of
+# The gray colors were chosen by Kevin Wright with the help of
 # http://alloyui.com/examples/color-picker/hsv/
 # Type in HSV, get RGB colors, desaturate in R, type in RGB, extract HSV.
 # 260,0.9,0.6   desaturate(rgb(61,15,154,max=255))  #363636 -> 0 0 21
@@ -118,6 +119,7 @@ myrgb <- function(x) rgb(x$red, x$green, x$blue, max=255)
 colsr %>% filter(palette=="tol") ->  tol
 syspals$tol <- split(tol, tol$ncolors) %>% lapply(., myrgb)
 
+# These palettes are similar to other palettes, so 
 # These tol functions are not documented, nor do they have accessor functions
 
 # discrete
@@ -138,7 +140,15 @@ colsr %>% filter(palette=="tol.ylorbr") %>% select(red,green,blue) %>% rgb(., ma
 colsr %>% filter(palette=="tol.iridescent") %>% select(red,green,blue) %>% rgb(., max=255) -> syspals$tol.iridescent
 colsr %>% filter(palette=="tol.smoothrainbow") %>% select(red,green,blue) %>% rgb(., max=255) -> syspals$tol.smoothrainbow
 
-# with(syspals, pal.bands(tol.bright, tol.highcontrast, tol.vibrant, tol.muted, tol.dark, tol.light, tol.sunset, tol.burd, tol.prgn, tol.ylorbr, tol.iridescent, tol.smoothrainbow))
+if(0){
+library(pals)
+with(syspals, pal.bands(tol.bright, tol.highcontrast, tol.vibrant, tol.muted,
+                        tol.dark, tol.light, tol.sunset, tol.burd, tol.prgn,
+                        tol.ylorbr, tol.iridescent, tol.smoothrainbow,
+                        labels=c("tol.bright", "tol.highcontrast", "tol.vibrant", "tol.muted",
+                                 "tol.dark", "tol.light", "tol.sunset", "tol.burd", "tol.prgn",
+                                 "tol.ylorbr", "tol.iridescent", "tol.smoothrainbow")))
+}
 # ----------------------------------------------------------------------------
 
 # tableau20

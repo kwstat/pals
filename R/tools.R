@@ -1,5 +1,5 @@
 # tools.R
-# Time-stamp: <30 Oct 2019 08:18:33 c:/x/rpack/pals/R/tools.R>
+# Time-stamp: <08 Sep 2021 19:57:22 c:/one/rpack/pals/r/tools.R>
 # Copyright: Kevin Wright, 2017. License: GPL-3.
 
 # ----------------------------------------------------------------------------
@@ -1154,4 +1154,3 @@ pal.heatmap2 <- function(..., n=100, nc=6, nr=20, labels=NULL){
 
   invisible()
 }
-
