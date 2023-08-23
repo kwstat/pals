@@ -1,3 +1,5 @@
+# pals 1.8
+
 # pals 1.7
 
 ## Test environments

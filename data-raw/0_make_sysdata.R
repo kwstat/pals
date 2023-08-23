@@ -24,7 +24,7 @@ pal.compress <- function(pal, n=5, thresh=2.5) {
   return(pal(n))
 }
 
-setwd("c:/one/rpack/pals/data-raw/")
+setwd("c:/drop/rpack/pals/data-raw/")
 colsr <- read.csv("colors_rgb.csv")
 # Initialize list to hold palettes in sysdata
 syspals <- list()
@@ -421,19 +421,19 @@ library(usethis)
 
 # For a while, use_data would not work with a list, and this was needed
 # https://stackoverflow.com/questions/49673667
-# walk2(syspals, names(syspals), 
-#       function(obj, name) {
-#         assign(name, obj)
-#           do.call("use_data",
-#                 list(as.name(name),
-#                      internal=TRUE,
-#                      overwrite = TRUE))
-#       })
+walk2(syspals, names(syspals), 
+     function(obj, name) {
+       assign(name, obj)
+         do.call("use_data",
+               list(as.name(name),
+                    internal=TRUE,
+                    overwrite = TRUE))
+     })
 use_data(syspals, internal=TRUE, overwrite=TRUE)
 
 if(FALSE){
-file.info("c:/x/rpack/pals/R/sysdata.rda")
-file.size("c:/x/rpack/pals/R/sysdata.rda") # in bytes
+file.info("c:/drop/rpack/pals/R/sysdata.rda")
+file.size("c:/drop/rpack/pals/R/sysdata.rda") # in bytes
 # check rda to verify the best compression
 tools::checkRdaFiles("c:/x/rpack/pals/R/sysdata.rda")
 # resave rda with a better compression if available

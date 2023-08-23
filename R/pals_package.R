@@ -1,6 +1,4 @@
 # pals_package.R
-# Time-stamp: <25 Sep 2018 12:34:31 c:/x/rpack/pals/R/pals_package.R>
-# Copyright: Kevin Wright, 2017. License: GPL-2.
 
 #' pals: A package for comprehensive palettes and palette evaluation tools
 #'
@@ -49,8 +47,8 @@
 #' To learn more, see the vignettes:
 #' \code{browseVignettes(package="pals")}
 #'
-#' @docType package
 #' @name pals
+#' @aliases pals-package
 #' @import graphics
 #' @import grDevices
 NULL

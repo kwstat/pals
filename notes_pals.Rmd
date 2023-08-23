@@ -1,11 +1,6 @@
 
 # Ideas
 
-Add Wong colors
-https://github.com/DesiQuintans/Pebble-safe
-Add named colors
-https://sashat.me/2017/01/11/list-of-20-simple-distinct-colors/
-
 Emil Hvitfeldt has THE comprehensive list of palettes in R
 https://github.com/EmilHvitfeldt/r-color-palettes
 
@@ -66,6 +61,8 @@ https://github.com/matplotlib/matplotlib/blob/master/lib/matplotlib/_cm.py
 # Done
 
 # Misc
+
+https://sashat.me/2017/01/11/list-of-20-simple-distinct-colors/
 
 Color Schemes Appropriate for Scientific Data Graphics
 http://geog.uoregon.edu/datagraphics/color_scales.htm

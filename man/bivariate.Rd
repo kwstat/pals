@@ -78,7 +78,7 @@ uses lightness, and the other direction uses hue (yellow, green, blue).
 
 The `vsup.*` palettes are Value-Suppressing Uncertainty Palettes.
 
-We strongly recommend not using `vsup.viridis`, because the horizontal axis has
+We strongly discourage using `vsup.viridis`, because the horizontal axis has
 changes in brightness, which are confounded with the changes in brightness
 in the vertical axis.
 

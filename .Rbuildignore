@@ -39,3 +39,4 @@
 ^docs$
 ^pkgdown$
 ^CRAN-RELEASE$
+^LICENSE\.md$

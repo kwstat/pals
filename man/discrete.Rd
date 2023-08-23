@@ -15,6 +15,7 @@
 \alias{tableau20}
 \alias{tol}
 \alias{tol.groundcover}
+\alias{trubetskoy}
 \alias{watlington}
 \title{Discrete palettes}
 \usage{
@@ -43,6 +44,8 @@ tableau20(n = 20)
 tol(n = 12)
 
 tol.groundcover(n = 14)
+
+trubetskoy(n = 22)
 
 watlington(n = 16)
 }
@@ -84,7 +87,9 @@ A color image of the Kelly palette can be found in Green-Armytage (2010).
 The color 'white' has been re-defined as light-gray, #F2F3F4.
 Commentary: We think the kelly palette has an over-abundance of orange-ish
 colors, the purples are not very distinct, color 22 (olive green) is almost
-identical to color 2 (black), etc.
+identical to color 2 (black), etc.  Trubetskoy says "towards the bottom of
+ Kelly's list things get complicated. The orange yellow, purplish red,
+ yellowish brown and reddish orange all seemed to blend together".
 
 The \code{okabe} palette was design to be (1) clear for both colorblind and
 non-colorblind people, (2) vividly colored, and (3) good for screen and printed.
@@ -106,6 +111,11 @@ https://github.com/vega/vega/wiki/Scales.
 
 The \code{tableau20} palette has 10 pairs of dark/light colors that are used by
 the Tableau software.
+
+The \code{trubetskoy} palette as 20 colors, plus black and white.
+The colors are designed to be easily distinguishable, tastefully luminant,
+intuitively named, supplied with RGB colors.
+https://sashamaps.net/docs/resources/20-colors/
 
 The \code{tol} palette has 12 colors by Paul Tol.
 
@@ -180,6 +190,9 @@ http://jfly.iam.u-tokyo.ac.jp/color/
 
 Paul Tol (2012). Color Schemes. SRON technical note, SRON/EPS/TN/09-002.
 https://personal.sron.nl/~pault/
+
+Sasha Trubetskoy (2017). List of 20 Simple, Distinct Colors.
+https://sashamaps.net/docs/resources/20-colors/
 
 John Watlington.
 An Optimum 16 Color Palette.

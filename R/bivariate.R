@@ -1,5 +1,5 @@
 # bivariate.R
-# Time-stamp: <06 Sep 2018 14:11:43 c:/x/rpack/pals/R/bivariate.R>
+# Time-stamp: <30 Dec 2021 12:31:09 c:/one/rpack/pals/r/bivariate.R>
 # Copyright Kevin Wright, 2017, GPL-3
 
 #' Bivariate palettes
@@ -19,7 +19,7 @@
 #'
 #' The `vsup.*` palettes are Value-Suppressing Uncertainty Palettes.
 #' 
-#' We strongly recommend not using `vsup.viridis`, because the horizontal axis has
+#' We strongly discourage using `vsup.viridis`, because the horizontal axis has
 #' changes in brightness, which are confounded with the changes in brightness
 #' in the vertical axis.
 #' 

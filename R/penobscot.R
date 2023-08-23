@@ -12,8 +12,8 @@
 #' @usage data(penobscot)
 #' 
 #' @source 
-#' \url{https://github.com/agile-geoscience/notebooks/}
-#' \url{https://github.com/agile-geoscience/notebooks/blob/master/Filtering_horizons.ipynb}
+#' \url{https://github.com/agilescientific/notebooks}
+#' \url{https://github.com/agilescientific/notebooks/blob/master/Filtering_horizons.ipynb}
 #'
 #' @examples 
 #' #

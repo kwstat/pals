@@ -8,8 +8,8 @@
 A matrix 463 x 595.
 }
 \source{
-\url{https://github.com/agile-geoscience/notebooks/}
-\url{https://github.com/agile-geoscience/notebooks/blob/master/Filtering_horizons.ipynb}
+\url{https://github.com/agilescientific/notebooks}
+\url{https://github.com/agilescientific/notebooks/blob/master/Filtering_horizons.ipynb}
 }
 \usage{
 data(penobscot)

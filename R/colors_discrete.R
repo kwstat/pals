@@ -34,7 +34,9 @@
 #' The color 'white' has been re-defined as light-gray, #F2F3F4.
 #' Commentary: We think the kelly palette has an over-abundance of orange-ish
 #' colors, the purples are not very distinct, color 22 (olive green) is almost
-#' identical to color 2 (black), etc.
+#' identical to color 2 (black), etc.  Trubetskoy says "towards the bottom of
+#'  Kelly's list things get complicated. The orange yellow, purplish red,
+#'  yellowish brown and reddish orange all seemed to blend together".
 #'
 #' The \code{okabe} palette was design to be (1) clear for both colorblind and
 #' non-colorblind people, (2) vividly colored, and (3) good for screen and printed.
@@ -56,6 +58,11 @@
 #' 
 #' The \code{tableau20} palette has 10 pairs of dark/light colors that are used by
 #' the Tableau software.
+#' 
+#' The \code{trubetskoy} palette as 20 colors, plus black and white.
+#' The colors are designed to be easily distinguishable, tastefully luminant,
+#' intuitively named, supplied with RGB colors.
+#' https://sashamaps.net/docs/resources/20-colors/
 #' 
 #' The \code{tol} palette has 12 colors by Paul Tol.
 #' 
@@ -137,6 +144,9 @@
 #' Paul Tol (2012). Color Schemes. SRON technical note, SRON/EPS/TN/09-002.
 #' https://personal.sron.nl/~pault/
 #'
+#' Sasha Trubetskoy (2017). List of 20 Simple, Distinct Colors.
+#' https://sashamaps.net/docs/resources/20-colors/
+#' 
 #' John Watlington.
 #' An Optimum 16 Color Palette.
 #' http://alumni.media.mit.edu/~wad/color/palette.html
@@ -398,6 +408,29 @@ tol.groundcover <- function(n=14){
 
   return(pal[1:n])
 }
+
+
+#' @export
+#' @rdname discrete
+trubetskoy <- function(n=22){
+  if(n > 22){
+    message("Only 22 colors are available with 'trubetskoy'")
+    n <- 26
+  }  
+  
+  pal <- c("#e6194b","#3cb44b","#ffe119","#4363d8","#f58231",
+           "#911eb4","#42d4f4","#f032e6","#bfef45","#fabed4",
+           "#469990","#dcbeff","#9a6324","#fffac8","#800000",
+           "#aaffc3","#808000","#ffd8b1","#000075","#a9a9a9",
+           "#ffffff","#000000")
+  names(pal) <- c("red","green","yellow","blue","orange",
+                  "purple","cyan","magenta","lime","pink",
+                  "teal","lavender","brown","beige", "maroon",
+                  "mint","olive","apricot","navy","grey",
+                  "white","black")
+  return(pal[1:n])
+}
+
 
 # ----------------------------------------------------------------------------
 
