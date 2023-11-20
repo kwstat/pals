@@ -28,6 +28,10 @@ hand in RGB space.
 What to look for:
 
 A good palette has colors that are spread somewhat uniformly in 3D.
+
+Note: The rgl package is NOT included in "Depends" for the pals
+package because it can cause problems for people.  You might have
+to manually install rgl with install.packages.
 }
 \examples{
 \dontrun{

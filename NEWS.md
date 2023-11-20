@@ -1,7 +1,15 @@
+# pals 1.9
+
+* Better warning if `pal.cube()` is called without `rgl` package installed (#10, Adam).
+
+
 # pals 1.8 (2023-08-20)
 
 * Switch to MIT license.
+
 * Add `trubetskoy` discrete color palette.
+
+* Fix docType issue reported by CRAN.
 
 
 # pals 1.7 (2021-04-17)
@@ -11,7 +19,7 @@
 
 # pals 1.6 (2019-12-04)
 
-* Moved `rgl` from Imports to Suggests to reduce startup load (#2, Kent Johnson).
+* Moved `rgl` from Imports to Suggests to reduce startup load (#4, Kent Johnson).
 
 * Moved `maps` from Depends to Imports.
 

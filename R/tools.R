@@ -1,5 +1,5 @@
 # tools.R
-# Time-stamp: <08 Sep 2021 19:57:22 c:/one/rpack/pals/r/tools.R>
+# Time-stamp: <20 Nov 2023 13:31:13 c:/drop/rpack/pals/r/tools.R>
 # Copyright: Kevin Wright, 2017. License: GPL-3.
 
 # ----------------------------------------------------------------------------
@@ -431,6 +431,10 @@ pal.compress <- function(pal, n=5, thresh=2.5) {
 #' What to look for:
 #' 
 #' A good palette has colors that are spread somewhat uniformly in 3D.
+#'
+#' Note: The rgl package is NOT included in "Depends" for the pals
+#' package because it can cause problems for people.  You might have
+#' to manually install rgl with install.packages.
 #' 
 #' @param pal A palette/colormap function or a vector of colors.
 #' 
@@ -458,8 +462,12 @@ pal.compress <- function(pal, n=5, thresh=2.5) {
 #' None
 #'
 #' @importFrom methods as
+#' @importFrom utils installed.packages
 pal.cube <- function(pal, n=100, label=FALSE, type="RGB"){
 
+  if(!("rgl" %in% installed.packages() ))
+    stop("You must install the `rgl` package first.")
+    
   if(is.function(pal)) pal <- pal(n)
 
   if(type=="RGB") {

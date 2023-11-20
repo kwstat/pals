@@ -1,5 +1,24 @@
 # pals 1.8
 
+* Switch to MIT license.
+* Fix docType issue reported by CRAN.
+
+## Test environments and results
+
+* local R 4.3.1 on Windows 10
+* Winbuilder R-devel
+* Rhub
+
+OK (allowing for usual quirky reporting from Rhub)
+
+## revdepcheck results
+
+We checked 9 reverse dependencies (6 from CRAN + 3 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages
+ 
+ 
 # pals 1.7
 
 ## Test environments
@@ -12,6 +31,8 @@
 
 OK
 
+ 
+ 
 
 # pals 1.6
 
