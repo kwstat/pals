@@ -1,7 +1,9 @@
 # pals 1.9
 
 * Better warning if `pal.cube()` is called without `rgl` package installed (#10, Adam).
-
+* New exported helper function: `pals.maxcolors()` (#5). By @bschilder
+  - Added unit tests.
+* Bumped `pals` version from 1.8 --> 1.9 in *DESCRIPTION*.
 
 # pals 1.8 (2023-08-20)
 
