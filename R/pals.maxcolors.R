@@ -3,6 +3,7 @@
 #' This function returns a data frame with the maximum number of colors for
 #'  each palette currently available within the \pkg{pals} package.
 #' @returns A data frame with the maximum number of colors for each palette.
+#' 
 #' @author R code by Brian M Schilder. 
 #' @export
 #' @importFrom utils getFromNamespace
