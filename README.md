@@ -2,7 +2,8 @@
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/pals)](https://cran.r-project.org/package=pals)
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/pals)](https://cranlogs.r-pkg.org/badges/pals)
-
+[![R build status](https://github.com/kwstat/pals/workflows/rworkflows/badge.svg)](https://github.com/kwstat/pals/actions)
+[![](https://codecov.io/gh/kwstat/pals/branch/main/graph/badge.svg)](https://codecov.io/gh/kwstat/pals)
 
 Homepage: https://kwstat.github.io/pals
 

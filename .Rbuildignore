@@ -40,3 +40,9 @@
 ^pkgdown$
 ^CRAN-RELEASE$
 ^LICENSE\.md$
+
+# ----- GitHub Actions ----- 
+^\.github$
+^node_modules$
+^package-lock\.json$
+^package\.json$

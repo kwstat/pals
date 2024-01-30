@@ -4,6 +4,10 @@
 * New exported helper function: `pals.maxcolors()` (#5). By @bschilder
   - Added unit tests.
 * Bumped `pals` version from 1.8 --> 1.9 in *DESCRIPTION*.
+* Added `rworkflows` via `rworkflows::use_workflow()`:
+  - Removed *docs* folder
+  - Add some extra lines to *.Rbuildignore* to ensure GitHub Actions works. 
+  - Add GHA status and code coverage badges to *README.md*.
 
 # pals 1.8 (2023-08-20)
 
