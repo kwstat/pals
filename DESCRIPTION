@@ -1,32 +1,36 @@
 Package: pals
-Version: 1.9
-Authors@R: person("Kevin","Wright", email="kw.stat@gmail.com", comment=c(ORCID = "0000-0002-0617-8673"), role=c("aut","cre","cph"))
 Title: Color Palettes, Colormaps, and Tools to Evaluate Them
-Description: A comprehensive collection of color palettes, colormaps, and tools to evaluate them.
+Version: 1.9
+Authors@R: 
+    person("Kevin", "Wright", , "kw.stat@gmail.com", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0002-0617-8673"))
+Description: A comprehensive collection of color palettes, colormaps, and
+    tools to evaluate them.
+License: MIT + file LICENSE
 URL: https://kwstat.github.io/pals/
 BugReports: https://github.com/kwstat/pals/issues
-VignetteBuilder: knitr
-Language: en-US
-Encoding: UTF-8
 Depends: 
-  R (>= 2.10)
+    R (>= 2.10)
 Imports:
-  dichromat,
-  colorspace,
-  graphics,
-  grDevices,
-  mapproj,
-  maps,
-  methods,
-  stats
+    colorspace,
+    dichromat,
+    graphics,
+    grDevices,
+    mapproj,
+    maps,
+    methods,
+    stats
 Suggests:
-  classInt,
-  ggplot2,
-  knitr,
-  latticeExtra,
-  reshape2,
-  rgl,
-  rmarkdown,
-  testthat
-License: MIT + file LICENSE
-RoxygenNote: 7.2.3
+    classInt,
+    ggplot2,
+    knitr,
+    latticeExtra,
+    reshape2,
+    rgl,
+    rmarkdown,
+    testthat
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+Language: en-US
+RoxygenNote: 7.3.1

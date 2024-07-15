@@ -1,4 +1,4 @@
-The 'pals' package as a whole is released under the GPL-3 license.
+The 'pals' package as a whole is released under the MIT license.
 
 This file lists the copyright holders and licenses of the various colormaps and palettes in the 'pals' package.
 
@@ -14,7 +14,7 @@ https://github.com/matplotlib/cmocean/blob/master/LICENSE.txt
 ColorBrewer palettes
 Copyright: Cynthia Brewer, Mark Harrower, and The Pennsylvania State University
 License: Apache License, Version 2.0
-http://www.personal.psu.edu/cab38/ColorBrewer/ColorBrewer_updates.html
+https://github.com/axismaps/colorbrewer/
 
 -----
 

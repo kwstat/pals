@@ -4,6 +4,7 @@
 
 # ----- Git -----
 ^.gitignore$
+^\.github$
 
 # ----- devtools -----
 ^revdep$
