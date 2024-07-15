@@ -1,3 +1,8 @@
+# pals 1.9
+
+* License clarification.
+
+
 # pals 1.8
 
 * Switch to MIT license.
