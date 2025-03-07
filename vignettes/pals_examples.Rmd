@@ -29,9 +29,9 @@ options(width=90)
 
 The appearance of color depends on:
 
-1. The display device (screen, paper, photocopy).
-2. The type of graphic (regions/lines).
-3. The person (age, gender, colorblindness)
+1. The display device (laptop/monitor, projector, paper, photocopy).
+2. The type of graphic (regions, lines).
+3. The person viewing the graphic (age, gender, colorblindness)
 
 It is difficult to give definitive recommendations for the best palettes and colormaps.  Nonetheless, here are some we like.
 
@@ -66,6 +66,8 @@ Show palettes and colormaps as colored bands
 1. A good discrete palette has distinct colors.
 2. A good continuous colormap does not show boundaries between colors.
 
+The graphic below shows what we consider to be major flaw of the viridis palette...nearly half of the palette is more or less a green color.
+
 ```{r}
 require(pals)
 op=par(mar=c(0,5,3,1))
@@ -84,8 +86,8 @@ Show the amount of red, green, blue, and gray in colors of a palette.  The gray 
 
 ### What to look for:
 
-1. Sequential data should usually be shown with a colormap that is smoothly
-increasing in lightness, as shown by the gray line.
+1. Sequential data should usually be shown with a colormap that is smoothly increasing in lightness, as shown by the gray line.
+
 ```{r}
 pal.channels(parula, main="parula")
 ```
@@ -109,9 +111,10 @@ pal.cluster(alphabet2(), main="alphabet2")
 
 A few colormaps in the `pals` package are defined with mathematical formulas (e.g. the cubehelix colormap), but most of the colormaps are originally defined as a smooth curve through a seqence of 256 colors. There seems to be no theoretical reason for 256 colors, other than tradition. It is natural to wonder if a smooth curve through fewer colors would be equally sufficient. This function compresses a colormap function down to a small-ish vector of colors that can be passed into `colorRampPalette` to re-create the original palette with a non-noticeable difference.  Most of the palettes in the `pals` package are stored as a compressed sequence of colors.
 
-How effective is `pal.compress`? Compressing all 50 `kovesi.*` colormaps reduced memory from 352000 to 46000 bytes, a savings of 87%.
+How effective is `pal.compress`? Compressing all 50 `kovesi.*` colormaps reduced memory from a needlessly wasteful 352000 bytes down to 46000 bytes, a savings of 87%.
 
-In the figure below, the top band is the (mathematically-defined) `cubehelix` colormap function evaluated at 255 colors. The `cubebasis` vector has 17 colors (shown in the middle). These 17 colors are passed into the `colorRampPalette` function and expanded to 255 colors shown in the bottom band.  The maximum squared LUV distance between the individual colors in the two bands is 2.34, which is smaller than the theoretical perceptual difference of roughly 2.5.
+In the figure below, the top band is the (mathematically-defined) `cubehelix` colormap function evaluated at 255 colors. These 256 colors are compressed to 17 colors in the `cubebasis` vector (shown in the middle). These 17 colors are passed into the `colorRampPalette` function and expanded to 255 colors shown in the bottom band.  The maximum squared LUV distance between the individual colors in the two bands is only 2.34, which is smaller than the theoretical perceptual difference of roughly 2.5.
+
 ```{r}
 # smooth palettes are usually easy to compress
 p1 <- cubehelix(255)
@@ -164,15 +167,14 @@ hand in RGB space.
 
 ## pal.heatmap()
 
-A random heatmap is generated (with 5% missing values) and a key is added
-to the heatmap by appending a blank column along the right side and then a column with the
-palette colors.
+A random heatmap is generated (with 5% missing values) and a key is added to the heatmap by appending a blank column along the right side and then a column with the palette colors.
 
 ### What to look for:
 
-1. Can the value of each cell be correctly inferred using the key on 
-the right side?
+1. Can the value of each cell be correctly inferred using the key on the right side?
 2. Can missing values be identified?
+
+The graphic below shows that the `alphabet2` palette is dominated by red/pink/purple colors.
 
 ```{r}
 op <- par(mfrow=c(1,2), mar=c(1,1,2,2))
@@ -187,11 +189,13 @@ Display multiple palettes on a heatmap (similar to the ColorBrewer website).
 
 ### What to look for:
 
-1. Are large regions distinct from each other?
+1. Are the large regions distinct from each other?
 2. Are rectangular outlines visible?
 3. Are outliers identifiable within each region?
 4. Are colors identifiable in the complex area (left) part of the map?
 5. Are missing values visible?
+
+In the example below, the `tol.groundcover` palette has several shades of green that are nearly indistinguishable.
 
 ```{r}
 pal.heatmap2(watlington(16), tol.groundcover(14), brewer.rdylbu(11),
@@ -271,8 +275,6 @@ par(op)
 
 This function combines several other functions into a single test image.
 
-The examples below show the superiority of the `parula` colormap as compared to the `viridis` colormap.
-
 ### What to look for:
 
 1. Are all squares (especially upper left and lower right) in the Z-curve distinct?
@@ -281,7 +283,10 @@ The examples below show the superiority of the `parula` colormap as compared to 
 4. Is the actual peak of the volcano identifiable? The lowest area?
 5. Is the gray/luminosity channel monotonic?
 
-The examples below show the poor performance of the 'viridis' colormap in dark regions.  The 'parula' palette shows more structure in the volcano.
+The examples below show the poor performance of the 'viridis' colormap in dark regions.
+
+The 'parula' palette shows more structure in the peak of the volcano.
+
 
 ```{r}
 pal.test(parula)

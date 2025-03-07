@@ -1,6 +1,46 @@
+# pals 1.10
+
+* Fix NOTE from CRAN check.
+
+## Test environments and results
+
+* local R 4.4.1 on Windows 10
+* Winbuilder R-devel
+* Winbuilder R-oldrelease
+
+## revdepcheck results
+
+We checked 5 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+
+Checked mineSweepR by hand.
+
+
 # pals 1.9
 
 * License clarification.
+* Added reference in DESCRIPTION.
+
+## Test environments and results
+
+* local R 4.4.1 on Windows 10
+* Winbuilder R-devel
+* Winbuilder R-oldrelease
+
+## Rcmd check results
+
+OK except 1 NOTE about a misspelled word in DESCRIPTION that is an author's name.
+
+
+## revdepcheck results
+
+We checked 9 reverse dependencies (6 from CRAN + 3 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+
+Package mineSweepR was checked by hand
+
+We saw 0 new problems
+
 
 
 # pals 1.8
